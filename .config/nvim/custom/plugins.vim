@@ -1,41 +1,30 @@
-call plug#begin(stdpath('data') . '/plugged')
+call plug#begin()
 
-Plug 'voldikss/vim-floaterm'
 Plug 'justinmk/vim-dirvish'
-Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
-Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-commentary'
+Plug 'matze/vim-move'
+Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'thinca/vim-visualstar'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': { -> coc#util#install() } }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'mhinz/vim-startify'
+
+" Themes
+Plug 'ayu-theme/ayu-vim'
+Plug 'AlessandroYorba/Sierra'
+Plug 'AlessandroYorba/Alduin'
+Plug 'morhetz/gruvbox'
+Plug 'dikiaap/minimalist'
 
 call plug#end()
-
-" ****************
-" * lightline
-" ****************
-set noshowmode
-let g:lightline = {
-  \ 'colorscheme': 'jellybeans',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-  \ },
-  \ 'component_function': {
-  \   'cocstatus': 'coc#status'
-  \ },
-\ }
-
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 " ****************
 " * coc
@@ -117,21 +106,6 @@ let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
 
 " ****************
-" * floatermnew
+" * CtrlSpace
 " ****************
-nnoremap <Leader>n :FloatermNew ranger<CR>
-nnoremap <Leader>f :FloatermNew fzf<CR>
-
-" ****************
-" * startify
-" ****************
-let g:startify_custom_header = [
- \ '                                        ▟▙            ',
- \ '                                        ▝▘            ',
- \ '██▃▅▇█▆▖  ▗▟████▙▖   ▄████▄   ██▄  ▄██  ██  ▗▟█▆▄▄▆█▙▖',
- \ '██▛▔ ▝██  ██▄▄▄▄██  ██▛▔▔▜██  ▝██  ██▘  ██  ██▛▜██▛▜██',
- \ '██    ██  ██▀▀▀▀▀▘  ██▖  ▗██   ▜█▙▟█▛   ██  ██  ██  ██',
- \ '██    ██  ▜█▙▄▄▄▟▊  ▀██▙▟██▀   ▝████▘   ██  ██  ██  ██',
- \ '▀▀    ▀▀   ▝▀▀▀▀▀     ▀▀▀▀       ▀▀     ▀▀  ▀▀  ▀▀  ▀▀',
- \ '',
-\]
+let g:CtrlSpaceDefaultMappingKey = "<C-space> "
