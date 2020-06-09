@@ -3,6 +3,7 @@ source $HOME/.antigen.zsh
 
 antigen use oh-my-zsh
 
+antigen bundle asdf
 antigen bundle git
 antigen bundle archlinux
 antigen bundle cargo
