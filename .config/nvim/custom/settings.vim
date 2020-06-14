@@ -2,6 +2,7 @@ let mapleader = "\<Space>"
 
 " general
 set mouse=a
+set clipboard+=unnamedplus
 set nu
 set title
 set tabstop=2
