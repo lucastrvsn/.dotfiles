@@ -2,7 +2,6 @@ let mapleader = "\<Space>"
 
 " general
 set mouse=a
-set clipboard+=unnamedplus
 set nu
 set title
 set tabstop=2
@@ -19,14 +18,12 @@ set noswapfile
 set nocompatible
 set hidden
 set updatetime=300
-set lazyredraw
 set autoread
 set noerrorbells
 set novisualbell
 
 " search
 set incsearch
-set hlsearch
 set ignorecase
 set smartcase
 set colorcolumn=80

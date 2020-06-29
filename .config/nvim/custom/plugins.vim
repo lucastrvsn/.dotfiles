@@ -6,23 +6,22 @@ Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
+Plug 'haya14busa/incsearch.vim'
 Plug 'tpope/vim-commentary'
 Plug 'matze/vim-move'
+Plug 'danilamihailov/beacon.nvim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'thinca/vim-visualstar'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'jiangmiao/auto-pairs'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 " Themes
-Plug 'ayu-theme/ayu-vim'
-Plug 'AlessandroYorba/Sierra'
-Plug 'AlessandroYorba/Alduin'
 Plug 'morhetz/gruvbox'
-Plug 'dikiaap/minimalist'
 
 call plug#end()
 
@@ -74,18 +73,28 @@ inoremap <silent><expr> <Tab>
 " use <c-space>for trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <NUL> coc#refresh()
-
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " ****************
 " * prettier
 " ****************
-nmap <Leader>p <Plug>(Prettier)
 let g:prettier#config#single_quote = "true"
 let g:prettier#config#trailing_comma = "none"
 let g:prettier#autoformat = 0
+nmap <Leader>p <Plug>(Prettier)
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
+
+" ****************
+" * incsearch
+" ****************
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
 " ****************
 " * commentary
@@ -96,14 +105,26 @@ map <C-_> <Plug>Commentary<CR>
 " * multilinecursor
 " ****************
 let g:multi_cursor_use_default_mapping = 0
-let g:multi_cursor_start_word_key      = '<C-d>'
+let g:multi_cursor_start_word_key      = 'gb'
 let g:multi_cursor_select_all_word_key = '<A-n>'
 let g:multi_cursor_start_key           = 'g<C-n>'
 let g:multi_cursor_select_all_key      = 'g<A-n>'
-let g:multi_cursor_next_key            = '<C-d>'
+let g:multi_cursor_next_key            = 'gb'
 let g:multi_cursor_prev_key            = '<C-p>'
 let g:multi_cursor_skip_key            = '<C-x>'
 let g:multi_cursor_quit_key            = '<Esc>'
+
+" ****************
+" * fzf
+" ****************
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Todo', 'border': 'rounded' } }
+nnoremap <C-p> :<C-u>FZF<CR>
+nnoremap <leader><leader> :GFiles<CR>
+nnoremap <leader>fi       :Files<CR>
+nnoremap <leader>C        :Colors<CR>
+nnoremap <leader><CR>     :Buffers<CR>
+nnoremap <leader>fl       :Lines<CR>
+nnoremap <leader>m        :History<CR>
 
 " ****************
 " * CtrlSpace

@@ -8,10 +8,7 @@ set t_Co=256
 set termguicolors
 set background=dark
 
-" Ayu theme settings
-let ayucolor="dark"
-
-colorscheme ayu
+colorscheme gruvbox
 
 hi Comment cterm=italic
 hi EndOfBuffer guifg=bg

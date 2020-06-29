@@ -26,6 +26,7 @@ antigen theme denysdovhan/spaceship-prompt
 antigen apply
 
 # Spaceship configuration
+SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_CHAR_SYMBOL="$ "
 SPACESHIP_USER_SHOW=always
 SPACESHIP_HOST_SHOW=always
