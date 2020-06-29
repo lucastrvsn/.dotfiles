@@ -21,6 +21,7 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 " Themes
 Plug 'morhetz/gruvbox'
+Plug 'hardcoreplayers/oceanic-material'
 
 call plug#end()
 " }}}
@@ -94,8 +95,8 @@ set number
 set relativenumber
 
 " Improve terminal colors
-set t_Co=256
 set termguicolors
+set t_Co=256
 
 " Highlight tailing whitespace
 " See issue: https://github.com/Integralist/ProVim/issues/4
@@ -109,14 +110,58 @@ set timeout timeoutlen=1000 ttimeoutlen=100
 set laststatus=2
 
 " Set the status line to something useful
-set statusline=%f\ %=L:%l/%L\ %c\ (%p%%)
+function! ReadOnly()
+  if &readonly || !&modifiable
+    return ''
+  endif
+  return ''
+endfunction
+
+function! GitInfo()
+  if fugitive#head() != ''
+    return '  '.fugitive#head().' '
+  endif
+  return ''
+endfunction
+
+function! GetMode()
+  if mode() == "\<C-v>"
+    return 'vb'
+  endif
+  return mode()
+endfunction
+
+autocmd ColorScheme * highlight link Mode1 StatusLine
+autocmd ColorScheme * highlight link Mode2 DiffChange
+autocmd ColorScheme * highlight link Mode3 Search
+autocmd ColorScheme * highlight link Mode4 DiffDelete
+autocmd ColorScheme * highlight link Mode5 DiffDelete
+autocmd ColorScheme * highlight link StatuslineBackground StatusLineNC
+autocmd ColorScheme * highlight link StatuslineGitBranch Number
+
 set noshowmode
-set showtabline=0
-set path+=**
+set statusline=
+set statusline+=%#Mode1#%{GetMode()=='c'?'\ \ Command\ ':''}
+set statusline+=%#Mode1#%{GetMode()=='n'?'\ \ Normal\ ':''}
+set statusline+=%#Mode2#%{GetMode()=='i'?'\ \ Insert\ ':''}
+set statusline+=%#Mode3#%{GetMode()==#'v'?'\ \ Visual\ ':''}
+set statusline+=%#Mode3#%{GetMode()==#'V'?'\ \ V·Line\ ':''}
+set statusline+=%#Mode3#%{GetMode()=='vb'?'\ \ V·Block\ ':''}
+set statusline+=%#Mode4#%{GetMode()=='R'?'\ \ Replace\ ':''}
+set statusline+=%#Mode4#%{GetMode()=='Rv'?'\ \ V·Replace\ ':''}
+set statusline+=%#StatusLineNC#
+set statusline+=\ %f\ 
+set statusline+=%{ReadOnly()}
+set statusline+=%= " right side
+set statusline+=%#StatusLineGitBranch#%{GitInfo()}
+set statusline+=%#StatusLineNC#
+set statusline+=\ %{tolower(&filetype)}
+set statusline+=\ %p%%\ %l:%c\ 
 
 " Set wildmenu
 set wildmenu
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store,**/node_modules/**
+set path+=**
 
 " Hide the toolbar
 set guioptions-=T
@@ -139,9 +184,6 @@ set shortmess+=I
 set splitbelow
 set splitright
 
-" Highlight the current line
-set cursorline
-
 " Ensure Vim doesn't beep at you every time you make a mistype
 set visualbell
 
@@ -156,7 +198,6 @@ set showmatch
 
 " Always highlight column 80 so it's easier to see where
 " cutoff appears on longer screens
-autocmd BufWinEnter * highlight ColorColumn ctermbg=darkred
 set colorcolumn=80
 " }}}
 
@@ -168,8 +209,8 @@ let g:coc_global_extensions = [
   \ 'coc-html',
   \ 'coc-css',
   \ 'coc-cssmodules',
-  \ 'coc-highlight',
   \ 'coc-browser',
+  \ 'coc-highlight',
   \ 'coc-git',
   \ 'coc-markdownlint',
   \ 'coc-rls',
