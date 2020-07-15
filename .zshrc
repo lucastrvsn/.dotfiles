@@ -35,3 +35,6 @@ SPACESHIP_HOST_SHOW=always
 alias vim=nvim
 alias vi=nvim
 alias v=nvim
+
+# To-do bindings
+alias todo="nvim ~/.todo.md"

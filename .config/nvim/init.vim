@@ -2,11 +2,16 @@
 call plug#begin()
 
 Plug 'justinmk/vim-dirvish'
+Plug 'kristijanhusak/vim-dirvish-git'
+Plug 'itchyny/lightline.vim'
+Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'haya14busa/incsearch.vim'
+Plug 'andymass/vim-matchup'
 Plug 'tpope/vim-commentary'
 Plug 'matze/vim-move'
 Plug 'danilamihailov/beacon.nvim'
@@ -26,299 +31,351 @@ Plug 'hardcoreplayers/oceanic-material'
 call plug#end()
 " }}}
 
-" Settings {{{
-" Switch syntax highlighting on, when the terminal has colors
-syntax on
+" General {{{
+  " Switch syntax highlighting on, when the terminal has colors
+  syntax on
 
-" Use vim, not vi api
-set nocompatible
+  " Use vim, not vi api
+  set nocompatible
 
-" Use mouse
-set mouse=a
+  " Use mouse
+  set mouse=a
 
-" No backup files
-set nobackup
+  " No backup files
+  set nobackup
 
-" No write backup
-set nowritebackup
+  " No write backup
+  set nowritebackup
 
-" No swap file
-set noswapfile
+  " No swap file
+  set noswapfile
 
-" Change update time
-set updatetime=300
+  " Change update time
+  set updatetime=300
 
-" Command history
-set history=100
+  " Command history
+  set history=100
 
-" Always show cursor
-set ruler
+  " Always show cursor
+  set ruler
 
-" Show incomplete commands
-set showcmd
+  " Show incomplete commands
+  set showcmd
 
-" Incremental searching (search as you type)
-set incsearch
+  " Set magic by default
+  set magic
 
-" Highlight search matches
-set hlsearch
+  " Incremental searching (search as you type)
+  set incsearch
 
-" Ignore case in search
-set smartcase
+  " Highlight search matches
+  set hlsearch
 
-" Make sure any searches /searchPhrase doesn't need the \c escape character
-set ignorecase
+  " Ignore case in search
+  set smartcase
 
-" A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
-" if you try and quit Vim while there are hidden buffers, you will raise an error:
-" E162: No write since last change for buffer “a.txt”
-set hidden
+  " Make sure any searches /searchPhrase doesn't need the \c escape character
+  set ignorecase
 
-" Turn word wrap off
-set nowrap
+  " A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
+  " if you try and quit Vim while there are hidden buffers, you will raise an error:
+  " E162: No write since last change for buffer “a.txt”
+  set hidden
 
-" Allow backspace to delete end of line, indent and start of line characters
-set backspace=indent,eol,start
+  " Turn word wrap off
+  set nowrap
 
-" Convert tabs to spaces
-set expandtab
+  " Allow backspace to delete end of line, indent and start of line characters
+  set backspace=indent,eol,start
 
-" Set tab size in spaces (this is for manual indenting)
-set tabstop=2
+  " Convert tabs to spaces
+  set expandtab
+  set smarttab
 
-" The number of spaces inserted for a tab (used for auto indenting)
-set softtabstop=2
-set shiftwidth=2
+  " Set tab size in spaces (this is for manual indenting)
+  set tabstop=2
 
-" Turn on line numbers
-set number
-set relativenumber
+  " The number of spaces inserted for a tab (used for auto indenting)
+  set softtabstop=2
+  set shiftwidth=2
 
-" Improve terminal colors
-set termguicolors
-set t_Co=256
+  " Turn on line numbers
+  set number
+  set relativenumber
 
-" Highlight tailing whitespace
-" See issue: https://github.com/Integralist/ProVim/issues/4
-set list listchars=tab:\ \ ,trail:·
+  " Improve terminal colors
+  set termguicolors
 
-" Get rid of the delay when pressing O (for example)
-" http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
-set timeout timeoutlen=1000 ttimeoutlen=100
+  " Highlight tailing whitespace
+  " See issue: https://github.com/Integralist/ProVim/issues/4
+  set list listchars=tab:\ \ ,trail:·
 
-" Always show status bar
-set laststatus=2
+  " Get rid of the delay when pressing O (for example)
+  " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
+  set timeout timeoutlen=1000 ttimeoutlen=100
 
-" Set the status line to something useful
-function! ReadOnly()
-  if &readonly || !&modifiable
-    return ''
-  endif
-  return ''
-endfunction
+  " Always show status bar
+  set laststatus=2
 
-function! GitInfo()
-  if fugitive#head() != ''
-    return '  '.fugitive#head().' '
-  endif
-  return ''
-endfunction
+  " Set wildmenu
+  set wildmenu
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store,**/node_modules/**
+  set path+=**
 
-function! GetMode()
-  if mode() == "\<C-v>"
-    return 'vb'
-  endif
-  return mode()
-endfunction
+  " Hide the toolbar (gui)
+  set guioptions-=T
 
-autocmd ColorScheme * highlight link Mode1 StatusLine
-autocmd ColorScheme * highlight link Mode2 DiffChange
-autocmd ColorScheme * highlight link Mode3 Search
-autocmd ColorScheme * highlight link Mode4 DiffDelete
-autocmd ColorScheme * highlight link Mode5 DiffDelete
-autocmd ColorScheme * highlight link StatuslineBackground StatusLineNC
-autocmd ColorScheme * highlight link StatuslineGitBranch Number
+  " UTF encoding
+  set encoding=utf-8
+  set fileencoding=utf-8
 
-set noshowmode
-set statusline=
-set statusline+=%#Mode1#%{GetMode()=='c'?'\ \ Command\ ':''}
-set statusline+=%#Mode1#%{GetMode()=='n'?'\ \ Normal\ ':''}
-set statusline+=%#Mode2#%{GetMode()=='i'?'\ \ Insert\ ':''}
-set statusline+=%#Mode3#%{GetMode()==#'v'?'\ \ Visual\ ':''}
-set statusline+=%#Mode3#%{GetMode()==#'V'?'\ \ V·Line\ ':''}
-set statusline+=%#Mode3#%{GetMode()=='vb'?'\ \ V·Block\ ':''}
-set statusline+=%#Mode4#%{GetMode()=='R'?'\ \ Replace\ ':''}
-set statusline+=%#Mode4#%{GetMode()=='Rv'?'\ \ V·Replace\ ':''}
-set statusline+=%#StatusLineNC#
-set statusline+=\ %f\ 
-set statusline+=%{ReadOnly()}
-set statusline+=%= " right side
-set statusline+=%#StatusLineGitBranch#%{GitInfo()}
-set statusline+=%#StatusLineNC#
-set statusline+=\ %{tolower(&filetype)}
-set statusline+=\ %p%%\ %l:%c\ 
+  " Autoload files that have changed outside of vim
+  set autoread
 
-" Set wildmenu
-set wildmenu
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store,**/node_modules/**
-set path+=**
+  " Use system clipboard
+  " http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
+  set clipboard+=unnamed
 
-" Hide the toolbar
-set guioptions-=T
+  " Better splits (new windows appear below and to the right)
+  set splitbelow
+  set splitright
 
-" UTF encoding
-set encoding=utf-8
-set fileencoding=utf-8
+  " Ensure Vim doesn't beep at you every time you make a mistype
+  set visualbell
+  set noerrorbells
+  set t_vb=
+  set tm=500
 
-" Autoload files that have changed outside of vim
-set autoread
+  " Visual autocomplete for command menu (e.g. :e ~/path/to/file)
+  set wildmenu
 
-" Use system clipboard
-" http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
-set clipboard+=unnamed
+  " redraw only when we need to (i.e. don't redraw when executing a macro)
+  set lazyredraw
 
-" Don't show intro
-set shortmess+=I
+  " highlight a matching [{()}] when cursor is placed on start/end character
+  set showmatch
 
-" Better splits (new windows appear below and to the right)
-set splitbelow
-set splitright
-
-" Ensure Vim doesn't beep at you every time you make a mistype
-set visualbell
-
-" Visual autocomplete for command menu (e.g. :e ~/path/to/file)
-set wildmenu
-
-" redraw only when we need to (i.e. don't redraw when executing a macro)
-set lazyredraw
-
-" highlight a matching [{()}] when cursor is placed on start/end character
-set showmatch
-
-" Always highlight column 80 so it's easier to see where
-" cutoff appears on longer screens
-set colorcolumn=80
+  " Always highlight column 80 so it's easier to see where
+  " cutoff appears on longer screens
+  set colorcolumn=80
 " }}}
 
 " {{{ Plugin settings
-" coc
-let g:coc_global_extensions = [
-  \ 'coc-json',
-  \ 'coc-tsserver',
-  \ 'coc-html',
-  \ 'coc-css',
-  \ 'coc-cssmodules',
-  \ 'coc-browser',
-  \ 'coc-highlight',
-  \ 'coc-git',
-  \ 'coc-markdownlint',
-  \ 'coc-rls',
-  \ 'coc-yaml',
-  \ 'coc-yank'
-\]
+  " Coc {{{
+    let g:coc_global_extensions = [
+      \ 'coc-json',
+      \ 'coc-tsserver',
+      \ 'coc-html',
+      \ 'coc-css',
+      \ 'coc-cssmodules',
+      \ 'coc-browser',
+      \ 'coc-highlight',
+      \ 'coc-git',
+      \ 'coc-markdownlint',
+      \ 'coc-rls',
+      \ 'coc-yaml',
+      \ 'coc-yank'
+    \]
 
-function! s:show_documentation()
-  if (index(['vim', 'help'], &filetype) >= 0)
-    execute 'h ' . expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+    function! s:show_documentation()
+      if (index(['vim', 'help'], &filetype) >= 0)
+        execute 'h ' . expand('<cword>')
+      else
+        call CocAction('doHover')
+      endif
+    endfunction
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+  " }}}
 
-" prettier
-let g:prettier#config#single_quote = "true"
-let g:prettier#config#trailing_comma = "none"
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
+  " Prettier {{{
+    let g:prettier#config#single_quote = "true"
+    let g:prettier#config#trailing_comma = "none"
+    let g:prettier#autoformat = 0
 
-" incsearch
-let g:incsearch#auto_nohlsearch = 1
+    autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
+  " }}}
 
-" multilinecursor
-let g:multi_cursor_use_default_mapping = 0
-let g:multi_cursor_start_word_key      = 'gb'
-let g:multi_cursor_select_all_word_key = '<A-n>'
-let g:multi_cursor_start_key           = 'g<C-n>'
-let g:multi_cursor_select_all_key      = 'g<A-n>'
-let g:multi_cursor_next_key            = 'gb'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-x>'
-let g:multi_cursor_quit_key            = '<Esc>'
+  " incsearch
+  let g:incsearch#auto_nohlsearch = 1
 
-" fzf
-let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Todo', 'border': 'rounded' } }
+  " multilinecursor {{{
+    let g:multi_cursor_use_default_mapping = 0
+    let g:multi_cursor_start_word_key      = 'gb'
+    let g:multi_cursor_select_all_word_key = '<A-n>'
+    let g:multi_cursor_start_key           = 'g<C-n>'
+    let g:multi_cursor_select_all_key      = 'g<A-n>'
+    let g:multi_cursor_next_key            = 'gb'
+    let g:multi_cursor_prev_key            = '<C-p>'
+    let g:multi_cursor_skip_key            = '<C-x>'
+    let g:multi_cursor_quit_key            = '<Esc>'
+  " }}}
 
-" ctrlspace
-let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+  " FZF {{{
+    let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Todo', 'border': 'rounded' } }
+  " }}}
 
-" vim-rotter
-let g:rooter_change_directory_for_non_project_files='current'
+  " Lightline {{{
+    let g:lightline = {}
+    let g:lightline.colorscheme = 'gruvbox'
+  " }}}
 
+  " Startify {{{
+    " Don't change to directory when selecting a file
+    let g:startify_files_number = 5
+    let g:startify_change_to_dir = 0
+    let g:startify_custom_header = [ ]
+    let g:startify_relative_path = 1
+    let g:startify_use_env = 1
+
+    " Custom startup list, only show MRU from current directory/project
+    let g:startify_lists = [
+    \  { 'type': 'dir',       'header': [ 'Files '. getcwd() ] },
+    \  { 'type': function('helpers#listcommits'), 'header': [ 'Recent Commits' ] },
+    \  { 'type': 'sessions',  'header': [ 'Sessions' ]       },
+    \  { 'type': 'bookmarks', 'header': [ 'Bookmarks' ]      },
+    \  { 'type': 'commands',  'header': [ 'Commands' ]       },
+    \ ]
+
+    let g:startify_commands = [
+    \   { 'up': [ 'Update Plugins', ':PlugUpdate' ] },
+    \   { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
+    \ ]
+
+    let g:startify_bookmarks = [
+        \ { 'c': '~/.config/nvim/init.vim' },
+        \ { 'g': '~/.gitconfig' },
+        \ { 'z': '~/.zshrc' }
+    \ ]
+
+    autocmd User Startified setlocal cursorline
+    nmap <leader>st :Startify<cr>
+  " }}}
+
+  " ctrlspace
+  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+
+  " vim-rotter
+  let g:rooter_change_directory_for_non_project_files = 'current'
 " }}}
 
-" {{{ Mappings
-let mapleader = "\<Space>"
+" Mappings {{{
+  let mapleader = "\<Space>"
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <Leader>rn <Plug>(coc-rename)
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+  " ******
+  " general
+  " ******
+  " moving up and down the right way
+  nnoremap <silent> j gj
+  nnoremap <silent> k gk
+  nnoremap <silent> ^ g^
+  nnoremap <silent> $ g$
 
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+  " remove arrow keys mappings
+  for key in ['<Up>', '<Down>', '<Left>', '<Right>']
+    exec 'noremap' key '<Nop>'
+    exec 'inoremap' key '<Nop>'
+    exec 'cnoremap' key '<Nop>'
+  endfor
 
-inoremap <silent><expr> <Tab>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<Tab>" :
-  \ coc#refresh()
+  " keep visual selection when indenting
+  vmap < <gv
+  vmap > >gv
 
-" use <c-space>for trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <silent><expr> <NUL> coc#refresh()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+    nnoremap <C-b>c :tabnew +terminal<CR>
+    tnoremap <C-b>c <C-\><C-n>:tabnew +terminal<CR>
 
-nnoremap <C-p> :<C-u>FZF<CR>
-nnoremap <leader><leader> :GFiles<CR>
-nnoremap <leader>fi       :Files<CR>
-nnoremap <leader>C        :Colors<CR>
-nnoremap <leader><CR>     :Buffers<CR>
-nnoremap <leader>fl       :Lines<CR>
-nnoremap <leader>m        :History<CR>
+    autocmd BufWinEnter,WinEnter term://* startinsert
+    autocmd BufLeave term://* stopinsert
+  endif
 
-map <C-_> <Plug>Commentary<CR>
+  " ******
+  " coc
+  " ******
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  nmap <Leader>rn <Plug>(coc-rename)
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+  " use <tab> for trigger completion and navigate to the next complete item
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
 
-nmap <Leader>p <Plug>(Prettier)
+  inoremap <silent><expr> <Tab>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<Tab>" :
+    \ coc#refresh()
+
+  " use <c-space>for trigger completion
+  inoremap <silent><expr> <c-space> coc#refresh()
+  inoremap <silent><expr> <NUL> coc#refresh()
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+  " ******
+  " fzf
+  " ******
+  function! FzfOmniFiles()
+    if fugitive#head() != ''
+      :GitFiles
+    else
+      :Files
+    endif
+  endfunction
+
+  nnoremap <C-p> :call FzfOmniFiles()<CR>
+  nnoremap <leader>fi       :Files<CR>
+  nnoremap <leader>C        :Colors<CR>
+  nnoremap <leader><CR>     :Buffers<CR>
+  nnoremap <leader>fl       :Lines<CR>
+  nnoremap <leader>m        :History<CR>
+
+  " ******
+  " ctrlspace
+  " ******
+  nnoremap <leader>t :CtrlSpace l<CR>
+
+  " ******
+  " commentary
+  " ******
+  map <C-_> <Plug>Commentary<CR>
+
+  " ******
+  " incsearch
+  " ******
+  map n  <Plug>(incsearch-nohl-n)
+  map N  <Plug>(incsearch-nohl-N)
+  map *  <Plug>(incsearch-nohl-*)
+  map #  <Plug>(incsearch-nohl-#)
+  map g* <Plug>(incsearch-nohl-g*)
+  map g# <Plug>(incsearch-nohl-g#)
+
+  " ******
+  " prettier
+  " ******
+  nmap <Leader>p <Plug>(Prettier)
+" }}}
 
 " {{{ Autocommands
-" When editing a file, always jump to the last known cursor position.
-" Don't do it for commit messages, when the position is invalid, or when
-" inside an event handler (happens when dropping a file on gvim).
-autocmd BufReadPost *
-  \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal g`\"" |
-  \ endif
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
 
-" Scroll offset on current window
-autocmd VimEnter,WinEnter * let &scrolloff = winheight(0) / 4
+  " Scroll offset on current window
+  autocmd VimEnter,WinEnter * let &scrolloff = winheight(0) / 4
 " }}}
 
 " {{{ Theme
-set background=dark
-colorscheme gruvbox
-hi EndOfBuffer guifg=bg
+  set background=dark
+  colorscheme gruvbox
+  hi EndOfBuffer guifg=bg
 " }}}
