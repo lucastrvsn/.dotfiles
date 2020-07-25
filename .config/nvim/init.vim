@@ -4,12 +4,10 @@ call plug#begin()
 Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
 Plug 'itchyny/lightline.vim'
-Plug 'shinchu/lightline-gruvbox.vim'
-Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-surround'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'haya14busa/incsearch.vim'
 Plug 'andymass/vim-matchup'
 Plug 'tpope/vim-commentary'
@@ -17,8 +15,7 @@ Plug 'matze/vim-move'
 Plug 'danilamihailov/beacon.nvim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -41,6 +38,9 @@ call plug#end()
   " Use mouse
   set mouse=a
 
+  " Disable messages
+  set shortmess=F
+
   " No backup files
   set nobackup
 
@@ -51,19 +51,14 @@ call plug#end()
   set noswapfile
 
   " Change update time
-  set updatetime=300
-
-  " Command history
-  set history=100
-
-  " Always show cursor
-  set ruler
-
-  " Show incomplete commands
-  set showcmd
+  set updatetime=100
 
   " Set magic by default
   set magic
+
+  " Reduce vim messages
+  set showcmd
+  set ruler
 
   " Incremental searching (search as you type)
   set incsearch
@@ -108,22 +103,23 @@ call plug#end()
 
   " Highlight tailing whitespace
   " See issue: https://github.com/Integralist/ProVim/issues/4
-  set list listchars=tab:\ \ ,trail:·
+  set list
+  set listchars=tab:\ \ ,trail:·
 
   " Get rid of the delay when pressing O (for example)
   " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
-  set timeout timeoutlen=1000 ttimeoutlen=100
+  set timeout
+  set timeoutlen=1000
+  set ttimeoutlen=100
 
   " Always show status bar
   set laststatus=2
+  set showtabline=0
 
   " Set wildmenu
   set wildmenu
   set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store,**/node_modules/**
   set path+=**
-
-  " Hide the toolbar (gui)
-  set guioptions-=T
 
   " UTF encoding
   set encoding=utf-8
@@ -143,14 +139,6 @@ call plug#end()
   " Ensure Vim doesn't beep at you every time you make a mistype
   set visualbell
   set noerrorbells
-  set t_vb=
-  set tm=500
-
-  " Visual autocomplete for command menu (e.g. :e ~/path/to/file)
-  set wildmenu
-
-  " redraw only when we need to (i.e. don't redraw when executing a macro)
-  set lazyredraw
 
   " highlight a matching [{()}] when cursor is placed on start/end character
   set showmatch
@@ -158,7 +146,7 @@ call plug#end()
   " Always highlight column 80 so it's easier to see where
   " cutoff appears on longer screens
   set colorcolumn=80
-" }}}
+" " }}}
 
 " {{{ Plugin settings
   " Coc {{{
@@ -172,6 +160,7 @@ call plug#end()
       \ 'coc-highlight',
       \ 'coc-git',
       \ 'coc-markdownlint',
+      \ 'coc-pairs',
       \ 'coc-rls',
       \ 'coc-yaml',
       \ 'coc-yank'
@@ -199,6 +188,9 @@ call plug#end()
   " incsearch
   let g:incsearch#auto_nohlsearch = 1
 
+  " fzf
+  let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Todo', 'border': 'rounded' } }
+
   " multilinecursor {{{
     let g:multi_cursor_use_default_mapping = 0
     let g:multi_cursor_start_word_key      = 'gb'
@@ -211,51 +203,11 @@ call plug#end()
     let g:multi_cursor_quit_key            = '<Esc>'
   " }}}
 
-  " FZF {{{
-    let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Todo', 'border': 'rounded' } }
-  " }}}
-
-  " Lightline {{{
-    let g:lightline = {}
-    let g:lightline.colorscheme = 'gruvbox'
-  " }}}
-
-  " Startify {{{
-    " Don't change to directory when selecting a file
-    let g:startify_files_number = 5
-    let g:startify_change_to_dir = 0
-    let g:startify_custom_header = [ ]
-    let g:startify_relative_path = 1
-    let g:startify_use_env = 1
-
-    " Custom startup list, only show MRU from current directory/project
-    let g:startify_lists = [
-    \  { 'type': 'dir',       'header': [ 'Files '. getcwd() ] },
-    \  { 'type': function('helpers#listcommits'), 'header': [ 'Recent Commits' ] },
-    \  { 'type': 'sessions',  'header': [ 'Sessions' ]       },
-    \  { 'type': 'bookmarks', 'header': [ 'Bookmarks' ]      },
-    \  { 'type': 'commands',  'header': [ 'Commands' ]       },
-    \ ]
-
-    let g:startify_commands = [
-    \   { 'up': [ 'Update Plugins', ':PlugUpdate' ] },
-    \   { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
-    \ ]
-
-    let g:startify_bookmarks = [
-        \ { 'c': '~/.config/nvim/init.vim' },
-        \ { 'g': '~/.gitconfig' },
-        \ { 'z': '~/.zshrc' }
-    \ ]
-
-    autocmd User Startified setlocal cursorline
-    nmap <leader>st :Startify<cr>
-  " }}}
-
   " ctrlspace
   let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 
-  " vim-rotter
+  " vim-rooter
+  let g:rooter_silent_chdir = 1
   let g:rooter_change_directory_for_non_project_files = 'current'
 " }}}
 
@@ -283,7 +235,8 @@ call plug#end()
   vmap > >gv
 
   if has('nvim')
-    tnoremap <Esc> <C-\><C-n>
+    au TermOpen * tnoremap <Esc> <C-\><C-n>
+    au FileType fzf tunmap <Esc>
     nnoremap <C-b>c :tabnew +terminal<CR>
     tnoremap <C-b>c <C-\><C-n>:tabnew +terminal<CR>
 
