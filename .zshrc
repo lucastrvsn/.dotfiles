@@ -14,7 +14,6 @@ antigen bundle node
 antigen bundle npm
 antigen bundle npx
 antigen bundle rust
-antigen bundle tmux
 antigen bundle yarn
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
@@ -25,16 +24,22 @@ antigen theme denysdovhan/spaceship-prompt
 # Apply all plugins and theme
 antigen apply
 
-# Spaceship configuration
+# default configs
+EDITOR="nvim"
+
+# spaceship configs
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_CHAR_SYMBOL="$ "
 SPACESHIP_USER_SHOW=always
 SPACESHIP_HOST_SHOW=always
 
-# Zsh aliases
+# alias for vim
 alias vim=nvim
 alias vi=nvim
 alias v=nvim
 
-# To-do bindings
-alias todo="nvim ~/.todo.md"
+# changing ls to exa
+alias ls="exa -al --color=always --group-directories-first"
+alias la="exa -a --color=always --group-directories-first"
+alias ll="exa -l --color=always --group-directories-first"
+alias lt="exa -aT --color=always --group-directories-first"

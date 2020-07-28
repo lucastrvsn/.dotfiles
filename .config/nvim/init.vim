@@ -1,8 +1,10 @@
+" github.com/lucastrvsn
+
 " {{{ Plugins
 call plug#begin()
 
-Plug 'justinmk/vim-dirvish'
-Plug 'kristijanhusak/vim-dirvish-git'
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
@@ -14,6 +16,7 @@ Plug 'tpope/vim-commentary'
 Plug 'matze/vim-move'
 Plug 'danilamihailov/beacon.nvim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'Yggdroot/indentLine'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -21,9 +24,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
-" Themes
 Plug 'morhetz/gruvbox'
-Plug 'hardcoreplayers/oceanic-material'
+Plug 'ayu-theme/ayu-vim'
 
 call plug#end()
 " }}}
@@ -37,9 +39,6 @@ call plug#end()
 
   " Use mouse
   set mouse=a
-
-  " Disable messages
-  set shortmess=F
 
   " No backup files
   set nobackup
@@ -103,8 +102,7 @@ call plug#end()
 
   " Highlight tailing whitespace
   " See issue: https://github.com/Integralist/ProVim/issues/4
-  set list
-  set listchars=tab:\ \ ,trail:·
+  set list listchars=tab:·\ ,trail:·
 
   " Get rid of the delay when pressing O (for example)
   " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
@@ -128,10 +126,6 @@ call plug#end()
   " Autoload files that have changed outside of vim
   set autoread
 
-  " Use system clipboard
-  " http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
-  set clipboard+=unnamed
-
   " Better splits (new windows appear below and to the right)
   set splitbelow
   set splitright
@@ -148,8 +142,48 @@ call plug#end()
   set colorcolumn=80
 " " }}}
 
+" Mappings {{{
+  nnoremap <Space> <Nop>
+  let mapleader = "\<Space>"
+
+  " moving up and down the right way
+  nnoremap <silent> j gj
+  nnoremap <silent> k gk
+  nnoremap <silent> ^ g^
+  nnoremap <silent> $ g$
+
+  " remove arrow keys mappings
+  for key in ['<Up>', '<Down>', '<Left>', '<Right>']
+    exec 'noremap' key '<Nop>'
+    exec 'inoremap' key '<Nop>'
+    exec 'cnoremap' key '<Nop>'
+  endfor
+
+  " keep visual selection when indenting
+  vmap < <gv
+  vmap > >gv
+
+  " neovim terminal
+  if has('nvim')
+    au TermOpen * tnoremap <Esc> <C-\><C-n>
+    au FileType fzf tunmap <Esc>
+    nnoremap <Leader>c :tabnew +terminal<CR>
+    tnoremap <Leader>c <C-\><C-n>:tabnew +terminal<CR>
+
+    autocmd BufWinEnter,WinEnter term://* startinsert
+    autocmd BufLeave term://* stopinsert
+  endif
+" }}}
+
 " {{{ Plugin settings
-  " Coc {{{
+  " nerdtree {{{
+    let g:NERDTreeWinPos = "left"
+    let g:NERDTreeWinSize = 28
+
+    map <leader>n :NERDTreeToggle<CR>
+  " }}}
+
+  " coc {{{
     let g:coc_global_extensions = [
       \ 'coc-json',
       \ 'coc-tsserver',
@@ -174,7 +208,33 @@ call plug#end()
       endif
     endfunction
 
+    " use <tab> for trigger completion and navigate to the next complete item
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+
+    nmap <silent> gd          <Plug>(coc-definition)
+    nmap <silent> gi          <Plug>(coc-implementation)
+    nmap <silent> gr          <Plug>(coc-references)
+    nmap <Leader>rn           <Plug>(coc-rename)
+
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+    inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+    inoremap <silent><expr> <c-space> coc#refresh()
+    inoremap <silent><expr> <NUL> coc#refresh()
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
     autocmd CursorHold * silent call CocActionAsync('highlight')
+  " }}}
+
+  " lightline {{{
+    let g:lightline = {}
+    let g:lightline.colorscheme = 'ayu_mirage'
   " }}}
 
   " Prettier {{{
@@ -182,14 +242,49 @@ call plug#end()
     let g:prettier#config#trailing_comma = "none"
     let g:prettier#autoformat = 0
 
+    nmap <Leader>p <Plug>(Prettier)
+
     autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
   " }}}
 
-  " incsearch
-  let g:incsearch#auto_nohlsearch = 1
+  " incsearch {{{
+    let g:incsearch#auto_nohlsearch = 1
 
-  " fzf
-  let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Todo', 'border': 'rounded' } }
+    map /  <Plug>(incsearch-forward)
+    map ?  <Plug>(incsearch-backward)
+    map g/ <Plug>(incsearch-stay)
+    map n  <Plug>(incsearch-nohl-n)
+    map N  <Plug>(incsearch-nohl-N)
+    map *  <Plug>(incsearch-nohl-*)
+    map #  <Plug>(incsearch-nohl-#)
+    map g* <Plug>(incsearch-nohl-g*)
+    map g# <Plug>(incsearch-nohl-g#)
+  " }}}
+
+  " fzf {{{
+    let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Todo', 'border': 'rounded' } }
+
+    function! FzfOmniFiles()
+      if fugitive#head() != ''
+        :GitFiles
+      else
+        :Files
+      endif
+    endfunction
+
+    nnoremap <C-p> :call FzfOmniFiles()<CR>
+    nnoremap <leader>fi       :Files<CR>
+    nnoremap <leader>C        :Colors<CR>
+    nnoremap <leader><CR>     :Buffers<CR>
+    nnoremap <leader>fl       :Lines<CR>
+    nnoremap <leader>m        :History<CR>
+  " }}}
+
+  " indentLine {{{
+    let g:indentLine_enabled = 0 " disable vertical lines
+    let g:indentLine_leadingSpaceEnabled = 1 " enable leading spaces
+    let g:indentLine_leadingSpaceChar = '·'
+  " }}}
 
   " multilinecursor {{{
     let g:multi_cursor_use_default_mapping = 0
@@ -203,115 +298,20 @@ call plug#end()
     let g:multi_cursor_quit_key            = '<Esc>'
   " }}}
 
-  " ctrlspace
-  let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+  " ctrlspace {{{
+    let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 
-  " vim-rooter
-  let g:rooter_silent_chdir = 1
-  let g:rooter_change_directory_for_non_project_files = 'current'
-" }}}
+    nnoremap <leader>t :CtrlSpace l<CR>
+  " }}}
 
-" Mappings {{{
-  let mapleader = "\<Space>"
+  " vim-commentary {{{
+    map <C-_> <Plug>Commentary<CR>
+  " }}}
 
-  " ******
-  " general
-  " ******
-  " moving up and down the right way
-  nnoremap <silent> j gj
-  nnoremap <silent> k gk
-  nnoremap <silent> ^ g^
-  nnoremap <silent> $ g$
-
-  " remove arrow keys mappings
-  for key in ['<Up>', '<Down>', '<Left>', '<Right>']
-    exec 'noremap' key '<Nop>'
-    exec 'inoremap' key '<Nop>'
-    exec 'cnoremap' key '<Nop>'
-  endfor
-
-  " keep visual selection when indenting
-  vmap < <gv
-  vmap > >gv
-
-  if has('nvim')
-    au TermOpen * tnoremap <Esc> <C-\><C-n>
-    au FileType fzf tunmap <Esc>
-    nnoremap <C-b>c :tabnew +terminal<CR>
-    tnoremap <C-b>c <C-\><C-n>:tabnew +terminal<CR>
-
-    autocmd BufWinEnter,WinEnter term://* startinsert
-    autocmd BufLeave term://* stopinsert
-  endif
-
-  " ******
-  " coc
-  " ******
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
-  nmap <Leader>rn <Plug>(coc-rename)
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-  " use <tab> for trigger completion and navigate to the next complete item
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
-
-  inoremap <silent><expr> <Tab>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<Tab>" :
-    \ coc#refresh()
-
-  " use <c-space>for trigger completion
-  inoremap <silent><expr> <c-space> coc#refresh()
-  inoremap <silent><expr> <NUL> coc#refresh()
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-  " ******
-  " fzf
-  " ******
-  function! FzfOmniFiles()
-    if fugitive#head() != ''
-      :GitFiles
-    else
-      :Files
-    endif
-  endfunction
-
-  nnoremap <C-p> :call FzfOmniFiles()<CR>
-  nnoremap <leader>fi       :Files<CR>
-  nnoremap <leader>C        :Colors<CR>
-  nnoremap <leader><CR>     :Buffers<CR>
-  nnoremap <leader>fl       :Lines<CR>
-  nnoremap <leader>m        :History<CR>
-
-  " ******
-  " ctrlspace
-  " ******
-  nnoremap <leader>t :CtrlSpace l<CR>
-
-  " ******
-  " commentary
-  " ******
-  map <C-_> <Plug>Commentary<CR>
-
-  " ******
-  " incsearch
-  " ******
-  map n  <Plug>(incsearch-nohl-n)
-  map N  <Plug>(incsearch-nohl-N)
-  map *  <Plug>(incsearch-nohl-*)
-  map #  <Plug>(incsearch-nohl-#)
-  map g* <Plug>(incsearch-nohl-g*)
-  map g# <Plug>(incsearch-nohl-g#)
-
-  " ******
-  " prettier
-  " ******
-  nmap <Leader>p <Plug>(Prettier)
+  " vim-rooter {{{
+    let g:rooter_silent_chdir = 1
+    let g:rooter_change_directory_for_non_project_files = 'current'
+  " }}}
 " }}}
 
 " {{{ Autocommands
@@ -329,6 +329,8 @@ call plug#end()
 
 " {{{ Theme
   set background=dark
-  colorscheme gruvbox
+  let ayucolor="mirage"
+  colorscheme ayu
+
   hi EndOfBuffer guifg=bg
 " }}}

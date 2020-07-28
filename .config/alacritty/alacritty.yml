@@ -1,4 +1,5 @@
 window:
+  decorations: full
   dimensions:
     columns: 120
     lines: 30
@@ -42,8 +43,6 @@ colors:
     white:   '#ebdbb2'
 
 background_opacity: 0.95
-
-dynamic_title: true
 
 cursor:
   style: Beam
