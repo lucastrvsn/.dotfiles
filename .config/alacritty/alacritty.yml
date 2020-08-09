@@ -2,7 +2,7 @@ window:
   decorations: full
   dimensions:
     columns: 120
-    lines: 30
+    lines: 32
   padding:
     x: 0
     y: 0
@@ -11,12 +11,6 @@ font:
   normal:
     family: JetBrains Mono
     style: Regular
-  bold:
-    family: JetBrains Mono
-  italic:
-    family: JetBrains Mono
-  bold_italic:
-    family: JetBrains Mono
   size: 12.0
 
 colors:

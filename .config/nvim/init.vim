@@ -1,31 +1,32 @@
+" my personal neovim config file
 " github.com/lucastrvsn
 
-" {{{ Plugins
+" Plugins {{{
 call plug#begin()
 
-Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-rooter'
-Plug 'tpope/vim-surround'
-Plug 'mhinz/vim-signify'
-Plug 'haya14busa/incsearch.vim'
-Plug 'andymass/vim-matchup'
-Plug 'tpope/vim-commentary'
-Plug 'matze/vim-move'
-Plug 'danilamihailov/beacon.nvim'
-Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'Yggdroot/indentLine'
-Plug 'terryma/vim-multiple-cursors'
+Plug 'airblade/vim-rooter'
+Plug 'andymass/vim-matchup'
+Plug 'danilamihailov/beacon.nvim'
+Plug 'haya14busa/is.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'matze/vim-move'
+Plug 'mhinz/vim-signify'
+Plug 'neovim/nvim-lsp'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete-lsp'
+" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'sheerun/vim-polyglot'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tyru/caw.vim'
+Plug 'vim-airline/vim-airline'
 
-Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
+Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 " }}}
@@ -40,14 +41,19 @@ call plug#end()
   " Use mouse
   set mouse=a
 
-  " No backup files
+  " Increase history
+  set history=10000
+
+  " No backup
   set nobackup
-
-  " No write backup
   set nowritebackup
-
-  " No swap file
   set noswapfile
+
+  " Undo stuff (send all undo files to /tmp)
+  set undodir=/tmp//,.
+  set undofile
+  set undolevels=1000
+  set undoreload=10000
 
   " Change update time
   set updatetime=100
@@ -58,6 +64,13 @@ call plug#end()
   " Reduce vim messages
   set showcmd
   set ruler
+  set shortmess=atOI
+
+  " Scroll offset
+  set scrolloff=4
+
+  " Hide mouse cursor when typing
+  set mousehide
 
   " Incremental searching (search as you type)
   set incsearch
@@ -82,14 +95,17 @@ call plug#end()
   " Allow backspace to delete end of line, indent and start of line characters
   set backspace=indent,eol,start
 
+  " Display much as possible on lastline
+  set display=lastline
+
   " Convert tabs to spaces
   set expandtab
   set smarttab
 
-  " Set tab size in spaces (this is for manual indenting)
+  " Set tab size in spaces (manual indenting)
   set tabstop=2
 
-  " The number of spaces inserted for a tab (used for auto indenting)
+  " The number of spaces inserted for a tab (auto indenting)
   set softtabstop=2
   set shiftwidth=2
 
@@ -99,9 +115,10 @@ call plug#end()
 
   " Improve terminal colors
   set termguicolors
+  set t_Co=256
 
   " Highlight tailing whitespace
-  " See issue: https://github.com/Integralist/ProVim/issues/4
+  " See: https://github.com/Integralist/ProVim/issues/4
   set list listchars=tab:·\ ,trail:·
 
   " Get rid of the delay when pressing O (for example)
@@ -113,6 +130,7 @@ call plug#end()
   " Always show status bar
   set laststatus=2
   set showtabline=0
+  set noshowmode
 
   " Set wildmenu
   set wildmenu
@@ -122,6 +140,7 @@ call plug#end()
   " UTF encoding
   set encoding=utf-8
   set fileencoding=utf-8
+  set termencoding=utf-8
 
   " Autoload files that have changed outside of vim
   set autoread
@@ -140,10 +159,12 @@ call plug#end()
   " Always highlight column 80 so it's easier to see where
   " cutoff appears on longer screens
   set colorcolumn=80
-" " }}}
+
+  " Fix some scroll issues with tmux
+  set t_ut=
+" }}}
 
 " Mappings {{{
-  nnoremap <Space> <Nop>
   let mapleader = "\<Space>"
 
   " moving up and down the right way
@@ -160,105 +181,87 @@ call plug#end()
   endfor
 
   " keep visual selection when indenting
-  vmap < <gv
-  vmap > >gv
+  vmap <silent> < <gv
+  vmap <silent> > >gv
 
   " neovim terminal
   if has('nvim')
     au TermOpen * tnoremap <Esc> <C-\><C-n>
     au FileType fzf tunmap <Esc>
-    nnoremap <Leader>c :tabnew +terminal<CR>
-    tnoremap <Leader>c <C-\><C-n>:tabnew +terminal<CR>
+    nnoremap <leader>c :tabnew +terminal<CR>
+    tnoremap <leader>c <C-\><C-n>:tabnew +terminal<CR>
 
     autocmd BufWinEnter,WinEnter term://* startinsert
     autocmd BufLeave term://* stopinsert
   endif
 " }}}
 
-" {{{ Plugin settings
-  " nerdtree {{{
-    let g:NERDTreeWinPos = "left"
-    let g:NERDTreeWinSize = 28
-
-    map <leader>n :NERDTreeToggle<CR>
-  " }}}
-
+" Plugin settings {{{
   " coc {{{
-    let g:coc_global_extensions = [
-      \ 'coc-json',
-      \ 'coc-tsserver',
-      \ 'coc-html',
-      \ 'coc-css',
-      \ 'coc-cssmodules',
-      \ 'coc-browser',
-      \ 'coc-highlight',
-      \ 'coc-git',
-      \ 'coc-markdownlint',
-      \ 'coc-pairs',
-      \ 'coc-rls',
-      \ 'coc-yaml',
-      \ 'coc-yank'
-    \]
+    " let g:coc_global_extensions = [
+    "  \ 'coc-browser',
+    "  \ 'coc-css',
+    "  \ 'coc-cssmodules',
+    "  \ 'coc-explorer',
+    "  \ 'coc-git',
+    "  \ 'coc-highlight',
+    "  \ 'coc-html',
+    "  \ 'coc-json',
+    "  \ 'coc-markdownlint',
+    "  \ 'coc-pairs',
+    "  \ 'coc-rls',
+    "  \ 'coc-tsserver',
+    "  \ 'coc-yaml',
+    "  \ 'coc-yank'
+    "\]
+    " 
+    " function! s:show_documentation()
+    "   if (index(['vim', 'help'], &filetype) >= 0)
+    "     execute 'h ' . expand('<cword>')
+    "   else
+    "     call CocAction('doHover')
+    "   endif
+    " endfunction
+    " 
+    " " use <tab> for trigger completion and navigate to the next complete item
+    " function! s:check_back_space() abort
+    "   let col = col('.') - 1
+    "   return !col || getline('.')[col - 1]  =~ '\s'
+    " endfunction
+    " 
+    " nmap <silent> gd          <Plug>(coc-definition)
+    " nmap <silent> gi          <Plug>(coc-implementation)
+    " nmap <silent> gr          <Plug>(coc-references)
+    " 
+    " nnoremap <silent> K :call <SID>show_documentation()<CR>
+    " inoremap <silent><expr> <Tab>
+    "  \ pumvisible() ? "\<C-n>" :
+    "  \ <SID>check_back_space() ? "\<Tab>" :
+    "  \ coc#refresh()
+    " inoremap <silent><expr> <c-space> coc#refresh()
+    " inoremap <silent><expr> <NUL> coc#refresh()
+    " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    " 
+    " " use coc-explorer to browse through files
+    " nmap <leader>e :CocCommand explorer --position floating --focus --quit-on-open<CR>
+    " 
+    " autocmd CursorHold * silent call CocActionAsync('highlight')
+       r
 
-    function! s:show_documentation()
-      if (index(['vim', 'help'], &filetype) >= 0)
-        execute 'h ' . expand('<cword>')
-      else
-        call CocAction('doHover')
-      endif
-    endfunction
 
-    " use <tab> for trigger completion and navigate to the next complete item
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction
-
-    nmap <silent> gd          <Plug>(coc-definition)
-    nmap <silent> gi          <Plug>(coc-implementation)
-    nmap <silent> gr          <Plug>(coc-references)
-    nmap <Leader>rn           <Plug>(coc-rename)
-
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
-    inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-    inoremap <silent><expr> <c-space> coc#refresh()
-    inoremap <silent><expr> <NUL> coc#refresh()
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-  " }}}
-
-  " lightline {{{
-    let g:lightline = {}
-    let g:lightline.colorscheme = 'ayu_mirage'
+  " deoplete.nvim {{{
+    let g:deoplete#enable_at_startup = 1
   " }}}
 
   " Prettier {{{
-    let g:prettier#config#single_quote = "true"
-    let g:prettier#config#trailing_comma = "none"
+    let g:prettier#config#single_quote = 'true'
+    let g:prettier#config#trailing_comma = 'none'
     let g:prettier#autoformat = 0
 
-    nmap <Leader>p <Plug>(Prettier)
+    nmap <leader>p <Plug>(Prettier)
 
     autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
-  " }}}
-
-  " incsearch {{{
-    let g:incsearch#auto_nohlsearch = 1
-
-    map /  <Plug>(incsearch-forward)
-    map ?  <Plug>(incsearch-backward)
-    map g/ <Plug>(incsearch-stay)
-    map n  <Plug>(incsearch-nohl-n)
-    map N  <Plug>(incsearch-nohl-N)
-    map *  <Plug>(incsearch-nohl-*)
-    map #  <Plug>(incsearch-nohl-#)
-    map g* <Plug>(incsearch-nohl-g*)
-    map g# <Plug>(incsearch-nohl-g#)
   " }}}
 
   " fzf {{{
@@ -273,9 +276,10 @@ call plug#end()
     endfunction
 
     nnoremap <C-p> :call FzfOmniFiles()<CR>
+    nnoremap <leader>w        :Windows<CR>
+    nnoremap <leader>b        :Buffers<CR>
     nnoremap <leader>fi       :Files<CR>
     nnoremap <leader>C        :Colors<CR>
-    nnoremap <leader><CR>     :Buffers<CR>
     nnoremap <leader>fl       :Lines<CR>
     nnoremap <leader>m        :History<CR>
   " }}}
@@ -299,7 +303,7 @@ call plug#end()
   " }}}
 
   " ctrlspace {{{
-    let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+    let g:CtrlSpaceDefaultMappingKey = '<C-space> '
 
     nnoremap <leader>t :CtrlSpace l<CR>
   " }}}
@@ -320,17 +324,13 @@ call plug#end()
   " inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
     \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
+    \   exe "normal g`\'" |
     \ endif
-
-  " Scroll offset on current window
-  autocmd VimEnter,WinEnter * let &scrolloff = winheight(0) / 4
 " }}}
 
 " {{{ Theme
   set background=dark
-  let ayucolor="mirage"
-  colorscheme ayu
+  colorscheme gruvbox-material
 
   hi EndOfBuffer guifg=bg
 " }}}

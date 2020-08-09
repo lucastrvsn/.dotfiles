@@ -1,33 +1,28 @@
-# Load plugins
+# antigen {{{
 source $HOME/.antigen.zsh
 
 antigen use oh-my-zsh
-
-antigen bundle asdf
-antigen bundle git
-antigen bundle archlinux
-antigen bundle cargo
-antigen bundle docker-compose
-antigen bundle docker
-antigen bundle emoji
-antigen bundle node
-antigen bundle npm
-antigen bundle npx
-antigen bundle rust
-antigen bundle yarn
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
-
-# Load spaceship theme
+antigen bundle zsh-users/zsh-completions
+antigen bundle b4b4r07/enhancd
+antigen bundle b4b4r07/emoji-cli
+antigen bundle asdf
+antigen bundle git
+antigen bundle node
+antigen bundle npm
+antigen bundle yarn
+antigen bundle tmux
 antigen theme denysdovhan/spaceship-prompt
 
-# Apply all plugins and theme
 antigen apply
+# }}}
 
-# default configs
+# zsh config
 EDITOR="nvim"
+CASE_SENSITIVE="false"
 
-# spaceship configs
+# spaceship config
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_CHAR_SYMBOL="$ "
 SPACESHIP_USER_SHOW=always
@@ -38,8 +33,3 @@ alias vim=nvim
 alias vi=nvim
 alias v=nvim
 
-# changing ls to exa
-alias ls="exa -al --color=always --group-directories-first"
-alias la="exa -a --color=always --group-directories-first"
-alias ll="exa -l --color=always --group-directories-first"
-alias lt="exa -aT --color=always --group-directories-first"
