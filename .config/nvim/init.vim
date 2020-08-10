@@ -13,15 +13,12 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'matze/vim-move'
 Plug 'mhinz/vim-signify'
-Plug 'neovim/nvim-lsp'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/deoplete-lsp'
-" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'sheerun/vim-polyglot'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 Plug 'tyru/caw.vim'
 Plug 'vim-airline/vim-airline'
 
@@ -162,6 +159,11 @@ call plug#end()
 
   " Fix some scroll issues with tmux
   set t_ut=
+
+  " Theme settings
+  set background=dark
+  colorscheme gruvbox-material
+  hi EndOfBuffer guifg=bg
 " }}}
 
 " Mappings {{{
@@ -198,57 +200,53 @@ call plug#end()
 
 " Plugin settings {{{
   " coc {{{
-    " let g:coc_global_extensions = [
-    "  \ 'coc-browser',
-    "  \ 'coc-css',
-    "  \ 'coc-cssmodules',
-    "  \ 'coc-explorer',
-    "  \ 'coc-git',
-    "  \ 'coc-highlight',
-    "  \ 'coc-html',
-    "  \ 'coc-json',
-    "  \ 'coc-markdownlint',
-    "  \ 'coc-pairs',
-    "  \ 'coc-rls',
-    "  \ 'coc-tsserver',
-    "  \ 'coc-yaml',
-    "  \ 'coc-yank'
-    "\]
-    " 
-    " function! s:show_documentation()
-    "   if (index(['vim', 'help'], &filetype) >= 0)
-    "     execute 'h ' . expand('<cword>')
-    "   else
-    "     call CocAction('doHover')
-    "   endif
-    " endfunction
-    " 
-    " " use <tab> for trigger completion and navigate to the next complete item
-    " function! s:check_back_space() abort
-    "   let col = col('.') - 1
-    "   return !col || getline('.')[col - 1]  =~ '\s'
-    " endfunction
-    " 
-    " nmap <silent> gd          <Plug>(coc-definition)
-    " nmap <silent> gi          <Plug>(coc-implementation)
-    " nmap <silent> gr          <Plug>(coc-references)
-    " 
-    " nnoremap <silent> K :call <SID>show_documentation()<CR>
-    " inoremap <silent><expr> <Tab>
-    "  \ pumvisible() ? "\<C-n>" :
-    "  \ <SID>check_back_space() ? "\<Tab>" :
-    "  \ coc#refresh()
-    " inoremap <silent><expr> <c-space> coc#refresh()
-    " inoremap <silent><expr> <NUL> coc#refresh()
-    " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    " 
-    " " use coc-explorer to browse through files
-    " nmap <leader>e :CocCommand explorer --position floating --focus --quit-on-open<CR>
-    " 
-    " autocmd CursorHold * silent call CocActionAsync('highlight')
-       r
+    let g:coc_global_extensions = [
+     \ 'coc-css',
+     \ 'coc-cssmodules',
+     \ 'coc-explorer',
+     \ 'coc-highlight',
+     \ 'coc-html',
+     \ 'coc-json',
+     \ 'coc-markdownlint',
+     \ 'coc-pairs',
+     \ 'coc-rls',
+     \ 'coc-tsserver',
+     \ 'coc-yaml'
+    \]
 
+    function! s:show_documentation()
+      if (index(['vim', 'help'], &filetype) >= 0)
+        execute 'h ' . expand('<cword>')
+      else
+        call CocAction('doHover')
+      endif
+    endfunction
+
+    " use <tab> for trigger completion and navigate to the next complete item
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+
+    nmap <silent> gd          <Plug>(coc-definition)
+    nmap <silent> gi          <Plug>(coc-implementation)
+    nmap <silent> gr          <Plug>(coc-references)
+
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+    inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+    inoremap <silent><expr> <c-space> coc#refresh()
+    inoremap <silent><expr> <NUL> coc#refresh()
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+    " use coc-explorer to browse through files
+    nmap <leader>e :CocCommand explorer --position floating --focus --quit-on-open<CR>
+
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+  " }}}
 
   " deoplete.nvim {{{
     let g:deoplete#enable_at_startup = 1
@@ -275,41 +273,16 @@ call plug#end()
       endif
     endfunction
 
-    nnoremap <C-p> :call FzfOmniFiles()<CR>
-    nnoremap <leader>w        :Windows<CR>
-    nnoremap <leader>b        :Buffers<CR>
-    nnoremap <leader>fi       :Files<CR>
-    nnoremap <leader>C        :Colors<CR>
-    nnoremap <leader>fl       :Lines<CR>
-    nnoremap <leader>m        :History<CR>
+    nnoremap <C-p>     :call FzfOmniFiles()<CR>
+    nnoremap <leader>w :Windows<CR>
+    nnoremap <leader>b :Buffers<CR>
+    nnoremap <leader>m :History<CR>
   " }}}
 
   " indentLine {{{
     let g:indentLine_enabled = 0 " disable vertical lines
     let g:indentLine_leadingSpaceEnabled = 1 " enable leading spaces
     let g:indentLine_leadingSpaceChar = '·'
-  " }}}
-
-  " multilinecursor {{{
-    let g:multi_cursor_use_default_mapping = 0
-    let g:multi_cursor_start_word_key      = 'gb'
-    let g:multi_cursor_select_all_word_key = '<A-n>'
-    let g:multi_cursor_start_key           = 'g<C-n>'
-    let g:multi_cursor_select_all_key      = 'g<A-n>'
-    let g:multi_cursor_next_key            = 'gb'
-    let g:multi_cursor_prev_key            = '<C-p>'
-    let g:multi_cursor_skip_key            = '<C-x>'
-    let g:multi_cursor_quit_key            = '<Esc>'
-  " }}}
-
-  " ctrlspace {{{
-    let g:CtrlSpaceDefaultMappingKey = '<C-space> '
-
-    nnoremap <leader>t :CtrlSpace l<CR>
-  " }}}
-
-  " vim-commentary {{{
-    map <C-_> <Plug>Commentary<CR>
   " }}}
 
   " vim-rooter {{{
@@ -326,11 +299,4 @@ call plug#end()
     \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\'" |
     \ endif
-" }}}
-
-" {{{ Theme
-  set background=dark
-  colorscheme gruvbox-material
-
-  hi EndOfBuffer guifg=bg
 " }}}
