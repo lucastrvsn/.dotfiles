@@ -1,84 +1,103 @@
 " my personal neovim config file
 " github.com/lucastrvsn
 
-" Plugins {{{
-call plug#begin()
-
-Plug 'Yggdroot/indentLine'
-Plug 'airblade/vim-rooter'
-Plug 'andymass/vim-matchup'
-Plug 'danilamihailov/beacon.nvim'
-Plug 'haya14busa/is.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'matze/vim-move'
-Plug 'mhinz/vim-signify'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
-Plug 'tyru/caw.vim'
-Plug 'vim-airline/vim-airline'
-
-Plug 'ayu-theme/ayu-vim'
-Plug 'sainnhe/gruvbox-material'
-
-call plug#end()
+" plugins {{{
+try
+  call plug#begin()
+  " style
+  Plug 'sainnhe/sonokai'
+  Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+  " completion
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
+  Plug 'neovim/nvim-lsp'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete-lsp'
+  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+  " languages
+  Plug 'sheerun/vim-polyglot'
+  " misc
+  Plug 'justinmk/vim-dirvish'
+  Plug 'kristijanhusak/vim-dirvish-git'
+  Plug 'editorconfig/editorconfig-vim'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'psliwka/vim-smoothie'
+  Plug 'camspiers/animate.vim'
+  Plug 'farmergreg/vim-lastplace'
+  Plug 'vim-test/vim-test'
+  Plug 'airblade/vim-rooter'
+  Plug 'andymass/vim-matchup'
+  Plug 'haya14busa/is.vim'
+  Plug 'matze/vim-move'
+  Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
+  Plug 'mhinz/vim-signify'
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-surround'
+  Plug 'tyru/caw.vim'
+  Plug 'yggdroot/indentline'
+  call plug#end()
+catch
+  echom 'vim-plug not installed'
+endtry
 " }}}
 
-" General {{{
-  " Switch syntax highlighting on, when the terminal has colors
+lua << EOF
+  local nvim_lsp = require'nvim_lsp'
+  nvim_lsp.tsserver.setup{}
+EOF
+
+" general {{{
+  " switch syntax highlighting on, when the terminal has colors
   syntax on
 
-  " Use vim, not vi api
+  " use vim, not vi api
   set nocompatible
 
-  " Use mouse
+  " use mouse
   set mouse=a
 
-  " Increase history
+  " increase history
   set history=10000
 
-  " No backup
+  " no backup
   set nobackup
   set nowritebackup
   set noswapfile
 
-  " Undo stuff (send all undo files to /tmp)
+  " undo stuff (send all undo files to /tmp)
   set undodir=/tmp//,.
   set undofile
   set undolevels=1000
   set undoreload=10000
 
-  " Change update time
+  " change update time
   set updatetime=100
 
-  " Set magic by default
+  " set magic by default
   set magic
 
-  " Reduce vim messages
+  " set terminal title
+  set title
+
+  " reduce vim messages
   set showcmd
   set ruler
   set shortmess=atOI
 
-  " Scroll offset
+  " scroll offset
   set scrolloff=4
 
-  " Hide mouse cursor when typing
-  set mousehide
-
-  " Incremental searching (search as you type)
+  " incremental searching (search as you type)
   set incsearch
 
-  " Highlight search matches
+  " highlight search matches
   set hlsearch
 
-  " Ignore case in search
+  " ignore case in search
   set smartcase
 
-  " Make sure any searches /searchPhrase doesn't need the \c escape character
+  " make sure any searches /searchPhrase doesn't need the \c escape character
   set ignorecase
 
   " A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
@@ -86,105 +105,145 @@ call plug#end()
   " E162: No write since last change for buffer “a.txt”
   set hidden
 
-  " Turn word wrap off
+  " turn word wrap off
   set nowrap
 
-  " Allow backspace to delete end of line, indent and start of line characters
+  " allow backspace to delete end of line, indent and start of line characters
   set backspace=indent,eol,start
 
-  " Display much as possible on lastline
+  " display much as possible on lastline
   set display=lastline
 
-  " Convert tabs to spaces
+  " convert tabs to spaces
   set expandtab
   set smarttab
 
-  " Set tab size in spaces (manual indenting)
+  " set tab size in spaces (manual indenting)
   set tabstop=2
 
-  " The number of spaces inserted for a tab (auto indenting)
+  " the number of spaces inserted for a tab (auto indenting)
   set softtabstop=2
   set shiftwidth=2
 
-  " Turn on line numbers
+  " turn on line numbers
   set number
   set relativenumber
 
-  " Improve terminal colors
+  " improve terminal colors
   set termguicolors
   set t_Co=256
 
-  " Highlight tailing whitespace
-  " See: https://github.com/Integralist/ProVim/issues/4
+  " highlight tailing whitespace
+  " https://github.com/Integralist/ProVim/issues/4
   set list listchars=tab:·\ ,trail:·
 
-  " Get rid of the delay when pressing O (for example)
+  " get rid of the delay when pressing O (for example)
   " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
   set timeout
   set timeoutlen=1000
   set ttimeoutlen=100
 
-  " Always show status bar
-  set laststatus=2
+  " always show status bar
   set showtabline=0
   set noshowmode
 
-  " Set wildmenu
+  " statusline
+  let g:current_mode = {
+    \ 'n': 'normal',
+    \ 'v': 'visual',
+    \ 'V': 'vline',
+    \ "\<C-V>": 'vblock',
+    \ 'i': 'insert',
+    \ 'R': 'replace',
+    \ 'Rv': 'vreplace',
+    \ 'c': 'command',
+    \ 't': 'terminal',
+  \}
+
+  function! CurrentMode() abort
+    let l:current = mode()
+    return get(g:current_mode, l:current, l:current)
+  endfunction
+
+  set laststatus=2
+  set statusline= " left side
+  set statusline+=%#ToolbarLine#
+  set statusline+=\ %{CurrentMode()}\ %*
+  set statusline+=%{&modified?'\ •':''}
+  set statusline+=\ [%n%H%R%W]%*\ 
+  set statusline+=%f
+  set statusline+=%= " right side
+  set statusline+=%#Statement#%{fugitive#head()}%*\ 
+  set statusline+=%l/%L\ %p%%\ 
+
+  " set wildmenu
+  set path+=**
   set wildmenu
   set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store,**/node_modules/**
-  set path+=**
 
   " UTF encoding
   set encoding=utf-8
   set fileencoding=utf-8
   set termencoding=utf-8
 
-  " Autoload files that have changed outside of vim
+  " autoload files that have changed outside of vim
   set autoread
 
-  " Better splits (new windows appear below and to the right)
+  " better splits (new windows appear below and to the right)
   set splitbelow
   set splitright
 
-  " Ensure Vim doesn't beep at you every time you make a mistype
+  " ensure Vim doesn't beep at you every time you make a mistype
   set visualbell
   set noerrorbells
 
   " highlight a matching [{()}] when cursor is placed on start/end character
   set showmatch
 
-  " Always highlight column 80 so it's easier to see where
+  " always highlight column 80 so it's easier to see where
   " cutoff appears on longer screens
   set colorcolumn=80
 
-  " Fix some scroll issues with tmux
-  set t_ut=
+  " cursor line
+  set cursorline
 
-  " Theme settings
-  set background=dark
-  colorscheme gruvbox-material
-  hi EndOfBuffer guifg=bg
+  " tmux
+  if exists('$TMUX')
+    " fix some scroll issues
+    set t_ut=
+  endif
 " }}}
 
-" Mappings {{{
+" colorscheme {{{
+  set background=dark
+  colorscheme challenger_deep
+" }}}
+
+" mappings {{{
   let mapleader = "\<Space>"
 
   " moving up and down the right way
-  nnoremap <silent> j gj
-  nnoremap <silent> k gk
-  nnoremap <silent> ^ g^
-  nnoremap <silent> $ g$
+  nnoremap <silent>j gj
+  nnoremap <silent>k gk
+  nnoremap <silent>^ g^
+  nnoremap <silent>$ g$
 
   " remove arrow keys mappings
   for key in ['<Up>', '<Down>', '<Left>', '<Right>']
     exec 'noremap' key '<Nop>'
     exec 'inoremap' key '<Nop>'
-    exec 'cnoremap' key '<Nop>'
   endfor
 
   " keep visual selection when indenting
   vmap <silent> < <gv
   vmap <silent> > >gv
+
+  " deal with clipboard
+  nnoremap <leader>y "+y
+  vnoremap <leader>y "+y
+  nnoremap <leader>p "+p
+  vnoremap <leader>p "+p
+  nnoremap <leader>P "+P
 
   " neovim terminal
   if has('nvim')
@@ -198,73 +257,96 @@ call plug#end()
   endif
 " }}}
 
-" Plugin settings {{{
+" plugin settings {{{
   " coc {{{
-    let g:coc_global_extensions = [
-     \ 'coc-css',
-     \ 'coc-cssmodules',
-     \ 'coc-explorer',
-     \ 'coc-highlight',
-     \ 'coc-html',
-     \ 'coc-json',
-     \ 'coc-markdownlint',
-     \ 'coc-pairs',
-     \ 'coc-rls',
-     \ 'coc-tsserver',
-     \ 'coc-yaml'
-    \]
-
-    function! s:show_documentation()
-      if (index(['vim', 'help'], &filetype) >= 0)
-        execute 'h ' . expand('<cword>')
-      else
-        call CocAction('doHover')
-      endif
-    endfunction
-
-    " use <tab> for trigger completion and navigate to the next complete item
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction
-
-    nmap <silent> gd          <Plug>(coc-definition)
-    nmap <silent> gi          <Plug>(coc-implementation)
-    nmap <silent> gr          <Plug>(coc-references)
-
-    nnoremap <silent> K :call <SID>show_documentation()<CR>
-    inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-    inoremap <silent><expr> <c-space> coc#refresh()
-    inoremap <silent><expr> <NUL> coc#refresh()
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-    " use coc-explorer to browse through files
-    nmap <leader>e :CocCommand explorer --position floating --focus --quit-on-open<CR>
-
-    autocmd CursorHold * silent call CocActionAsync('highlight')
+    " let g:coc_global_extensions = [
+    " \ 'coc-css',
+    " \ 'coc-cssmodules',
+    " \ 'coc-explorer',
+    " \ 'coc-highlight',
+    " \ 'coc-html',
+    " \ 'coc-json',
+    " \ 'coc-markdownlint',
+    " \ 'coc-pairs',
+    " \ 'coc-rls',
+    " \ 'coc-tsserver',
+    " \ 'coc-yaml'
+    "\]
+    " 
+    " function! s:show_documentation()
+    "   if (index(['vim', 'help'], &filetype) >= 0)
+    "     execute 'h ' . expand('<cword>')
+    "   else
+    "     call CocAction('doHover')
+    "   endif
+    " endfunction
+    " 
+    " " use <tab> for trigger completion and navigate to the next complete item
+    " function! s:check_back_space() abort
+    "   let col = col('.') - 1
+    "   return !col || getline('.')[col - 1]  =~ '\s'
+    " endfunction
+    " 
+    " nmap <silent> gd          <Plug>(coc-definition)
+    " nmap <silent> gi          <Plug>(coc-implementation)
+    " nmap <silent> gr          <Plug>(coc-references)
+    " 
+    " nnoremap <silent> K :call <SID>show_documentation()<CR>
+    " inoremap <silent><expr> <Tab>
+    "  \ pumvisible() ? "\<C-n>" :
+    "  \ <SID>check_back_space() ? "\<Tab>" :
+    "  \ coc#refresh()
+    " inoremap <silent><expr> <c-space> coc#refresh()
+    " inoremap <silent><expr> <NUL> coc#refresh()
+    " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    " 
+    " " use coc-explorer to browse through files
+    " nmap <leader>e :CocCommand explorer --width 30 --position left --focus --quit-on-open<CR>
+    " 
+    " autocmd CursorHold * silent call CocActionAsync('highlight')
   " }}}
-
-  " deoplete.nvim {{{
+  
+  " deoplete {{{
     let g:deoplete#enable_at_startup = 1
+
+    call deoplete#custom#option({
+      \ 'smart_case': v:true,
+    \})
+
+    inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
+    inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   " }}}
 
-  " Prettier {{{
+  " dirvish {{{
+    let dirvish_mode = ':sort ,^.*/,'
+    let loaded_netrwPlugin = 1 " disable netrw
+  " }}}
+
+  " prettier {{{
     let g:prettier#config#single_quote = 'true'
     let g:prettier#config#trailing_comma = 'none'
     let g:prettier#autoformat = 0
 
-    nmap <leader>p <Plug>(Prettier)
-
     autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
+  " }}}
+  
+  " vim-test {{{
+    nmap <silent> t<C-n> :TestNearest<CR>
+    nmap <silent> t<C-f> :TestFile<CR>
+    nmap <silent> t<C-s> :TestSuite<CR>
+    nmap <silent> t<C-l> :TestLast<CR>
+    nmap <silent> t<C-g> :TestVisit<CR>
+  " }}}
+  
+  " vim-animate {{{
+    nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
+    nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
+    nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
+    nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
   " }}}
 
   " fzf {{{
-    let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'highlight': 'Todo', 'border': 'rounded' } }
-
     function! FzfOmniFiles()
       if fugitive#head() != ''
         :GitFiles
@@ -273,13 +355,20 @@ call plug#end()
       endif
     endfunction
 
+    let g:fzf_layout = {
+     \ 'window': 'new | wincmd J | resize 1 | call animate#window_percent_height(0.5)'
+    \ }
+
     nnoremap <C-p>     :call FzfOmniFiles()<CR>
     nnoremap <leader>w :Windows<CR>
     nnoremap <leader>b :Buffers<CR>
     nnoremap <leader>m :History<CR>
+
+    autocmd! FileType fzf set laststatus=0 noshowmode noruler
+      \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
   " }}}
 
-  " indentLine {{{
+  " indentline {{{
     let g:indentLine_enabled = 0 " disable vertical lines
     let g:indentLine_leadingSpaceEnabled = 1 " enable leading spaces
     let g:indentLine_leadingSpaceChar = '·'
@@ -291,12 +380,6 @@ call plug#end()
   " }}}
 " }}}
 
-" {{{ Autocommands
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it for commit messages, when the position is invalid, or when
-  " inside an event handler (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\'" |
-    \ endif
+" {{{ autocommands
+" //
 " }}}
