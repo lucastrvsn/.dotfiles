@@ -11,9 +11,10 @@ try
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'neovim/nvim-lsp'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'Shougo/deoplete-lsp'
-  Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'nvim-lua/completion-nvim'
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'Shougo/deoplete-lsp'
+  " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
   " languages
   Plug 'sheerun/vim-polyglot'
   " misc
@@ -83,7 +84,10 @@ EOF
   " reduce vim messages
   set showcmd
   set ruler
-  set shortmess=atOI
+
+  " improve completion
+  set shortmess+=c
+  set completeopt=menuone,noinsert,noselect
 
   " scroll offset
   set scrolloff=4
@@ -258,66 +262,26 @@ EOF
 " }}}
 
 " plugin settings {{{
-  " coc {{{
-    " let g:coc_global_extensions = [
-    " \ 'coc-css',
-    " \ 'coc-cssmodules',
-    " \ 'coc-explorer',
-    " \ 'coc-highlight',
-    " \ 'coc-html',
-    " \ 'coc-json',
-    " \ 'coc-markdownlint',
-    " \ 'coc-pairs',
-    " \ 'coc-rls',
-    " \ 'coc-tsserver',
-    " \ 'coc-yaml'
-    "\]
-    " 
-    " function! s:show_documentation()
-    "   if (index(['vim', 'help'], &filetype) >= 0)
-    "     execute 'h ' . expand('<cword>')
-    "   else
-    "     call CocAction('doHover')
-    "   endif
-    " endfunction
-    " 
-    " " use <tab> for trigger completion and navigate to the next complete item
-    " function! s:check_back_space() abort
-    "   let col = col('.') - 1
-    "   return !col || getline('.')[col - 1]  =~ '\s'
-    " endfunction
-    " 
-    " nmap <silent> gd          <Plug>(coc-definition)
-    " nmap <silent> gi          <Plug>(coc-implementation)
-    " nmap <silent> gr          <Plug>(coc-references)
-    " 
-    " nnoremap <silent> K :call <SID>show_documentation()<CR>
-    " inoremap <silent><expr> <Tab>
-    "  \ pumvisible() ? "\<C-n>" :
-    "  \ <SID>check_back_space() ? "\<Tab>" :
-    "  \ coc#refresh()
-    " inoremap <silent><expr> <c-space> coc#refresh()
-    " inoremap <silent><expr> <NUL> coc#refresh()
-    " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    " 
-    " " use coc-explorer to browse through files
-    " nmap <leader>e :CocCommand explorer --width 30 --position left --focus --quit-on-open<CR>
-    " 
-    " autocmd CursorHold * silent call CocActionAsync('highlight')
-  " }}}
-  
   " deoplete {{{
-    let g:deoplete#enable_at_startup = 1
-
-    call deoplete#custom#option({
-      \ 'smart_case': v:true,
-    \})
-
-    inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
-    inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    " let g:deoplete#enable_at_startup = 1
+    " 
+    " call deoplete#custom#option({
+    "  \ 'smart_case': v:true,
+    "\})
+    " 
+    " inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
+    " inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   " }}}
 
+  " completion-vim {{{
+    " use <Tab> and <S-Tab> to navigate through popup menu
+    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    " manually trigger autocompletion
+    inoremap <silent><expr> <C-Space> completion#trigger_completion()
+
+    autocmd BufEnter * lua require'completion'.on_attach()
+  " }}}
   " dirvish {{{
     let dirvish_mode = ':sort ,^.*/,'
     let loaded_netrwPlugin = 1 " disable netrw
