@@ -12,9 +12,8 @@ try
   Plug 'junegunn/fzf.vim'
   Plug 'neovim/nvim-lsp'
   Plug 'nvim-lua/completion-nvim'
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  " Plug 'Shougo/deoplete-lsp'
-  " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'nvim-lua/diagnostic-nvim'
+  Plug 'nvim-lua/lsp-status.nvim'
   " languages
   Plug 'sheerun/vim-polyglot'
   " misc
@@ -43,10 +42,22 @@ catch
 endtry
 " }}}
 
-lua << EOF
-  local nvim_lsp = require'nvim_lsp'
-  nvim_lsp.tsserver.setup{}
-EOF
+lua << END
+  local lsp = require('nvim_lsp')
+
+  local on_attach = function(client)
+    require('lsp-status').on_attach(client)
+    require('diagnostic').on_attach()
+    require('completion').on_attach({
+      sorter = 'alphabet',
+      matcher = {'exact', 'fuzzy'}
+    })
+  end
+
+  lsp.tsserver.setup({
+    on_attach = on_attach
+  })
+END
 
 " general {{{
   " switch syntax highlighting on, when the terminal has colors
@@ -169,8 +180,16 @@ EOF
     return get(g:current_mode, l:current, l:current)
   endfunction
 
+  function! LspStatusLine() abort
+    if luaeval('#vim.lsp.buf_get_clients() > 0')
+      return luaeval("require('lsp-status').status()")
+    endif
+    return ''
+  endfunction
+
   set laststatus=2
   set statusline= " left side
+  set statusline+=%{LspStatusLine()}
   set statusline+=%#ToolbarLine#
   set statusline+=\ %{CurrentMode()}\ %*
   set statusline+=%{&modified?'\ •':''}
@@ -262,26 +281,33 @@ EOF
 " }}}
 
 " plugin settings {{{
-  " deoplete {{{
-    " let g:deoplete#enable_at_startup = 1
-    " 
-    " call deoplete#custom#option({
-    "  \ 'smart_case': v:true,
-    "\})
-    " 
-    " inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
-    " inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  " }}}
+  " completion-nvim {{{
+    let g:completion_enable_auto_hover = 1
+    let g:completion_auto_change_source = 1
+    let g:completion_enable_auto_paren = 0
+    let g:completion_timer_cycle = 80
+    let g:completion_auto_change_source = 1
 
-  " completion-vim {{{
-    " use <Tab> and <S-Tab> to navigate through popup menu
     inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    " manually trigger autocompletion
     inoremap <silent><expr> <C-Space> completion#trigger_completion()
-
-    autocmd BufEnter * lua require'completion'.on_attach()
   " }}}
+
+  " diagnostic-nvim {{{
+    let g:diagnostic_level = 'Warning'
+    let g:diagnostic_enable_virtual_text = 1
+    let g:diagnostic_virtual_text_prefix = ' '
+    let g:diagnostic_trimmed_virtual_text = '20'
+    let g:diagnostic_insert_delay = 1
+
+    call sign_define("LspDiagnosticsErrorSign", {"text" : ">>", "texthl" : "LspDiagnosticsError"})
+    call sign_define("LspDiagnosticsWarningSign", {"text" : "⚡", "texthl" : "LspDiagnosticsWarning"})
+    call sign_define("LspDiagnosticsInformationSign", {"text" : "", "texthl" : "LspDiagnosticsInformation"})
+    call sign_define("LspDiagnosticsHintSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})
+
+    autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+  " }}}
+
   " dirvish {{{
     let dirvish_mode = ':sort ,^.*/,'
     let loaded_netrwPlugin = 1 " disable netrw
