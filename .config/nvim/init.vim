@@ -21,8 +21,6 @@ try
   Plug 'kristijanhusak/vim-dirvish-git'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'jiangmiao/auto-pairs'
-  Plug 'psliwka/vim-smoothie'
-  Plug 'camspiers/animate.vim'
   Plug 'farmergreg/vim-lastplace'
   Plug 'vim-test/vim-test'
   Plug 'airblade/vim-rooter'
@@ -47,11 +45,8 @@ lua << END
 
   local on_attach = function(client)
     require('lsp-status').on_attach(client)
-    require('diagnostic').on_attach()
-    require('completion').on_attach({
-      sorter = 'alphabet',
-      matcher = {'exact', 'fuzzy'}
-    })
+    require('diagnostic').on_attach(client)
+    require('completion').on_attach(client)
   end
 
   lsp.tsserver.setup({
@@ -140,9 +135,10 @@ END
   set softtabstop=2
   set shiftwidth=2
 
-  " turn on line numbers
+  " turn on line numbers and sign column
   set number
   set relativenumber
+  set signcolumn=number
 
   " improve terminal colors
   set termguicolors
@@ -189,12 +185,12 @@ END
 
   set laststatus=2
   set statusline= " left side
-  set statusline+=%{LspStatusLine()}
   set statusline+=%#ToolbarLine#
   set statusline+=\ %{CurrentMode()}\ %*
   set statusline+=%{&modified?'\ •':''}
   set statusline+=\ [%n%H%R%W]%*\ 
-  set statusline+=%f
+  set statusline+=%f\ 
+  set statusline+=%{LspStatusLine()}
   set statusline+=%= " right side
   set statusline+=%#Statement#%{fugitive#head()}%*\ 
   set statusline+=%l/%L\ %p%%\ 
@@ -281,6 +277,18 @@ END
 " }}}
 
 " plugin settings {{{
+  " nvim-lsp {{{
+    nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+    nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+    nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+    nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+    nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+    nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+    nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+    nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+  " }}}
+
   " completion-nvim {{{
     let g:completion_enable_auto_hover = 1
     let g:completion_auto_change_source = 1
@@ -329,13 +337,6 @@ END
     nmap <silent> t<C-g> :TestVisit<CR>
   " }}}
   
-  " vim-animate {{{
-    nnoremap <silent> <Up>    :call animate#window_delta_height(10)<CR>
-    nnoremap <silent> <Down>  :call animate#window_delta_height(-10)<CR>
-    nnoremap <silent> <Left>  :call animate#window_delta_width(10)<CR>
-    nnoremap <silent> <Right> :call animate#window_delta_width(-10)<CR>
-  " }}}
-
   " fzf {{{
     function! FzfOmniFiles()
       if fugitive#head() != ''
@@ -344,10 +345,6 @@ END
         :Files
       endif
     endfunction
-
-    let g:fzf_layout = {
-     \ 'window': 'new | wincmd J | resize 1 | call animate#window_percent_height(0.5)'
-    \ }
 
     nnoremap <C-p>     :call FzfOmniFiles()<CR>
     nnoremap <leader>w :Windows<CR>
