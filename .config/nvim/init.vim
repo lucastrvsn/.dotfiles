@@ -1,164 +1,177 @@
 " my personal neovim config file
-" github.com/lucastrvsn
+" github.com/lucastrvsn/dotfiles
 
 " plugins {{{
 try
   call plug#begin()
-  " style
-  Plug 'sainnhe/sonokai'
-  Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
   " completion
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim'
-  Plug 'neovim/nvim-lsp'
-  Plug 'nvim-lua/completion-nvim'
-  Plug 'nvim-lua/diagnostic-nvim'
-  Plug 'nvim-lua/lsp-status.nvim'
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy
+  Plug 'junegunn/fzf.vim' " fzf integration with vim
+  Plug 'neovim/nvim-lsp' " neovim lsp
+  Plug 'nvim-lua/completion-nvim' " completion using lsp
+  Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
+  Plug 'nvim-lua/lsp-status.nvim' " statusline lsp
   " languages
-  Plug 'sheerun/vim-polyglot'
+  Plug 'sheerun/vim-polyglot' " pack of language syntax
   " misc
-  Plug 'justinmk/vim-dirvish'
-  Plug 'kristijanhusak/vim-dirvish-git'
-  Plug 'editorconfig/editorconfig-vim'
-  Plug 'jiangmiao/auto-pairs'
-  Plug 'farmergreg/vim-lastplace'
-  Plug 'vim-test/vim-test'
-  Plug 'airblade/vim-rooter'
-  Plug 'andymass/vim-matchup'
-  Plug 'haya14busa/is.vim'
-  Plug 'matze/vim-move'
-  Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
-  Plug 'mhinz/vim-signify'
-  Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-  Plug 'tpope/vim-fugitive'
-  Plug 'tpope/vim-surround'
-  Plug 'tyru/caw.vim'
-  Plug 'yggdroot/indentline'
+  Plug 'airblade/vim-rooter' " set root of git repository
+  Plug 'andymass/vim-matchup' " match more vim words
+  Plug 'editorconfig/editorconfig-vim' " support for editorconfig
+  Plug 'farmergreg/vim-lastplace' " remember last cursor position
+  Plug 'haya14busa/is.vim' " incsearch improved
+  Plug 'itchyny/lightline.vim' " statusline
+  Plug 'jiangmiao/auto-pairs' " auto add closing brackets
+  Plug 'junegunn/vim-emoji' " emoji support
+  Plug 'justinmk/vim-dirvish' " fast netrw alternative
+  Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
+  Plug 'matze/vim-move' " move lines up and down
+  Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursors
+  Plug 'mhinz/vim-signify' " gutter
+  Plug 'mhinz/vim-startify' " custom startpage
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " code formatter
+  Plug 'tpope/vim-fugitive' " git integration
+  Plug 'tpope/vim-surround' " change surround characters
+  Plug 'tyru/caw.vim' " comment plugin
+  Plug 'vim-test/vim-test' " run tests inside vim
+  Plug 'yggdroot/indentline' " beatiful line indentation
+  " style
+  Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+  Plug 'sainnhe/sonokai'
+  Plug 'ayu-theme/ayu-vim'
   call plug#end()
 catch
   echom 'vim-plug not installed'
 endtry
 " }}}
 
-lua << END
-  local lsp = require('nvim_lsp')
-
-  local on_attach = function(client)
-    require('lsp-status').on_attach(client)
-    require('diagnostic').on_attach(client)
-    require('completion').on_attach(client)
-  end
-
-  lsp.tsserver.setup({
-    on_attach = on_attach
-  })
-END
-
 " general {{{
-  " switch syntax highlighting on, when the terminal has colors
   syntax on
-
-  " use vim, not vi api
   set nocompatible
-
-  " use mouse
   set mouse=a
-
-  " increase history
   set history=10000
-
-  " no backup
   set nobackup
   set nowritebackup
   set noswapfile
-
-  " undo stuff (send all undo files to /tmp)
-  set undodir=/tmp//,.
+  set undodir=/tmp//,. " semi-persist undo
   set undofile
   set undolevels=1000
   set undoreload=10000
-
-  " change update time
   set updatetime=100
-
-  " set magic by default
-  set magic
-
-  " set terminal title
+  set lazyredraw
   set title
-
-  " reduce vim messages
   set showcmd
   set ruler
-
-  " improve completion
   set shortmess+=c
   set completeopt=menuone,noinsert,noselect
-
-  " scroll offset
   set scrolloff=4
-
-  " incremental searching (search as you type)
   set incsearch
-
-  " highlight search matches
   set hlsearch
-
-  " ignore case in search
   set smartcase
-
-  " make sure any searches /searchPhrase doesn't need the \c escape character
   set ignorecase
-
-  " A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
-  " if you try and quit Vim while there are hidden buffers, you will raise an error:
-  " E162: No write since last change for buffer “a.txt”
   set hidden
-
-  " turn word wrap off
   set nowrap
-
-  " allow backspace to delete end of line, indent and start of line characters
   set backspace=indent,eol,start
-
-  " display much as possible on lastline
   set display=lastline
-
-  " convert tabs to spaces
   set expandtab
   set smarttab
-
-  " set tab size in spaces (manual indenting)
   set tabstop=2
-
-  " the number of spaces inserted for a tab (auto indenting)
   set softtabstop=2
   set shiftwidth=2
-
-  " turn on line numbers and sign column
   set number
   set relativenumber
   set signcolumn=number
-
-  " improve terminal colors
-  set termguicolors
-  set t_Co=256
-
-  " highlight tailing whitespace
-  " https://github.com/Integralist/ProVim/issues/4
-  set list listchars=tab:·\ ,trail:·
-
-  " get rid of the delay when pressing O (for example)
-  " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
+  set list
+  set listchars=tab:·\ ,trail:·
   set timeout
   set timeoutlen=1000
   set ttimeoutlen=100
-
-  " always show status bar
   set showtabline=0
   set noshowmode
+  set path+=**
+  set wildmenu
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store,**/node_modules/**
+  set encoding=utf-8
+  set fileencoding=utf-8
+  set termencoding=utf-8
+  set autoread
+  set splitbelow
+  set splitright
+  set visualbell
+  set noerrorbells
+  set showmatch
+  set colorcolumn=80
 
-  " statusline
+  if exists('$TMUX')
+    " fix some scroll issues
+    set t_ut=
+  endif
+" }}}
+
+" lua {{{
+lua << END
+  local lsp = require'nvim_lsp'
+
+  local status = require'lsp-status'
+  status.register_progress()
+  status.config({
+    indicator_errors = '👎',
+    indicator_warnings = '⚠',
+    indicator_info = '🛈',
+    indicator_hint = '❗',
+    indicator_ok = '👍',
+    status_symbol = '🔥'
+  })
+
+  local on_attach = function(client)
+    require'diagnostic'.on_attach()
+    require'completion'.on_attach()
+    status.on_attach(client)
+  end
+
+  -- css
+  lsp.cssls.setup{
+    on_attach = on_attach
+  }
+
+  -- general diagnostic server
+  lsp.diagnosticls.setup{
+    on_attach = on_attach
+  }
+
+  -- html
+  lsp.html.setup{
+    on_attach = on_attach
+  }
+
+  -- json
+  lsp.jsonls.setup{
+    on_attach = on_attach
+  }
+
+  -- rust
+  lsp.rls.setup{
+    on_attach = on_attach
+  }
+
+  -- typescript
+  lsp.tsserver.setup{
+    on_attach = on_attach
+  }
+
+  -- vim
+  lsp.vimls.setup{
+    on_attach = on_attach
+  }
+
+  -- yaml
+  lsp.yamlls.setup{
+    on_attach = on_attach
+  }
+END
+" }}}
+
+" statusline {{{
+  " when not using lightline, use this custom statusline
   let g:current_mode = {
     \ 'n': 'normal',
     \ 'v': 'visual',
@@ -194,46 +207,12 @@ END
   set statusline+=%= " right side
   set statusline+=%#Statement#%{fugitive#head()}%*\ 
   set statusline+=%l/%L\ %p%%\ 
-
-  " set wildmenu
-  set path+=**
-  set wildmenu
-  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store,**/node_modules/**
-
-  " UTF encoding
-  set encoding=utf-8
-  set fileencoding=utf-8
-  set termencoding=utf-8
-
-  " autoload files that have changed outside of vim
-  set autoread
-
-  " better splits (new windows appear below and to the right)
-  set splitbelow
-  set splitright
-
-  " ensure Vim doesn't beep at you every time you make a mistype
-  set visualbell
-  set noerrorbells
-
-  " highlight a matching [{()}] when cursor is placed on start/end character
-  set showmatch
-
-  " always highlight column 80 so it's easier to see where
-  " cutoff appears on longer screens
-  set colorcolumn=80
-
-  " cursor line
-  set cursorline
-
-  " tmux
-  if exists('$TMUX')
-    " fix some scroll issues
-    set t_ut=
-  endif
 " }}}
 
-" colorscheme {{{
+" styles {{{
+  set termguicolors
+  set t_Co=256
+  set nocursorline
   set background=dark
   colorscheme challenger_deep
 " }}}
@@ -268,8 +247,8 @@ END
   if has('nvim')
     au TermOpen * tnoremap <Esc> <C-\><C-n>
     au FileType fzf tunmap <Esc>
-    nnoremap <leader>c :tabnew +terminal<CR>
-    tnoremap <leader>c <C-\><C-n>:tabnew +terminal<CR>
+    nnoremap <leader>c :tabnew +terminal<cr>
+    tnoremap <leader>c <C-\><C-n>:tabnew +terminal<cr>
 
     autocmd BufWinEnter,WinEnter term://* startinsert
     autocmd BufLeave term://* stopinsert
@@ -278,15 +257,15 @@ END
 
 " plugin settings {{{
   " nvim-lsp {{{
-    nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-    nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-    nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-    nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-    nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-    nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-    nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-    nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-    nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+    nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
+    nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<cr>
+    nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<cr>
+    nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<cr>
+    nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<cr>
+    nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<cr>
+    nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<cr>
+    nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<cr>
+    nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<cr>
   " }}}
 
   " completion-nvim {{{
@@ -302,16 +281,20 @@ END
   " }}}
 
   " diagnostic-nvim {{{
-    let g:diagnostic_level = 'Warning'
     let g:diagnostic_enable_virtual_text = 1
-    let g:diagnostic_virtual_text_prefix = ' '
-    let g:diagnostic_trimmed_virtual_text = '20'
-    let g:diagnostic_insert_delay = 1
+    let g:diagnostic_virtual_text_prefix = emoji#for('warning')
+    let g:diagnostic_trimmed_virtual_text = '50'
+    let g:diagnostic_enable_underline = 1
 
-    call sign_define("LspDiagnosticsErrorSign", {"text" : ">>", "texthl" : "LspDiagnosticsError"})
-    call sign_define("LspDiagnosticsWarningSign", {"text" : "⚡", "texthl" : "LspDiagnosticsWarning"})
-    call sign_define("LspDiagnosticsInformationSign", {"text" : "", "texthl" : "LspDiagnosticsInformation"})
-    call sign_define("LspDiagnosticsHintSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})
+    call sign_define("LspDiagnosticsErrorSign", {"text": emoji#for('warning'), "texthl" : "LspDiagnosticsError"})
+    call sign_define("LspDiagnosticsWarningSign", {"text": emoji#for('no_entry'), "texthl" : "LspDiagnosticsWarning"})
+    call sign_define("LspDiagnosticsInformationSign", {"text": emoji#for('grey_exclamation'), "texthl" : "LspDiagnosticsInformation"})
+    call sign_define("LspDiagnosticsHintSign", {"text": emoji#for('bulb'), "texthl" : "LspDiagnosticsHint"})
+
+    highlight! link LspDiagnosticsError SpellBad
+    highlight! link LspDiagnosticsHint SpellCap
+    highlight! link LspDiagnosticsInfo SpellLocal
+    highlight! link LspDiagnosticsWarning SpellRare
 
     autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
   " }}}
@@ -319,6 +302,33 @@ END
   " dirvish {{{
     let dirvish_mode = ':sort ,^.*/,'
     let loaded_netrwPlugin = 1 " disable netrw
+  " }}}
+
+  " lightline {{{
+    let g:lightline = {
+      \ 'colorscheme': 'challenger_deep',
+      \ 'mode_map': {
+      \   'n': 'normal',
+      \   'i': 'insert',
+      \   'R': 'replace',
+      \   'v': 'visual',
+      \   'V': 'vline',
+      \   "\<C-v>": 'vblock',
+      \   'c': 'command',
+      \   's': 'select',
+      \   'S': 'sline',
+      \   "\<C-s>": 'sblock',
+      \   't': 'terminal',
+      \ },
+      \ 'active': {
+      \   'left': [ ['mode', 'paste'], [ 'filename' ] ],
+      \   'right': [ ['lineinfo', 'gitbranch'], ['lsp'] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead',
+      \   'lsp': 'LspStatusLine'
+      \ }
+    \}
   " }}}
 
   " prettier {{{
@@ -330,11 +340,11 @@ END
   " }}}
   
   " vim-test {{{
-    nmap <silent> t<C-n> :TestNearest<CR>
-    nmap <silent> t<C-f> :TestFile<CR>
-    nmap <silent> t<C-s> :TestSuite<CR>
-    nmap <silent> t<C-l> :TestLast<CR>
-    nmap <silent> t<C-g> :TestVisit<CR>
+    nmap <silent> t<C-n> :TestNearest<cr>
+    nmap <silent> t<C-f> :TestFile<cr>
+    nmap <silent> t<C-s> :TestSuite<cr>
+    nmap <silent> t<C-l> :TestLast<cr>
+    nmap <silent> t<C-g> :TestVisit<cr>
   " }}}
   
   " fzf {{{
@@ -346,10 +356,10 @@ END
       endif
     endfunction
 
-    nnoremap <C-p>     :call FzfOmniFiles()<CR>
-    nnoremap <leader>w :Windows<CR>
-    nnoremap <leader>b :Buffers<CR>
-    nnoremap <leader>m :History<CR>
+    nnoremap <C-p>     :call FzfOmniFiles()<cr>
+    nnoremap <leader>w :Windows<cr>
+    nnoremap <leader>b :Buffers<cr>
+    nnoremap <leader>m :History<cr>
 
     autocmd! FileType fzf set laststatus=0 noshowmode noruler
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
@@ -367,6 +377,3 @@ END
   " }}}
 " }}}
 
-" {{{ autocommands
-" //
-" }}}
