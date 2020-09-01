@@ -2,46 +2,48 @@
 " github.com/lucastrvsn/dotfiles
 
 " plugins {{{
-try
-  call plug#begin()
-  " completion
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy
-  Plug 'junegunn/fzf.vim' " fzf integration with vim
-  Plug 'neovim/nvim-lsp' " neovim lsp
-  Plug 'nvim-lua/completion-nvim' " completion using lsp
-  Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
-  Plug 'nvim-lua/lsp-status.nvim' " statusline lsp
-  " languages
-  Plug 'sheerun/vim-polyglot' " pack of language syntax
-  " misc
-  Plug 'airblade/vim-rooter' " set root of git repository
-  Plug 'andymass/vim-matchup' " match more vim words
-  Plug 'editorconfig/editorconfig-vim' " support for editorconfig
-  Plug 'farmergreg/vim-lastplace' " remember last cursor position
-  Plug 'haya14busa/is.vim' " incsearch improved
-  Plug 'itchyny/lightline.vim' " statusline
-  Plug 'jiangmiao/auto-pairs' " auto add closing brackets
-  Plug 'junegunn/vim-emoji' " emoji support
-  Plug 'justinmk/vim-dirvish' " fast netrw alternative
-  Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
-  Plug 'matze/vim-move' " move lines up and down
-  Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursors
-  Plug 'mhinz/vim-signify' " gutter
-  Plug 'mhinz/vim-startify' " custom startpage
-  Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " code formatter
-  Plug 'tpope/vim-fugitive' " git integration
-  Plug 'tpope/vim-surround' " change surround characters
-  Plug 'tyru/caw.vim' " comment plugin
-  Plug 'vim-test/vim-test' " run tests inside vim
-  Plug 'yggdroot/indentline' " beatiful line indentation
-  " style
-  Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-  Plug 'sainnhe/sonokai'
-  Plug 'ayu-theme/ayu-vim'
-  call plug#end()
-catch
-  echom 'vim-plug not installed'
-endtry
+  if !exists('g:vscode')
+    try
+      call plug#begin()
+      " completion
+      Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy
+      Plug 'junegunn/fzf.vim' " fzf integration with vim
+      Plug 'neovim/nvim-lsp' " neovim lsp
+      Plug 'nvim-lua/completion-nvim' " completion using lsp
+      Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
+      Plug 'nvim-lua/lsp-status.nvim' " statusline lsp
+      " languages
+      Plug 'sheerun/vim-polyglot' " pack of language syntax
+      " misc
+      Plug 'airblade/vim-rooter' " set root of git repository
+      Plug 'andymass/vim-matchup' " match more vim words
+      Plug 'editorconfig/editorconfig-vim' " support for editorconfig
+      Plug 'farmergreg/vim-lastplace' " remember last cursor position
+      Plug 'haya14busa/is.vim' " incsearch improved
+      Plug 'itchyny/lightline.vim' " statusline
+      Plug 'jiangmiao/auto-pairs' " auto add closing brackets
+      Plug 'junegunn/vim-emoji' " emoji support
+      Plug 'justinmk/vim-dirvish' " fast netrw alternative
+      Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
+      Plug 'matze/vim-move' " move lines up and down
+      Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursors
+      Plug 'mhinz/vim-signify' " gutter
+      Plug 'mhinz/vim-startify' " custom startpage
+      Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " code formatter
+      Plug 'tpope/vim-fugitive' " git integration
+      Plug 'tpope/vim-surround' " change surround characters
+      Plug 'tyru/caw.vim' " comment plugin
+      Plug 'vim-test/vim-test' " run tests inside vim
+      Plug 'yggdroot/indentline' " beatiful line indentation
+      " style
+      Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+      Plug 'sainnhe/sonokai'
+      Plug 'ayu-theme/ayu-vim'
+      call plug#end()
+    catch
+      echom 'vim-plug not installed'
+    endtry
+  endif
 " }}}
 
 " general {{{
@@ -107,6 +109,7 @@ endtry
   endif
 " }}}
 
+if !exists('g:vscode')
 " lua {{{
 lua << END
   local lsp = require'nvim_lsp'
@@ -201,12 +204,12 @@ END
   set statusline+=%#ToolbarLine#
   set statusline+=\ %{CurrentMode()}\ %*
   set statusline+=%{&modified?'\ •':''}
-  set statusline+=\ [%n%H%R%W]%*\ 
-  set statusline+=%f\ 
+  set statusline+=\ [%n%H%R%W]%*\
+  set statusline+=%f\
   set statusline+=%{LspStatusLine()}
   set statusline+=%= " right side
-  set statusline+=%#Statement#%{fugitive#head()}%*\ 
-  set statusline+=%l/%L\ %p%%\ 
+  set statusline+=%#Statement#%{fugitive#head()}%*\
+  set statusline+=%l/%L\ %p%%\
 " }}}
 
 " styles {{{
@@ -216,6 +219,7 @@ END
   set background=dark
   colorscheme challenger_deep
 " }}}
+endif
 
 " mappings {{{
   let mapleader = "\<Space>"
@@ -255,6 +259,7 @@ END
   endif
 " }}}
 
+if !exists('g:vscode')
 " plugin settings {{{
   " nvim-lsp {{{
     nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
@@ -338,7 +343,7 @@ END
 
     autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
   " }}}
-  
+
   " vim-test {{{
     nmap <silent> t<C-n> :TestNearest<cr>
     nmap <silent> t<C-f> :TestFile<cr>
@@ -346,7 +351,7 @@ END
     nmap <silent> t<C-l> :TestLast<cr>
     nmap <silent> t<C-g> :TestVisit<cr>
   " }}}
-  
+
   " fzf {{{
     function! FzfOmniFiles()
       if fugitive#head() != ''
@@ -376,4 +381,4 @@ END
     let g:rooter_change_directory_for_non_project_files = 'current'
   " }}}
 " }}}
-
+endif
