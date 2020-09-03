@@ -1,18 +1,34 @@
 " my personal neovim config file
 " github.com/lucastrvsn/dotfiles
 
+" default {{{
+  let mapleader = "\<Space>"
+  let g:loaded_netrw = 1
+  let g:loaded_netrwPlugin = 1
+" }}}
+
 " plugins {{{
 try
   call plug#begin()
   " completion
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf
   Plug 'junegunn/fzf.vim' " fzf integration with vim
   Plug 'neovim/nvim-lsp' " neovim lsp
   Plug 'nvim-lua/completion-nvim' " completion using lsp
   Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
-  Plug 'nvim-lua/lsp-status.nvim' " statusline lsp
   " languages
-  Plug 'sheerun/vim-polyglot' " pack of language syntax
+  Plug 'tpope/vim-git'
+  Plug 'othree/html5.vim'
+  Plug 'pangloss/vim-javascrip'
+  Plug 'elzr/vim-json'
+  Plug 'MaxMEllon/vim-jsx-pretty'
+  Plug 'tbastos/vim-lua'
+  Plug 'plasticboy/vim-markdown'
+  Plug 'jxnblk/vim-mdx-js'
+  Plug 'rust-lang/rust.vim'
+  Plug 'cakebaker/scss-syntax.vim'
+  Plug 'HerringtonDarkholme/yats.vim'
+  Plug 'stephpy/vim-yaml'
   " misc
   Plug 'airblade/vim-rooter' " set root of git repository
   Plug 'andymass/vim-matchup' " match more vim words
@@ -21,22 +37,19 @@ try
   Plug 'haya14busa/is.vim' " incsearch improved
   Plug 'itchyny/lightline.vim' " statusline
   Plug 'jiangmiao/auto-pairs' " auto add closing brackets
-  Plug 'junegunn/vim-emoji' " emoji support
   Plug 'justinmk/vim-dirvish' " fast netrw alternative
   Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
   Plug 'matze/vim-move' " move lines up and down
   Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursors
   Plug 'mhinz/vim-signify' " gutter
-  Plug 'mhinz/vim-startify' " custom startpage
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " code formatter
+  Plug 'tpope/vim-eunuch' " unix command integration
   Plug 'tpope/vim-fugitive' " git integration
   Plug 'tpope/vim-surround' " change surround characters
   Plug 'tyru/caw.vim' " comment plugin
-  Plug 'vim-test/vim-test' " run tests inside vim
   Plug 'yggdroot/indentline' " beatiful line indentation
-  " style
+  " themes
   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-  Plug 'sainnhe/sonokai'
   Plug 'ayu-theme/ayu-vim'
   call plug#end()
 catch
@@ -100,6 +113,7 @@ endtry
   set noerrorbells
   set showmatch
   set colorcolumn=80
+  set textwidth=120
 
   if exists('$TMUX')
     " fix some scroll issues
@@ -214,12 +228,10 @@ END
   set t_Co=256
   set nocursorline
   set background=dark
-  colorscheme challenger_deep
+  colorscheme ayu
 " }}}
 
 " mappings {{{
-  let mapleader = "\<Space>"
-
   " moving up and down the right way
   nnoremap <silent>j gj
   nnoremap <silent>k gk
@@ -272,7 +284,6 @@ END
     let g:completion_enable_auto_hover = 1
     let g:completion_auto_change_source = 1
     let g:completion_enable_auto_paren = 0
-    let g:completion_timer_cycle = 80
     let g:completion_auto_change_source = 1
 
     inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -301,12 +312,11 @@ END
 
   " dirvish {{{
     let dirvish_mode = ':sort ,^.*/,'
-    let loaded_netrwPlugin = 1 " disable netrw
   " }}}
 
   " lightline {{{
     let g:lightline = {
-      \ 'colorscheme': 'challenger_deep',
+      \ 'colorscheme': 'ayu',
       \ 'mode_map': {
       \   'n': 'normal',
       \   'i': 'insert',
@@ -322,11 +332,10 @@ END
       \ },
       \ 'active': {
       \   'left': [ ['mode', 'paste'], [ 'filename' ] ],
-      \   'right': [ ['lineinfo', 'gitbranch'], ['lsp'] ]
+      \   'right': [ ['lineinfo', 'gitbranch'] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'lsp': 'LspStatusLine'
+      \   'gitbranch': 'FugitiveHead'
       \ }
     \}
   " }}}
@@ -337,14 +346,6 @@ END
     let g:prettier#autoformat = 0
 
     autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
-  " }}}
-  
-  " vim-test {{{
-    nmap <silent> t<C-n> :TestNearest<cr>
-    nmap <silent> t<C-f> :TestFile<cr>
-    nmap <silent> t<C-s> :TestSuite<cr>
-    nmap <silent> t<C-l> :TestLast<cr>
-    nmap <silent> t<C-g> :TestVisit<cr>
   " }}}
   
   " fzf {{{
@@ -369,6 +370,10 @@ END
     let g:indentLine_enabled = 0 " disable vertical lines
     let g:indentLine_leadingSpaceEnabled = 1 " enable leading spaces
     let g:indentLine_leadingSpaceChar = '·'
+  " }}}
+
+  " auto-pairs {{{
+    let g:AutoPairsMultilineClose = 0
   " }}}
 
   " vim-rooter {{{
