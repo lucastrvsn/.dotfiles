@@ -19,7 +19,7 @@ try
   " languages
   Plug 'tpope/vim-git'
   Plug 'othree/html5.vim'
-  Plug 'pangloss/vim-javascrip'
+  Plug 'pangloss/vim-javascript'
   Plug 'elzr/vim-json'
   Plug 'MaxMEllon/vim-jsx-pretty'
   Plug 'tbastos/vim-lua'
@@ -32,6 +32,7 @@ try
   " misc
   Plug 'airblade/vim-rooter' " set root of git repository
   Plug 'andymass/vim-matchup' " match more vim words
+  Plug 'christoomey/vim-tmux-navigator' " tmux integration
   Plug 'editorconfig/editorconfig-vim' " support for editorconfig
   Plug 'farmergreg/vim-lastplace' " remember last cursor position
   Plug 'haya14busa/is.vim' " incsearch improved
@@ -191,21 +192,13 @@ END
     return get(g:current_mode, l:current, l:current)
   endfunction
 
-  function! LspStatusLine() abort
-    if luaeval('#vim.lsp.buf_get_clients() > 0')
-      return luaeval("require('lsp-status').status()")
-    endif
-    return ''
-  endfunction
-
   set laststatus=2
   set statusline= " left side
   set statusline+=%#ToolbarLine#
   set statusline+=\ %{CurrentMode()}\ %*
   set statusline+=%{&modified?'\ •':''}
   set statusline+=\ [%n%H%R%W]%*\
-  set statusline+=%f\
-  set statusline+=%{LspStatusLine()}
+  set statusline+=%F
   set statusline+=%= " right side
   set statusline+=%#Statement#%{fugitive#head()}%*\
   set statusline+=%l/%L\ %p%%\
@@ -218,7 +211,6 @@ END
   set background=dark
   colorscheme ayu
 " }}}
-endif
 
 " mappings {{{
   " moving up and down the right way
@@ -282,14 +274,14 @@ endif
 
   " diagnostic-nvim {{{
     let g:diagnostic_enable_virtual_text = 1
-    let g:diagnostic_virtual_text_prefix = emoji#for('warning')
+    let g:diagnostic_virtual_text_prefix = '>'
     let g:diagnostic_trimmed_virtual_text = '50'
     let g:diagnostic_enable_underline = 1
 
-    call sign_define("LspDiagnosticsErrorSign", {"text": emoji#for('warning'), "texthl" : "LspDiagnosticsError"})
-    call sign_define("LspDiagnosticsWarningSign", {"text": emoji#for('no_entry'), "texthl" : "LspDiagnosticsWarning"})
-    call sign_define("LspDiagnosticsInformationSign", {"text": emoji#for('grey_exclamation'), "texthl" : "LspDiagnosticsInformation"})
-    call sign_define("LspDiagnosticsHintSign", {"text": emoji#for('bulb'), "texthl" : "LspDiagnosticsHint"})
+    call sign_define("LspDiagnosticsErrorSign", {"text": "!!", "texthl" : "LspDiagnosticsError"})
+    call sign_define("LspDiagnosticsWarningSign", {"text": ">>", "texthl" : "LspDiagnosticsWarning"})
+    call sign_define("LspDiagnosticsInformationSign", {"text": "?", "texthl" : "LspDiagnosticsInformation"})
+    call sign_define("LspDiagnosticsHintSign", {"text": "?", "texthl" : "LspDiagnosticsHint"})
 
     highlight! link LspDiagnosticsError SpellBad
     highlight! link LspDiagnosticsHint SpellCap
