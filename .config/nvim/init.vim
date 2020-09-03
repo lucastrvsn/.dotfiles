@@ -121,26 +121,13 @@ endtry
   endif
 " }}}
 
-if !exists('g:vscode')
 " lua {{{
 lua << END
   local lsp = require'nvim_lsp'
 
-  local status = require'lsp-status'
-  status.register_progress()
-  status.config({
-    indicator_errors = '👎',
-    indicator_warnings = '⚠',
-    indicator_info = '🛈',
-    indicator_hint = '❗',
-    indicator_ok = '👍',
-    status_symbol = '🔥'
-  })
-
   local on_attach = function(client)
     require'diagnostic'.on_attach()
     require'completion'.on_attach()
-    status.on_attach(client)
   end
 
   -- css
@@ -269,7 +256,6 @@ endif
   endif
 " }}}
 
-if !exists('g:vscode')
 " plugin settings {{{
   " nvim-lsp {{{
     nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
@@ -384,4 +370,3 @@ if !exists('g:vscode')
     let g:rooter_change_directory_for_non_project_files = 'current'
   " }}}
 " }}}
-endif
