@@ -121,6 +121,7 @@ endtry
   endif
 " }}}
 
+if !exists('g:vscode')
 " lua {{{
 lua << END
   local lsp = require'nvim_lsp'
@@ -215,12 +216,12 @@ END
   set statusline+=%#ToolbarLine#
   set statusline+=\ %{CurrentMode()}\ %*
   set statusline+=%{&modified?'\ •':''}
-  set statusline+=\ [%n%H%R%W]%*\ 
-  set statusline+=%f\ 
+  set statusline+=\ [%n%H%R%W]%*\
+  set statusline+=%f\
   set statusline+=%{LspStatusLine()}
   set statusline+=%= " right side
-  set statusline+=%#Statement#%{fugitive#head()}%*\ 
-  set statusline+=%l/%L\ %p%%\ 
+  set statusline+=%#Statement#%{fugitive#head()}%*\
+  set statusline+=%l/%L\ %p%%\
 " }}}
 
 " styles {{{
@@ -230,6 +231,7 @@ END
   set background=dark
   colorscheme ayu
 " }}}
+endif
 
 " mappings {{{
   " moving up and down the right way
@@ -267,6 +269,7 @@ END
   endif
 " }}}
 
+if !exists('g:vscode')
 " plugin settings {{{
   " nvim-lsp {{{
     nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
@@ -347,7 +350,7 @@ END
 
     autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
   " }}}
-  
+
   " fzf {{{
     function! FzfOmniFiles()
       if fugitive#head() != ''
@@ -381,4 +384,4 @@ END
     let g:rooter_change_directory_for_non_project_files = 'current'
   " }}}
 " }}}
-
+endif
