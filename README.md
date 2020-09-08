@@ -1,7 +1,7 @@
 # dotfiles
 
 - font: [Hack][]
-- ripgrep: fuzzy searcher
+- [ripgrep][]: fuzzy searcher
 
 ## zsh
 
