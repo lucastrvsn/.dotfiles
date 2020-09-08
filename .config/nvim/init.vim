@@ -2,7 +2,7 @@
 " github.com/lucastrvsn/dotfiles
 
 " default {{{
-  let mapleader = "\<Space>"
+  let g:mapleader = "\<Space>"
   let g:loaded_netrw = 1
   let g:loaded_netrwPlugin = 1
 " }}}
@@ -207,9 +207,8 @@ END
 " styles {{{
   set termguicolors
   set t_Co=256
-  set nocursorline
   set background=dark
-  colorscheme ayu
+  colorscheme challenger_deep
 " }}}
 
 " mappings {{{
@@ -297,7 +296,7 @@ END
 
   " lightline {{{
     let g:lightline = {
-      \ 'colorscheme': 'ayu',
+      \ 'colorscheme': 'challenger_deep',
       \ 'mode_map': {
       \   'n': 'normal',
       \   'i': 'insert',
@@ -341,7 +340,7 @@ END
     nnoremap <C-p>     :call FzfOmniFiles()<cr>
     nnoremap <leader>w :Windows<cr>
     nnoremap <leader>b :Buffers<cr>
-    nnoremap <leader>m :History<cr>
+    nnoremap <leader>h :History<cr>
 
     autocmd! FileType fzf set laststatus=0 noshowmode noruler
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler

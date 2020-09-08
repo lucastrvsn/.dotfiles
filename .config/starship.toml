@@ -1,8 +1,4 @@
 add_newline = false
 
-[character]
-symbol = "$"
-error_symbol = "!"
-
 [username]
 show_always = true

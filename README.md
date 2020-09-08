@@ -1,6 +1,7 @@
 # dotfiles
 
 - font: [Hack][]
+- ripgrep: fuzzy searcher
 
 ## zsh
 
@@ -17,3 +18,4 @@
 [starship]: https://starship.rs/
 [asdf]: https://asdf-vm.com/
 [vim-plug]: https://github.com/junegunn/vim-plug/
+[ripgrep]: https://github.com/BurntSushi/ripgrep/
