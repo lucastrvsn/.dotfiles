@@ -82,3 +82,8 @@ compinit
 
 # starship
 eval "$(starship init zsh)"
+
+# auto start tmux
+if [ -z "$TMUX" ]; then
+  tmux attach -t TMUX || tmux new -s TMUX
+fi
