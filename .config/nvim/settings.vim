@@ -54,17 +54,26 @@ set noerrorbells
 set showmatch
 set colorcolumn=80
 set textwidth=80
-set termguicolors
-set t_Co=256
 
 if exists('$TMUX')
-  " fix some scroll issues
   set t_ut=
 endif
 
 " styles {{{
+  if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+  endif
+
   set background=dark
-  let g:oceanic_material_background = 'ocean'
+  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+    \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+    \,sm:block-blinkwait175-blinkoff150-blinkon175
+  let g:oceanic_material_transparent_background = 0
   let g:oceanic_material_allow_reverse = 0
+  let g:oceanic_material_background = 'ocean'
   colorscheme oceanic_material
+
+  highlight Cursor gui=reverse guifg=NONE guibg=NONE
 " }}}

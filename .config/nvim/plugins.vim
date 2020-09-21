@@ -6,6 +6,7 @@ try
   Plug 'neovim/nvim-lspconfig' " neovim lsp common configs
   Plug 'nvim-lua/completion-nvim' " completion using lsp
   Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
+  Plug 'nvim-treesitter/nvim-treesitter' " nvim treesiter
   " languages
   Plug 'HerringtonDarkholme/yats.vim' " typescript
   Plug 'MaxMEllon/vim-jsx-pretty' " jsx
@@ -34,6 +35,7 @@ try
   Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
   Plug 'machakann/vim-highlightedyank' " highlight yanked text
   Plug 'matze/vim-move' " move lines up and down
+  Plug 'xuyuanp/scrollbar.nvim' " show scrollbar
   Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursors
   Plug 'mhinz/vim-signify' " gutter
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " code formatter
@@ -162,4 +164,27 @@ endtry
 " vim-rooter {{{
   let g:rooter_silent_chdir = 1
   let g:rooter_change_directory_for_non_project_files = 'current'
+" }}}
+
+" scrollbar.nvim {{{
+  let g:scrollbar_shape = {
+    \ 'head': '',
+    \ 'body': '█',
+    \ 'tail': '',
+    \ }
+  let g:scrollbar_highlight = {
+    \ 'head': 'StatusLineNC',
+    \ 'body': 'StatusLineNC',
+    \ 'tail': 'StatusLineNC',
+    \ }
+
+  augroup scrollbar_nvim
+    autocmd!
+    autocmd BufEnter    * silent! lua require('scrollbar').show()
+    autocmd BufLeave    * silent! lua require('scrollbar').clear()
+    autocmd CursorMoved * silent! lua require('scrollbar').show()
+    autocmd VimResized  * silent! lua require('scrollbar').show()
+    autocmd FocusGained * silent! lua require('scrollbar').show()
+    autocmd FocusLost   * silent! lua require('scrollbar').clear()
+  augroup end
 " }}}
