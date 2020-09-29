@@ -1,6 +1,6 @@
 # dotfiles
 
-- font: [Hack][]
+- font: [JetBrains Mono][]
 - [ripgrep][]: fuzzy searcher
 
 ## zsh
@@ -13,7 +13,7 @@
 
 - [vim-plug][]: plugin manager
 
-[Hack]: https://sourcefoundry.org/hack/
+[Hack]: hhttps://www.jetbrains.com/lp/mono/
 [zplug]: https://github.com/zplug/zplug/
 [starship]: https://starship.rs/
 [asdf]: https://asdf-vm.com/
