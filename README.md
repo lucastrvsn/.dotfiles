@@ -13,7 +13,7 @@
 
 - [vim-plug][]: plugin manager
 
-[Hack]: hhttps://www.jetbrains.com/lp/mono/
+[JetBrains Mono]: hhttps://www.jetbrains.com/lp/mono/
 [zplug]: https://github.com/zplug/zplug/
 [starship]: https://starship.rs/
 [asdf]: https://asdf-vm.com/
