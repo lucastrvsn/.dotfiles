@@ -98,14 +98,14 @@ pacstrap /mnt ${PACKAGES[@]}
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # copy post-install script
-cp -rfv post-install.sh /mnt/root
-chmod a+x /mnt/root/post-install.sh
+cp -rfv post-install.sh /mnt/post-install.sh
+chmod a+x /mnt/post-install.sh
 
 # chroot
 echo "After chrooting into newly installed OS, please run the post-install.sh by executing ./post-install.sh"
 echo "Press any key to chroot..."
 read tmpvar
-arch-chroot /mnt /bin/bash
+arch-chroot /mnt
 
 # ready to go arch
 echo "If post-install.sh was run succesfully, you will now have a fully working bootable Arch Linux system installed."
