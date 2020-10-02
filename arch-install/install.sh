@@ -15,25 +15,29 @@ then
   exit
 fi
 
-(
-  echo o
-  echo n
-  echo p
-  echo 1
-  echo +512M
-  echo n
-  echo p
-  echo 2
-  echo +8G
-  echo n
-  echo p
-  echo 3
-  echo a
-  echo 1
-  echo p
-  echo w
-  echo q
-) | fdisk
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
+  o # clear the in memory partition table
+  n # new partition
+  p # primary partition
+  1 # partition number 1
+    # default - start at beginning of disk 
+  +512M # 512 MB boot parttion
+  n # new partition
+  p # primary partition
+  2 # partion number 2
+    # default, start immediately after preceding partition
+  +8G # 8 GB swap parttion
+  n # new partition
+  p # primary partition
+  3 # partion number 3
+    # default, start immediately after preceding partition
+    # default, extend partition to end of disk
+  a # make a partition bootable
+  1 # bootable partition is partition 1 -- /dev/sda1
+  p # print the in-memory partition table
+  w # write the partition table
+  q # and we're done
+EOF
 
 # Format the partitions
 mkfs.ext4 /dev/sda3
