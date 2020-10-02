@@ -67,13 +67,10 @@ endif
     \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
     \,sm:block-blinkwait175-blinkoff150-blinkon175
 
-  " let g:oceanic_material_transparent_background = 0
-  " let g:oceanic_material_allow_reverse = 1
-  " let g:oceanic_material_background = 'ocean'
-  let g:gruvbox_material_background = 'soft'
-  colorscheme gruvbox-material
-
-  hi! link Directory Title
+  let g:oceanic_material_transparent_background = 0
+  let g:oceanic_material_allow_reverse = 1
+  let g:oceanic_material_background = 'ocean'
+  colorscheme oceanic_material
 
   autocmd BufEnter * :syntax sync fromstart
 " }}}

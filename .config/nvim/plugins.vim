@@ -23,14 +23,16 @@ try
   " Plug 'tpope/vim-git' " git
   " Plug 'vim-jp/vim-cpp' " c/cpp
   " misc
-  Plug 'cocopon/vaffle.vim' " file manager
   Plug 'unblevable/quick-scope' " improve t and f keys
   Plug 'airblade/vim-rooter' " set root of git repository
+  Plug 'andymass/vim-matchup' " match more vim words
   Plug 'christoomey/vim-tmux-navigator' " tmux integration
   Plug 'editorconfig/editorconfig-vim' " support for editorconfig
   Plug 'farmergreg/vim-lastplace' " remember last cursor position
   Plug 'haya14busa/is.vim' " incsearch improved
   Plug 'jiangmiao/auto-pairs' " auto add closing brackets
+  Plug 'justinmk/vim-dirvish' " fast netrw alternative
+  Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
   Plug 'machakann/vim-highlightedyank' " highlight yanked text
   Plug 'matze/vim-move' " move lines up and down
   Plug 'xuyuanp/scrollbar.nvim' " show scrollbar
@@ -41,13 +43,12 @@ try
   Plug 'tpope/vim-fugitive' " git integration
   Plug 'tpope/vim-surround' " change surround characters
   Plug 'tyru/caw.vim' " comment plugin
-  Plug 'yggdroot/indentline' " line indentation
+  Plug 'yggdroot/indentline' " beatiful line indentation
   " themes
   Plug 'alessandroyorba/sierra'
   Plug 'glepnir/oceanic-material'
   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
   Plug 'ayu-theme/ayu-vim'
-  Plug 'sainnhe/gruvbox-material'
   call plug#end()
 catch
   echom 'vim-plug not installed'
@@ -97,8 +98,12 @@ endtry
   autocmd CursorHold * silent lua vim.lsp.util.show_line_diagnostics()
 " }}}
 
-" vaffle {{{
-  nnoremap - <cmd>Vaffle<cr>
+" dirvish {{{
+  let dirvish_mode = ':sort ,^.*/,'
+
+  command! -nargs=? -complete=dir Explore Dirvish <args>
+  command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+  command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 " }}}
 
 " quick-scope {{{
@@ -120,6 +125,14 @@ endtry
 " }}}
 
 " fzf {{{
+  function! FzfOmniFiles()
+    if fugitive#head() != ''
+      :GitFiles
+    else
+      :Files
+    endif
+  endfunction
+
   let g:fzf_action = {
     \ 'ctrl-t': 'tab split',
     \ 'ctrl-x': 'split',
