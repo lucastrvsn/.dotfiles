@@ -1,10 +1,13 @@
 #! /bin/bash
 
+# configure fonts
+mkdir -p ~/.config/fontconfig
+cp -rfv ./fontconfig.conf ~/.config/fontconfig/fonts.conf
+
 # install yay
 git clone https://aur.archlinux.org/yay.git
 cd yay
-makepkg -si --asroot
-rm -rf yay
+makepkg -si
 
 # install packages using yay
 PACKAGES=(
@@ -42,3 +45,6 @@ yay -S ${PACKAGES[@]}
 
 # setup services
 systemctl enable lightdm.service
+
+# clean temp dirs
+rm -rf yay

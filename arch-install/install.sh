@@ -5,12 +5,12 @@
 
 # filesystem mounting
 echo "This script will create and format the partitions as follows:"
-echo "/dev/sda1 - 512Mib will be mounted as /boot/efi"
+echo "/dev/sda1 - 512Mib will be mounted as /efi"
 echo "/dev/sda2 - 8GiB will be used as swap"
 echo "/dev/sda3 - rest of space will be mounted as /"
 read -p 'Continue? [y/N]: ' fsok
 if ! [ $fsok = 'y' ] && ! [ $fsok = 'Y' ]
-then 
+then
   echo "Edit the script to continue..."
   exit
 fi
@@ -46,20 +46,20 @@ mkfs.fat -F32 /dev/sda1
 # setup time
 timedatectl set-ntp true
 
-# pacman keyring
-pacman-key --init
-pacman-key --populate archlinux
-pacman-key --refresh-keys
-
 # mount the partitions
 mount /dev/sda3 /mnt
-mkdir -pv /mnt/boot/efi
-mount /dev/sda1 /mnt/boot/efi
+mkdir -pv /mnt/efi
+mount /dev/sda1 /mnt/efi
 mkswap /dev/sda2
 swapon /dev/sda2
 
+# pacman
+pacman -Sy
+pacman -S --noconfirm --needed --noprogressbar --quiet reflector
+reflector -l 12 --sort rate --save /etc/pacman.d/mirrorlist
+
 # arch install
-echo "Starting Archlinux install..."
+echo "starting arch install..."
 
 PACKAGES=(
   # base
@@ -104,6 +104,9 @@ genfstab -U /mnt >> /mnt/etc/fstab
 cp -rfv ./chroot-install.sh /mnt/chroot-install.sh
 cp -rfv ./fontconfig.conf /mnt/fontconfig.conf
 chmod a+x /mnt/chroot-install.sh
+
+# copy the updated mirrorlist to the installed os
+cp -rfv /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
 # chroot
 echo "After chrooting into newly installed OS, please run the chroot-install.sh by executing ./chroot-install.sh"
