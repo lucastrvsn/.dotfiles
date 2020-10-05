@@ -90,7 +90,16 @@ PACKAGES=(
   curl
   ripgrep
   xdg-user-dirs
+  # display
+  sway
+  swaylock
+  swayidle
+  lightdm
+  lightdm-gtk-greeter
+  xorg-server
+  xorg-server-xwayland
   # fonts
+  fontconfig
   freetype2
   noto-fonts
   noto-fonts-emoji
