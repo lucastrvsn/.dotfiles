@@ -88,6 +88,7 @@ PACKAGES=(
   zsh
   git
   curl
+  alacritty
   ripgrep
   xdg-user-dirs
   # display
