@@ -39,7 +39,7 @@ echo "configuring theme config"
 mkdir -p ~/.config/gtk-3.0
 cat > ~/.config/gtk-3.0/settings.ini << EOL
 [Settings]
-gtk-application-prefer-dark-theme=1
+gtk-application-prefer-dark-theme=true
 gtk-theme-name=Pop-dark
 gtk-icon-theme-name=Pop
 gtk-font-name=Noto Sans 11
@@ -68,6 +68,8 @@ PACKAGES=(
   pop-gtk-theme
   pop-icon-theme-git
   xcursor-openzone
+  gnome-themes-extra
+  gtk-engines
   # misc
   playerctl
   waybar

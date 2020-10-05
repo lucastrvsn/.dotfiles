@@ -74,6 +74,7 @@ PACKAGES=(
   mesa
   pulseaudio
   sudo
+  openssh
   # network, bluetooth, touchpad
   networkmanager
   iw
@@ -91,6 +92,7 @@ PACKAGES=(
   alacritty
   ripgrep
   xdg-user-dirs
+  xdg-utils
   # display
   sway
   swaylock
@@ -102,8 +104,11 @@ PACKAGES=(
   # fonts
   fontconfig
   freetype2
+  ttf-liberation
+  ttf-ms-fonts
   noto-fonts
   noto-fonts-emoji
+  ttf-jetbrains-mono
 )
 pacstrap /mnt ${PACKAGES[@]}
 
@@ -112,7 +117,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # copy post-install script
 cp -rfv ./chroot-install.sh /mnt/chroot-install.sh
-cp -rfv ./fontconfig.conf /mnt/fontconfig.conf
 chmod a+x /mnt/chroot-install.sh
 
 # copy the updated mirrorlist to the installed os
