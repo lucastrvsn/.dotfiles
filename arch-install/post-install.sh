@@ -36,6 +36,7 @@ PACKAGES=(
   alacritty
   nnn
   neovim-nightly
+  feh
 )
 yay -S ${PACKAGES[@]}
 

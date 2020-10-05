@@ -65,6 +65,8 @@ PACKAGES=(
   # base
   base
   base-devel
+  linux
+  linux-firmware
   grub
   efibootmgr
   intel-ucode
@@ -72,7 +74,7 @@ PACKAGES=(
   mesa
   pulseaudio
   sudo
-  # network and bluetooth
+  # network, bluetooth, touchpad
   networkmanager
   iw
   wpa_supplicant
@@ -80,6 +82,7 @@ PACKAGES=(
   network-manager-applet
   networkmanager-openvpn
   bluez-utils
+  libinput
   # misc
   gnome-power-manager
   zsh
@@ -98,17 +101,21 @@ pacstrap /mnt ${PACKAGES[@]}
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # copy post-install script
-cp -rfv post-install.sh /mnt/post-install.sh
-chmod a+x /mnt/post-install.sh
+cp -rfv ./chroot-install.sh /mnt/chroot-install.sh
+cp -rfv ./fontconfig.conf /mnt/fontconfig.conf
+chmod a+x /mnt/chroot-install.sh
 
 # chroot
-echo "After chrooting into newly installed OS, please run the post-install.sh by executing ./post-install.sh"
+echo "After chrooting into newly installed OS, please run the chroot-install.sh by executing ./chroot-install.sh"
 echo "Press any key to chroot..."
 read tmpvar
 arch-chroot /mnt
 
+# delete chroot-install
+rm /mnt/chroot-install.sh
+
 # ready to go arch
-echo "If post-install.sh was run succesfully, you will now have a fully working bootable Arch Linux system installed."
+echo "If chroot-install.sh was run succesfully, you will now have a fully working bootable Arch Linux system installed."
 echo "The only thing left is to reboot into the new system."
 echo "Press any key to reboot or Ctrl+C to cancel..."
 read tmpvar

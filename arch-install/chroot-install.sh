@@ -30,7 +30,7 @@ LC_ALL=C xdg-user-dirs-update --force
 
 # configure fonts
 mkdir -p /home/lucas/.config/fontconfig
-cp ./fontconfig.conf /home/lucas/.config/fontconfig/fonts.conf
+mv ./fontconfig.conf /home/lucas/.config/fontconfig/fonts.conf
 
 # initramfs
 mkinitcpio -P
