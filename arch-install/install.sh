@@ -80,11 +80,10 @@ PACKAGES=(
   iw
   wpa_supplicant
   dialog
-  network-manager-applet
   networkmanager-openvpn
-  bluez-utils
   libinput
   # misc
+  gnome-themes-extra
   gnome-power-manager
   zsh
   git
@@ -94,18 +93,13 @@ PACKAGES=(
   xdg-user-dirs
   xdg-utils
   # display
-  sway
-  swaylock
-  swayidle
-  lightdm
-  lightdm-gtk-greeter
-  xorg-server
-  xorg-server-xwayland
+  gnome
+  gnome-extra
+  gdm
   # fonts
   fontconfig
   freetype2
   ttf-liberation
-  ttf-ms-fonts
   noto-fonts
   noto-fonts-emoji
   ttf-jetbrains-mono
