@@ -57,35 +57,22 @@ makepkg -si
 
 # install packages from aur using yay
 PACKAGES=(
-  # wm
-  waybar
-  wofi
-  kanshi
-  mako
   libpipewire02
   xdg-desktop-portal-wlr
   # theme
-  pop-gtk-theme
+  pop-gtk-theme-bin
   pop-icon-theme-git
   xcursor-openzone
-  gnome-themes-extra
-  gtk-engines
   # misc
+  light
   playerctl
-  waybar
-  grim
-  slurp
-  swappy
   ffmpeg
-  rsync
-  archivemount
   starship-bin
   wl-clipboard
   # apps
   alacritty
   nnn
   neovim-nightly
-  feh
 )
 yay -S ${PACKAGES[@]}
 yay -Yc
