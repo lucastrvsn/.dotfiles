@@ -31,7 +31,7 @@ passwd $username
 
 # configure home directory
 mkhomedir_helper $username
-LC_ALL=C xdg-user-dirs-update --force
+LC_ALL=C; xdg-user-dirs-update --force
 
 # initramfs
 mkinitcpio -P
