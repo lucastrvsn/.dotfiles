@@ -42,4 +42,4 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 # setup services
 systemctl enable NetworkManager.service
-systemctl enable lightdm.service
+systemctl enable gdm.service
