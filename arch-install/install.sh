@@ -83,8 +83,8 @@ PACKAGES=(
   networkmanager-openvpn
   libinput
   # misc
-  gnome-themes-extra
-  gnome-power-manager
+  # gnome-themes-extra
+  # gnome-power-manager
   zsh
   git
   curl
@@ -93,9 +93,13 @@ PACKAGES=(
   xdg-user-dirs
   xdg-utils
   # display
-  gnome
-  gnome-extra
-  gdm
+  # gnome
+  # gnome-extra
+  # gdm
+  xfce4
+  xfce4-goodies
+  lightdm
+  lightdm-gtk-greeter
   # fonts
   fontconfig
   freetype2

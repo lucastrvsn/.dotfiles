@@ -34,25 +34,9 @@ cat > ~/.config/fontconfig/fonts.conf << EOL
 </fontconfig>
 EOL
 
-# configure theme
-echo "configuring theme config"
-mkdir -p ~/.config/gtk-3.0
-cat > ~/.config/gtk-3.0/settings.ini << EOL
-[Settings]
-gtk-application-prefer-dark-theme=true
-gtk-theme-name=Pop-dark
-gtk-icon-theme-name=Pop
-gtk-font-name=Noto Sans 11
-gtk-cursor-theme-name=OpenZone_White
-gtk-cursor-theme-size=24
-gtk-xft-antialias=1
-gtk-xft-hinting=1
-gtk-xft-hintstyle=hintfull
-EOL
-
 # install yay
-git clone https://aur.archlinux.org/yay.git
-cd yay
+git clone https://aur.archlinux.org/yay.git ~
+cd ~/yay
 makepkg -si
 
 # install packages from aur using yay
@@ -60,17 +44,18 @@ PACKAGES=(
   libpipewire02
   xdg-desktop-portal-wlr
   # theme
-  pop-gtk-theme-bin
-  pop-icon-theme-git
+  # pop-gtk-theme-bin
+  # pop-icon-theme-git
   xcursor-openzone
   # misc
   light
   playerctl
   ffmpeg
   starship-bin
-  wl-clipboard
+  # wl-clipboard
+  xclip
+  xsel
   # apps
-  alacritty
   nnn
   neovim-nightly
 )
@@ -78,6 +63,7 @@ yay -S ${PACKAGES[@]}
 yay -Yc
 
 # clean yay build directory
-rm -rf yay
+rm -rf ~/yay
+cd ~
 
 echo "all packages has been installed."

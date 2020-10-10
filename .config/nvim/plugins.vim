@@ -7,21 +7,6 @@ try
   Plug 'nvim-lua/completion-nvim' " completion using lsp
   Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
   Plug 'nvim-treesitter/nvim-treesitter' " nvim treesiter
-  " languages
-  " Plug 'HerringtonDarkholme/yats.vim' " typescript
-  " Plug 'MaxMEllon/vim-jsx-pretty' " jsx
-  " Plug 'arzg/vim-sh' " shell
-  " Plug 'cakebaker/scss-syntax.vim' " scss
-  " Plug 'elzr/vim-json' " json
-  " Plug 'jxnblk/vim-mdx-js' " mdx
-  " Plug 'othree/html5.vim' " html
-  " Plug 'pangloss/vim-javascript' " js
-  " Plug 'plasticboy/vim-markdown' " md
-  " Plug 'rust-lang/rust.vim' " rust
-  " Plug 'stephpy/vim-yaml' " yaml
-  " Plug 'tbastos/vim-lua' " lua
-  " Plug 'tpope/vim-git' " git
-  " Plug 'vim-jp/vim-cpp' " c/cpp
   " misc
   Plug 'unblevable/quick-scope' " improve t and f keys
   Plug 'airblade/vim-rooter' " set root of git repository
@@ -45,10 +30,7 @@ try
   Plug 'tyru/caw.vim' " comment plugin
   Plug 'yggdroot/indentline' " beatiful line indentation
   " themes
-  Plug 'alessandroyorba/sierra'
-  Plug 'glepnir/oceanic-material'
-  Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-  Plug 'ayu-theme/ayu-vim'
+  Plug 'sainnhe/gruvbox-material'
   call plug#end()
 catch
   echom 'vim-plug not installed'

@@ -14,10 +14,6 @@ endfor
 vmap <silent> < <gv
 vmap <silent> > >gv
 
-" begening of line
-nnoremap 0 ^
-nnoremap ^ 0
-
 " deal with clipboard
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y

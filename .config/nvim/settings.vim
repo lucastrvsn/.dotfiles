@@ -63,14 +63,11 @@ endif
 " styles {{{
   set termguicolors
   set background=dark
-  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
-    \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-    \,sm:block-blinkwait175-blinkoff150-blinkon175
+  set guicursor=n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20
 
-  let g:oceanic_material_transparent_background = 0
-  let g:oceanic_material_allow_reverse = 1
-  let g:oceanic_material_background = 'ocean'
-  colorscheme oceanic_material
+  let g:gruvbox_material_palette = 'material'
+  let g:gruvbox_material_background = 'medium'
+  colorscheme gruvbox-material
 
   autocmd BufEnter * :syntax sync fromstart
 " }}}
