@@ -70,36 +70,38 @@ PACKAGES=(
   grub
   efibootmgr
   intel-ucode
-  zsh
   mesa
+  xf86-video-intel
+  vulkan-intel
   pulseaudio
   sudo
   openssh
   # network, bluetooth, touchpad
-  networkmanager
-  iw
+  connman
+  iwd
   wpa_supplicant
+  bluez
+  openvpn
   dialog
-  networkmanager-openvpn
   libinput
   # misc
-  # gnome-themes-extra
-  # gnome-power-manager
-  zsh
   git
   curl
-  alacritty
   ripgrep
+  zsh
+  alacritty
+  libpipewire02
   xdg-user-dirs
   xdg-utils
+  xdg-desktop-portal-wlr
+  wofi
+  playerctl
+  wl-clipboard
   # display
-  # gnome
-  # gnome-extra
-  # gdm
-  xfce4
-  xfce4-goodies
-  lightdm
-  lightdm-gtk-greeter
+  sway
+  swayidle
+  swaylock
+  xorg-server-xwayland
   # fonts
   fontconfig
   freetype2

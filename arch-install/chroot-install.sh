@@ -31,7 +31,7 @@ passwd $username
 
 # configure home directory
 mkhomedir_helper $username
-LC_ALL=C; xdg-user-dirs-update --force
+LC_ALL=C bash -c 'xdg-user-dirs-update --force'
 
 # initramfs
 mkinitcpio -P
@@ -41,5 +41,5 @@ grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=arch
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # setup services
-systemctl enable NetworkManager.service
+systemctl enable connman.service
 systemctl enable lightdm.service

@@ -41,20 +41,11 @@ makepkg -si
 
 # install packages from aur using yay
 PACKAGES=(
-  libpipewire02
-  xdg-desktop-portal-wlr
   # theme
-  # pop-gtk-theme-bin
-  # pop-icon-theme-git
   xcursor-openzone
   # misc
   light
-  playerctl
-  ffmpeg
   starship-bin
-  # wl-clipboard
-  xclip
-  xsel
   # apps
   nnn
   neovim-nightly
