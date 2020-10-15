@@ -95,7 +95,7 @@ echo "choose what do you want to install"
 read -p 'GNOME (g) or sway (s)? ' de
 if [ $de = 'g' ] || [ $de = 'G' ]
 then
-  PACKAGES+=(gnome gnome-extra)
+  PACKAGES+=(gnome gnome-extra gdm)
 else
   PACKAGES+=(
     sway
