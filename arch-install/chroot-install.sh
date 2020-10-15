@@ -41,5 +41,14 @@ grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=arch
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # setup services
-systemctl enable connman.service
-systemctl enable lightdm.service
+if pacman -Qs networkmanager > /dev/null ; then
+  systemctl enable NetworkManager.service
+fi
+
+if pacman -Qs connman > /dev/null ; then
+  systemctl enable connman.service
+fi
+
+if pacman -Qs gdm > /dev/null ; then
+  systemctl enable gdm.service
+fi
