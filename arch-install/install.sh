@@ -62,7 +62,6 @@ reflector -l 12 --sort rate --save /etc/pacman.d/mirrorlist
 echo "starting arch install..."
 
 PACKAGES=(
-  # base
   base
   base-devel
   linux
@@ -76,40 +75,45 @@ PACKAGES=(
   pulseaudio
   sudo
   openssh
-  # network, bluetooth, touchpad
-  connman
-  iwd
-  wpa_supplicant
-  bluez
   openvpn
-  dialog
-  libinput
-  # misc
   git
   curl
   ripgrep
   zsh
-  alacritty
   libpipewire02
   xdg-user-dirs
   xdg-utils
   xdg-desktop-portal-wlr
-  wofi
-  playerctl
   wl-clipboard
-  # display
-  sway
-  swayidle
-  swaylock
-  xorg-server-xwayland
-  # fonts
-  fontconfig
-  freetype2
   ttf-liberation
   noto-fonts
   noto-fonts-emoji
   ttf-jetbrains-mono
 )
+
+echo "choose what do you want to install"
+read -p 'GNOME (g) or sway (s)? ' de
+if [ $de = 'g' ] || [ $de = 'G' ]
+then
+  PACKAGES+=(gnome gnome-extra)
+else
+  PACKAGES+=(
+    sway
+    swayidle
+    swaylock
+    connman
+    iwd
+    wpa_supplicant
+    bluez
+    dialog
+    libinput
+    alacritty
+    wofi
+    playerctl
+    xorg-server-xwayland
+  )
+fi
+
 pacstrap /mnt ${PACKAGES[@]}
 
 # fstab
@@ -119,7 +123,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 cp -rfv ./chroot-install.sh /mnt/chroot-install.sh
 chmod a+x /mnt/chroot-install.sh
 
-# copy the updated mirrorlist to the installed os
+# copy the updated mirrorlist to the installed system
 cp -rfv /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
 # chroot
