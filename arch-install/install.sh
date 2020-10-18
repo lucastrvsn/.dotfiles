@@ -70,8 +70,6 @@ PACKAGES=(
   efibootmgr
   intel-ucode
   mesa
-  xf86-video-intel
-  vulkan-intel
   pulseaudio
   sudo
   openssh
