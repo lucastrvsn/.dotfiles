@@ -1,4 +1,16 @@
 add_newline = false
 
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[✗](bold red) "
+
+[hostname]
+ssh_only = false
+
+[time]
+disabled = false
+format = '[$time]($style) '
+time_format = "%H:%M"
+
 [username]
 show_always = true

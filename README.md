@@ -1,21 +1,27 @@
 # dotfiles
 
-- [JetBrains Mono][]: font used everywhere
-- [ripgrep][]: fuzzy searcher
+### This is all my config and tools I use daily as software engineer.
 
-## zsh
+---
 
-- [zplug][]: plugin manager
-- [starship][]: prompt
-- [asdf][]: version manager
+- [asdf][]: languages version manager
+- [gnome][]: desktop enviroment
+- [fzf][]: fuzzy search
+- [jetbrains-mono][]: font used everywhere
+- [kitty][]: terminal emulator
+- [ripgrep][]: better grep
+- [starship][]: shell prompt
+- [vim-plug][]: neovim plugin manager
+- [zplug][]: zsh plugin manager
+- [zsh][]: awesome shell
 
-## neovim
-
-- [vim-plug][]: plugin manager
-
-[JetBrains Mono]: https://www.jetbrains.com/lp/mono/
-[zplug]: https://github.com/zplug/zplug/
-[starship]: https://starship.rs/
 [asdf]: https://asdf-vm.com/
-[vim-plug]: https://github.com/junegunn/vim-plug/
+[gnome]: https://gnome.org/
+[fzf]: https://github.com/junegunn/fzf/
+[jetbrains-mono]: https://jetbrains.com/lp/mono/
+[kitty]: https://github.com/kovidgoyal/kitty/
 [ripgrep]: https://github.com/BurntSushi/ripgrep/
+[starship]: https://starship.rs/
+[vim-plug]: https://github.com/junegunn/vim-plug/
+[zplug]: https://github.com/zplug/zplug/
+[zsh]: https://zsh.org/

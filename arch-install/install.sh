@@ -56,7 +56,7 @@ swapon /dev/sda2
 # pacman
 pacman -Sy
 pacman -S --noconfirm --needed --noprogressbar --quiet reflector
-reflector -l 12 --sort rate --save /etc/pacman.d/mirrorlist
+reflector --country 'Brazil' --country 'United States' --sort rate --save /etc/pacman.d/mirrorlist
 
 # arch install
 echo "starting arch install..."
@@ -70,8 +70,9 @@ PACKAGES=(
   efibootmgr
   intel-ucode
   mesa
-  xf86-video-intel
-  vulkan-intel
+  alsa-oss
+  alsa-lib
+  alsa-utils
   pulseaudio
   sudo
   openssh
@@ -80,37 +81,101 @@ PACKAGES=(
   curl
   ripgrep
   zsh
+  ufw
+  playerctl
   libpipewire02
   xdg-user-dirs
   xdg-utils
   xdg-desktop-portal-wlr
-  wl-clipboard
   ttf-liberation
   noto-fonts
   noto-fonts-emoji
   ttf-jetbrains-mono
 )
 
-echo "choose what do you want to install"
-read -p 'GNOME (g) or sway (s)? ' de
-if [ $de = 'g' ] || [ $de = 'G' ]
+# codec and other media packages
+PACKAGES+=(
+  ffmpeg
+  exfat-utils
+  fuse-exfat
+  a52dec
+  faac
+  faad2
+  flac
+  jasper
+  lame
+  libdca
+  libdv
+  libmad
+  libmpeg2
+  libtheora
+  libvorbis
+  libxv
+  wavpack
+  x264
+  x265
+  xvidcore
+  gstreamer
+  gst-libav
+  gst-plugins-good
+)
+
+# disc and archive packages
+PACKAGES+=(
+  tar
+  gzip
+  unzip
+  unrar
+  rsync
+  gvfs
+  ntfs-3g
+  gvfs-afc
+)
+
+echo "install laptop utils (wireless, bluetooth, touchpad)?"
+read -p 'y/N: ' de
+if ! [ $de = 'y' ] && ! [ $de = 'Y' ]
 then
-  PACKAGES+=(gnome gnome-extra gdm)
-else
   PACKAGES+=(
-    sway
-    swayidle
-    swaylock
-    connman
+    tlp
+    light
     iwd
     wpa_supplicant
     bluez
     dialog
     libinput
+  )
+fi
+
+echo "choose what do you want to install"
+read -p 'GNOME (g), sway (s) or awesome (a)? ' de
+if [ $de = 'g' ] || [ $de = 'G' ]
+then
+  PACKAGES+=(
+    gnome
+    gnome-extra
+    gdm
+    wl-clipboard
+  )
+elif [ $de = 's' ] || [ $de = 'S' ]
+then
+  PACKAGES+=(
+    sway
+    swayidle
+    swaylock
+    connman
     alacritty
     wofi
-    playerctl
+    wl-clipboard
+    slim
     xorg-server-xwayland
+  )
+else
+  PACKAGES+=(
+    xorg
+    awesome
+    slim
+    connman
   )
 fi
 
