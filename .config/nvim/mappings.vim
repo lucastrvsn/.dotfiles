@@ -23,10 +23,10 @@ nnoremap <leader>P "+P
 
 " neovim terminal
 if has('nvim')
-  au TermOpen * tnoremap <Esc> <C-\><C-n>
   nnoremap <leader>c :tabnew +terminal<cr>
   tnoremap <leader>c <C-\><C-n>:tabnew +terminal<cr>
 
+  autocmd TermOpen * tnoremap <Esc> <C-\><C-n>
   autocmd BufWinEnter,WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
 endif

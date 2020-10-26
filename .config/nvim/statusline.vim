@@ -53,7 +53,7 @@ function! ActiveStatusLine() abort
   let l:statusline.='%1*%{Modified()}'
   let l:statusline.=' %t '
   let l:statusline.='%7*[%n%R%W]'
-  let l:statusline.='%6*%{GitBranch()}'
+  let l:statusline.='%6*%{FugitiveStatusline()}'
   let l:statusline.='%*%=' " right side
   let l:statusline.='%1* %{FileType()} %7*|%1* %l:%c %7*|%1* %{LinePercent()} '
   return l:statusline

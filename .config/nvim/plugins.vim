@@ -1,54 +1,34 @@
 try
   call plug#begin()
-  " completion
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf
-  Plug 'junegunn/fzf.vim' " fzf integration with vim
-  Plug 'neovim/nvim-lspconfig' " neovim lsp common configs
-  Plug 'nvim-lua/completion-nvim' " completion using lsp
-  Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
-  Plug 'nvim-treesitter/nvim-treesitter' " nvim treesiter
-  " misc
-  Plug 'unblevable/quick-scope' " improve t and f keys
   Plug 'airblade/vim-rooter' " set root of git repository
   Plug 'andymass/vim-matchup' " match more vim words
   Plug 'christoomey/vim-tmux-navigator' " tmux integration
+  Plug 'dkarter/bullets.vim' " markdown bullets
   Plug 'editorconfig/editorconfig-vim' " support for editorconfig
   Plug 'farmergreg/vim-lastplace' " remember last cursor position
   Plug 'haya14busa/is.vim' " incsearch improved
   Plug 'jiangmiao/auto-pairs' " auto add closing brackets
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf
+  Plug 'junegunn/fzf.vim' " fzf integration with vim
   Plug 'justinmk/vim-dirvish' " fast netrw alternative
   Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
-  Plug 'machakann/vim-highlightedyank' " highlight yanked text
   Plug 'matze/vim-move' " move lines up and down
-  Plug 'xuyuanp/scrollbar.nvim' " show scrollbar
   Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursors
   Plug 'mhinz/vim-signify' " gutter
-  Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " code formatter
-  Plug 'tpope/vim-eunuch' " unix command integration
+  Plug 'neovim/nvim-lspconfig' " neovim lsp common configs
+  Plug 'nvim-lua/completion-nvim' " completion using lsp
+  Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
+  Plug 'nvim-treesitter/nvim-treesitter' " nvim treesiter
+  Plug 'prettier/vim-prettier', { 'do': 'npm install' } " code formatter
+  Plug 'sainnhe/gruvbox-material' " theme
   Plug 'tpope/vim-fugitive' " git integration
   Plug 'tpope/vim-surround' " change surround characters
   Plug 'tyru/caw.vim' " comment plugin
-  Plug 'yggdroot/indentline' " beatiful line indentation
-  " themes
-  Plug 'sainnhe/gruvbox-material'
+  Plug 'unblevable/quick-scope' " improve t and f keys
   call plug#end()
 catch
   echom 'vim-plug not installed'
 endtry
-
-" nvim-lsp {{{
-  nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
-  nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<cr>
-  nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<cr>
-  nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<cr>
-  nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<cr>
-  nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<cr>
-  nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<cr>
-  nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<cr>
-  nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<cr>
-
-  " autocmd CursorHold * silent lua vim.lsp.buf.hover()
-" }}}
 
 " completion-nvim {{{
   let g:completion_enable_auto_hover = 1
@@ -63,14 +43,13 @@ endtry
 
 " diagnostic-nvim {{{
   let g:diagnostic_enable_virtual_text = 1
-  let g:diagnostic_virtual_text_prefix = '>'
-  let g:diagnostic_trimmed_virtual_text = '50'
+  let g:diagnostic_virtual_text_prefix = '━ '
   let g:diagnostic_enable_underline = 1
 
-  call sign_define("LspDiagnosticsErrorSign", {"text": "✖", "texthl" : "LspDiagnosticsError"})
-  call sign_define("LspDiagnosticsWarningSign", {"text": "⚠", "texthl" : "LspDiagnosticsWarning"})
-  call sign_define("LspDiagnosticsInformationSign", {"text": "▶", "texthl" : "LspDiagnosticsInformation"})
-  call sign_define("LspDiagnosticsHintSign", {"text": "★", "texthl" : "LspDiagnosticsHint"})
+  call sign_define("LspDiagnosticsErrorSign", {"text": "❌", "texthl" : "LspDiagnosticsError"})
+  call sign_define("LspDiagnosticsWarningSign", {"text": "⚠️", "texthl" : "LspDiagnosticsWarning"})
+  call sign_define("LspDiagnosticsInformationSign", {"text": "ℹ️", "texthl" : "LspDiagnosticsInformation"})
+  call sign_define("LspDiagnosticsHintSign", {"text": "💡", "texthl" : "LspDiagnosticsHint"})
 
   highlight! link LspDiagnosticsError SpellBad
   highlight! link LspDiagnosticsHint SpellCap
@@ -107,22 +86,13 @@ endtry
 " }}}
 
 " fzf {{{
-  function! FzfOmniFiles()
-    if fugitive#head() != ''
-      :GitFiles
-    else
-      :Files
-    endif
-  endfunction
-
   let g:fzf_action = {
-    \ 'ctrl-t': 'tab split',
     \ 'ctrl-x': 'split',
     \ 'ctrl-v': 'vsplit' }
   let g:fzf_layout = { 'down': '~40%' }
   let $FZF_DEFAULT_COMMAND="rg --files --hidden --smart-case"
 
-  nnoremap <C-p>     :Files<cr>
+  nnoremap <expr> <C-p> FugitiveHead() != '' ? ':GitFiles<CR>' : ':Files<CR>'
   nnoremap <leader>w :Windows<cr>
   nnoremap <leader>g :Rg<cr>
   nnoremap <leader>b :Buffers<cr>
@@ -133,12 +103,6 @@ endtry
     \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 " }}}
 
-" indentline {{{
-  let g:indentLine_enabled = 0 " disable vertical lines
-  let g:indentLine_leadingSpaceEnabled = 1 " enable leading spaces
-  let g:indentLine_leadingSpaceChar = '·'
-" }}}
-
 " auto-pairs {{{
   let g:AutoPairsMultilineClose = 0
 " }}}
@@ -146,27 +110,4 @@ endtry
 " vim-rooter {{{
   let g:rooter_silent_chdir = 1
   let g:rooter_change_directory_for_non_project_files = 'current'
-" }}}
-
-" scrollbar.nvim {{{
-  let g:scrollbar_shape = {
-    \ 'head': '',
-    \ 'body': '█',
-    \ 'tail': '',
-    \ }
-  let g:scrollbar_highlight = {
-    \ 'head': 'StatusLineNC',
-    \ 'body': 'StatusLineNC',
-    \ 'tail': 'StatusLineNC',
-    \ }
-
-  augroup scrollbar_nvim
-    autocmd!
-    autocmd BufEnter    * silent! lua require('scrollbar').show()
-    autocmd BufLeave    * silent! lua require('scrollbar').clear()
-    autocmd CursorMoved * silent! lua require('scrollbar').show()
-    autocmd VimResized  * silent! lua require('scrollbar').show()
-    autocmd FocusGained * silent! lua require('scrollbar').show()
-    autocmd FocusLost   * silent! lua require('scrollbar').clear()
-  augroup end
 " }}}
