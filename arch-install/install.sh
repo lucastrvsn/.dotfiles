@@ -81,7 +81,6 @@ PACKAGES=(
   curl
   ripgrep
   zsh
-  ufw
   playerctl
   libpipewire02
   xdg-user-dirs
