@@ -81,7 +81,6 @@ PACKAGES=(
   curl
   ripgrep
   zsh
-  ufw
   playerctl
   libpipewire02
   xdg-user-dirs
@@ -167,14 +166,12 @@ then
     alacritty
     wofi
     wl-clipboard
-    slim
     xorg-server-xwayland
   )
 else
   PACKAGES+=(
     xorg
     awesome
-    slim
     connman
   )
 fi

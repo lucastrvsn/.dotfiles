@@ -41,9 +41,6 @@ grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=arch
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # setup services
-ufw enable
-systemctl enable ufw.service
-
 if pacman -Qs tlp > /dev/null ; then
   systemctl enable tlp.service
 fi
