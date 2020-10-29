@@ -167,14 +167,12 @@ then
     alacritty
     wofi
     wl-clipboard
-    slim
     xorg-server-xwayland
   )
 else
   PACKAGES+=(
     xorg
     awesome
-    slim
     connman
   )
 fi
