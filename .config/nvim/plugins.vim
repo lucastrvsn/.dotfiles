@@ -35,10 +35,10 @@ endtry
   let g:completion_auto_change_source = 1
   let g:completion_enable_auto_paren = 0
   let g:completion_auto_change_source = 1
+  let g:completion_matching_smart_case = 1
 
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  inoremap <silent><expr> <C-Space> completion#trigger_completion()
 " }}}
 
 " diagnostic-nvim {{{

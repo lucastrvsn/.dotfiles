@@ -3,6 +3,9 @@ source ~/.zplug/init.zsh
 zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+zplug 'denysdovhan/spaceship-prompt', use:spaceship.zsh, from:github, as:theme
+zplug 'laurenkt/zsh-vimto'
+zplug 'owenvoke/quoter-zsh'
 
 zplug load
 
@@ -16,6 +19,10 @@ else
   export CLICOLOR=1
 fi
 
+# defaults
+export TERM="xterm-256color"
+export EDITOR="nvim"
+
 # aliases
 alias ls="ls ${lsflags}"
 alias ll="ls ${lsflags} -l"
@@ -27,13 +34,11 @@ alias vim=nvim
 alias vi=nvim
 alias v=nvim
 
-# defaults
-EDITOR="nvim"
-
 # history
 HISTFILE=~/.history-zsh
 HISTSIZE=10000
 SAVEHIST=10000
+setopt always_to_end
 setopt append_history           # allow multiple sessions to append to one history
 setopt bang_hist                # treat ! special during command expansion
 setopt extended_history         # Write history in :start:elasped;command format
@@ -67,21 +72,17 @@ export BLOCK_SIZE="'1"          # Add commas to file sizes
 typeset -U path                 # keep duplicates out of the path
 path+=(.)                       # append current directory to path (controversial)
 
-# bindkey
-bindkey -e
-bindkey '\e[3~' delete-char
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey ' '  magic-space
+# spaceship prompt
+SPACESHIP_PROMPT_ADD_NEWLINE=false
+SPACESHIP_USER_SHOW=always
+SPACESHIP_HOST_SHOW=always
+SPACESHIP_VI_MODE_SHOW=false
 
 # asdf
 . ~/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit
 compinit
-
-# starship
-eval "$(starship init zsh)"
 
 # auto start tmux
 if [ -z "$TMUX" ]; then
