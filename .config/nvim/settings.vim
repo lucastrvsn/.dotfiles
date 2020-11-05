@@ -43,6 +43,7 @@ set pumblend=20
 set pumheight=15
 set signcolumn=number
 set list listchars=tab:░░,trail:·
+set fillchars=eob:~
 set timeout
 set timeoutlen=1000
 set ttimeoutlen=100

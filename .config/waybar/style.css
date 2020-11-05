@@ -1,0 +1,118 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: 'JetBrains Mono', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  min-height: 0;
+}
+
+window {
+  font-weight: bold;
+  background-color: rgba(40, 40, 40, 0.8);
+  color: rgb(212, 190, 152);
+}
+
+window#waybar {
+  transition-property: background-color;
+  transition-duration: 120ms;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+#workspaces button {
+  padding: 4px 2px;
+  margin: 0 2px;
+  background-color: rgba(212, 190, 152, 0.1);
+  color: rgb(212, 190, 152);
+  border-radius: 2px;
+}
+
+#workspaces button.focused {
+  background-color: rgba(212, 190, 152, 0.4);
+}
+
+#workspaces button.urgent {
+  background-color: rgba(234, 105, 98, 0.8);
+}
+
+#mode {
+  background-color: rgba(137, 180, 130, 0.8);
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#mpd {
+  padding: 0 8px;
+  margin: 0 4px;
+  font-weight: bold;
+  background-color: rgba(212, 190, 152, 0.02);
+  color: rgb(212, 190, 152);
+}
+
+#clock {
+  font-weight: normal;
+  background-color: transparent;
+  color: rgb(212, 190, 152);
+}
+
+#battery {
+  color: rgb(125, 174, 163);
+}
+
+@keyframes blink {
+  to {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+#battery.critical:not(.charging) {
+  background-color: #f53c3c;
+  color: #ffffff;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#backlight {
+  color: rgb(212, 190, 152);
+}
+
+#pulseaudio {
+  color: rgb(211, 134, 155);
+}
+
+#temperature {
+  background-color: #f0932b;
+}
+
+#temperature.critical {
+  background-color: #eb4d4b;
+}
+
+#tray {
+  padding: 0;
+  background-color: transparent;
+}
+
+#language {
+  background: #00b093;
+  color: #740864;
+  padding: 0 5px;
+  margin: 0 5px;
+  min-width: 16px;
+}

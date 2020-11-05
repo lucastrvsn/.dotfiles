@@ -7,7 +7,6 @@ try
   Plug 'editorconfig/editorconfig-vim' " support for editorconfig
   Plug 'farmergreg/vim-lastplace' " remember last cursor position
   Plug 'haya14busa/is.vim' " incsearch improved
-  Plug 'jiangmiao/auto-pairs' " auto add closing brackets
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf
   Plug 'junegunn/fzf.vim' " fzf integration with vim
   Plug 'justinmk/vim-dirvish' " fast netrw alternative
@@ -19,7 +18,8 @@ try
   Plug 'nvim-lua/completion-nvim' " completion using lsp
   Plug 'nvim-lua/diagnostic-nvim' " erros and warning using lsp
   Plug 'nvim-treesitter/nvim-treesitter' " nvim treesiter
-  Plug 'prettier/vim-prettier', { 'do': 'npm install' } " code formatter
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " code formatter
+  Plug 'rstacruz/vim-closer' " auto close things
   Plug 'sainnhe/gruvbox-material' " theme
   Plug 'tpope/vim-fugitive' " git integration
   Plug 'tpope/vim-surround' " change surround characters
@@ -31,11 +31,13 @@ catch
 endtry
 
 " completion-nvim {{{
+  let g:completion_enable_auto_popup = 1
   let g:completion_enable_auto_hover = 1
-  let g:completion_auto_change_source = 1
-  let g:completion_enable_auto_paren = 0
-  let g:completion_auto_change_source = 1
+  let g:completion_timer_cycle = 300
+  let g:completion_sorting = "length"
+  let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
   let g:completion_matching_smart_case = 1
+  let g:completion_trigger_on_delete = 1
 
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -51,10 +53,10 @@ endtry
   call sign_define("LspDiagnosticsInformationSign", {"text": "ℹ️", "texthl" : "LspDiagnosticsInformation"})
   call sign_define("LspDiagnosticsHintSign", {"text": "💡", "texthl" : "LspDiagnosticsHint"})
 
-  highlight! link LspDiagnosticsError SpellBad
-  highlight! link LspDiagnosticsHint SpellCap
-  highlight! link LspDiagnosticsInfo SpellLocal
-  highlight! link LspDiagnosticsWarning SpellRare
+  " highlight! link LspDiagnosticsError SpellBad
+  " highlight! link LspDiagnosticsHint SpellCap
+  " highlight! link LspDiagnosticsInfo SpellLocal
+  " highlight! link LspDiagnosticsWarning SpellRare
 
   autocmd CursorHold * silent lua vim.lsp.util.show_line_diagnostics()
 " }}}
@@ -92,11 +94,11 @@ endtry
   let g:fzf_layout = { 'down': '~40%' }
   let $FZF_DEFAULT_COMMAND="rg --files --hidden --smart-case"
 
-  nnoremap <expr> <C-p> FugitiveHead() != '' ? ':GitFiles<CR>' : ':Files<CR>'
-  nnoremap <leader>w :Windows<cr>
-  nnoremap <leader>g :Rg<cr>
-  nnoremap <leader>b :Buffers<cr>
-  nnoremap <leader>h :History<cr>
+  nnoremap <C-p>     :Files<CR>
+  nnoremap <leader>w :Windows<CR>
+  nnoremap <leader>g :Rg<CR>
+  nnoremap <leader>b :Buffers<CR>
+  nnoremap <leader>h :History<CR>
 
   autocmd! FileType fzf
   autocmd  FileType fzf set laststatus=0 noshowmode noruler
