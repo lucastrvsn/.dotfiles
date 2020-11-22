@@ -5,7 +5,6 @@ zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
 zplug 'denysdovhan/spaceship-prompt', use:spaceship.zsh, from:github, as:theme
 zplug 'laurenkt/zsh-vimto'
-zplug 'owenvoke/quoter-zsh'
 
 zplug load
 

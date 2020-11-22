@@ -39,8 +39,9 @@ function! GitBranch() abort
   let l:text = ""
 
   if l:branch != ""
-    let l:text.=" "
-    let l:text.="[" . l:branch . "]"
+    let l:gitsigns = get(b:, 'gitsigns_status', '')
+    let l:text.=" " . l:branch
+    let l:text.=l:gitsigns != "" ? ' ' . l:gitsigns : ""
   endif
 
   return l:text
@@ -48,12 +49,12 @@ endfunction
 
 function! ActiveStatusLine() abort
   let l:mode = mode()
-  let l:statusline=''
+  let l:statusline='' " left side
   let l:statusline.=CurrentModeColor() . ' ' . CurrentModeText() . ' '
   let l:statusline.='%1*%{Modified()}'
   let l:statusline.=' %t '
   let l:statusline.='%7*[%n%R%W]'
-  let l:statusline.='%6*%{FugitiveStatusline()}'
+  let l:statusline.='%6*%{GitBranch()}'
   let l:statusline.='%*%=' " right side
   let l:statusline.='%1* %{FileType()} %7*|%1* %l:%c %7*|%1* %{LinePercent()} '
   return l:statusline
@@ -62,6 +63,7 @@ endfunction
 function! InactiveStatusLine() abort
   let l:statusline=''
   let l:statusline.='%1* %t %*'
+  let l:statusline.='%7*[%n%R%W]'
   return l:statusline
 endfunction
 

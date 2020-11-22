@@ -37,12 +37,15 @@ set smarttab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+set smartindent
 set number
 set relativenumber
-set pumblend=20
+set pumblend=16
+set winblend=16
 set pumheight=15
-set signcolumn=number
+set signcolumn=yes:1
 set list listchars=tab:░░,trail:·
+set fillchars=eob:~
 set timeout
 set timeoutlen=1000
 set ttimeoutlen=100
@@ -63,23 +66,24 @@ set showmatch
 set colorcolumn=80
 set synmaxcol=120
 
-if exists('$TMUX')
-  set t_ut=
-endif
-
 " styles {{{
   set termguicolors
   set background=dark
   set guicursor=n-v-c-sm:block,i-ci-ve:ver25-Cursor,r-cr-o:hor20
-
+  let &t_Cs = "\<Esc>[4:3m"
+  let &t_Ce = "\<Esc>[4:0m"
   let g:gruvbox_material_palette = 'material'
-  let g:gruvbox_material_background = 'medium'
+  let g:gruvbox_material_background = 'soft'
+  let g:gruvbox_material_enable_italic = 1
+  let g:gruvbox_material_transparent_background = 0
+  let g:gruvbox_material_diagnostic_line_highlight = 1
   colorscheme gruvbox-material
 
-  autocmd BufEnter * :syntax sync fromstart
+  highlight! SpellBad cterm=undercurl gui=undercurl
+  highlight! LspDiagnosticsUnderlineError cterm=undercurl gui=undercurl
 " }}}
 
 augroup highlight_yank
   autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({ timeout = 300 })
 augroup END
