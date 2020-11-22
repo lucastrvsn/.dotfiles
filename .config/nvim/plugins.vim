@@ -37,6 +37,8 @@ endtry
   let g:completion_matching_smart_case = 1
   let g:completion_auto_change_source = 1
   let g:completion_matching_strategy_list = ['fuzzy', 'substring', 'exact', 'all']
+  let g:completion_matching_smart_case = 1
+  let g:completion_trigger_on_delete = 1
 
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"

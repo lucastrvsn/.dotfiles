@@ -18,10 +18,6 @@ else
   export CLICOLOR=1
 fi
 
-# defaults
-export TERM="xterm-256color"
-export EDITOR="nvim"
-
 # aliases
 alias ls="ls ${lsflags}"
 alias ll="ls ${lsflags} -l"
@@ -84,6 +80,6 @@ autoload -Uz compinit
 compinit
 
 # auto start tmux
-if [ -z "$TMUX" ]; then
-  tmux attach -t TMUX || tmux new -s TMUX
+if which tmux >/dev/null 2>&1; then
+  test -z "$TMUX" && (tmux attach || tmux new-session)
 fi

@@ -1,9 +1,3 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
-
 ### Variables
 set $mod Mod4
 set $left h
@@ -11,22 +5,16 @@ set $down j
 set $up k
 set $right l
 set $term alacritty
-set $menu wofi --show run
+set $menu wofi --mode drun
 
 # default font
-font pango:Fixedsys Excelsior 12
+font pango:JetBrains Mono 12
 
 # drag floating windows
 floating_modifier $mod normal
 
 # output configuration
-output * bg ~/Imagens/wallpapers/wallhaven-oxkjgm.jpg fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_output
+output * bg ~/Pictures/wallpapers/wallhaven-vg7lv3.jpg fill
 
 # idle configuration
 exec swayidle -w \
@@ -51,25 +39,31 @@ input "5426:32:Razer_Razer_Abyssus_1800" {
 }
 
 # layout stuff
-default_border pixel 2
-default_floating_border normal 2
+default_border pixel 1
+default_floating_border normal 1
 hide_edge_borders smart
-gaps inner 10
+gaps inner 8
 gaps outer 0
 smart_gaps on
 
 # colors
-set $client_highlight  #009ddc
-set $client_indicator  #d9d8d8
-set $client_background #231f20
-set $client_foreground #d9d8d8
-set $client_urgent     #ee2e24
+set $bg       #282828
+set $fg       #d4be98
+set $red      #ea6962
+set $orange   #e78a4e
+set $green    #a9b665
+set $blue     #7daea3
+set $purple   #d3869b
+set $aqua     #89b482
+set $darkgray #282828
 
-#                       border             bg                 text               indi               childborder
-client.focused          $client_highlight  $client_highlight  $client_foreground $client_urgent     $client_highlight
-client.focused_inactive $client_background $client_background $client_foreground $client_background $client_background
-client.unfocused        $client_background $client_background $client_foreground $client_background $client_background
-client.urgent           $client_urgent     $client_urgent     $client_foreground $client_urgent     $client_urgent
+#                       border  bg      txt indi    childborder
+client.focused          $orange $orange $bg $orange $orange
+client.focused_inactive $aqua   $aqua   $bg $aqua   $aqua
+client.unfocused        $bg     $bg     $bg $bg     $bg
+client.urgent           $red    $red    $bg $red    $red
+client.placeholder      $bg     $bg     $bg $bg     $bg
+client.background       $bg
 
 # key bindings
 bindsym --to-code {
@@ -206,36 +200,32 @@ bindsym $mod+Shift+e mode "$mode_power"
 
 # statusbar
 bar {
-  position top
-  status_command while ~/.config/sway/bar.sh; do sleep 1; done
-  font pango:Fixedsys Excelsior 12
-  colors {
-    statusline #f6f4e6
-    background #3c2946
-    #                  border  background text
-    focused_workspace  #000000 #ffffff    #ff00ff
-    active_workspace   #000000 #ffffff    #ff00ff
-    inactive_workspace #ffffff #000000    #00ff00
-    binding_mode       #ffd571 #ffd571    #3c2946
-  }
+  swaybar_command waybar
+  # position top
+  # status_command while ~/.config/sway/bar.sh; do sleep 1; done
+  # font pango:Fixedsys Excelsior 12
+  # colors {
+  #   statusline #f6f4e6
+  #   background #3c2946
+  #   #                  border  background text
+  #   focused_workspace  #000000 #ffffff    #ff00ff
+  #   active_workspace   #000000 #ffffff    #ff00ff
+  #   inactive_workspace #ffffff #000000    #00ff00
+  #   binding_mode       #ffd571 #ffd571    #3c2946
+  # }
 }
 
 # set gnome theme
 set $gnome-schema org.gnome.desktop.interface
 
 exec_always {
-  gsettings set $gnome-schema gtk-theme 'Yaru-dark'
-  gsettings set $gnome-schema icon-theme 'Yaru'
+  gsettings set $gnome-schema gtk-theme 'Adwaita-dark'
+  gsettings set $gnome-schema icon-theme 'Adwaita'
   gsettings set $gnome-schema cursor-theme 'OpenZone_White'
   gsettings set $gnome-schema font-name 'Noto Sans 11'
 }
 
-exec_always import-gsettings \
-            gtk-theme:gtk-theme-name \
-            icon-theme:gtk-icon-theme-name \
-            cursor-theme:gtk-cursor-theme-name
-
-# autoexec
+# startup
 exec kanshi
 exec mako
 
