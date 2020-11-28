@@ -28,6 +28,7 @@ set inccommand=nosplit
 set hlsearch
 set smartcase
 set ignorecase
+set gdefault
 set hidden
 set nowrap
 set backspace=indent,eol,start
@@ -38,7 +39,9 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set smartindent
+set autoindent
 set number
+set magic
 set relativenumber
 set pumblend=16
 set winblend=16

@@ -1,6 +1,7 @@
 try
   call plug#begin()
   Plug 'airblade/vim-rooter' " change directory on vim open
+  Plug 'asheq/close-buffers.vim' " close buffers
   Plug 'christoomey/vim-tmux-navigator' " tmux integration
   Plug 'editorconfig/editorconfig-vim' " support for editorconfig
   Plug 'easymotion/vim-easymotion' " cursor magic
@@ -11,7 +12,7 @@ try
   Plug 'junegunn/fzf.vim' " fzf integration with vim
   Plug 'justinmk/vim-dirvish' " fast netrw alternative
   Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
-  Plug 'lewis6991/gitsigns.nvim' " git gutter
+  " Plug 'lewis6991/gitsigns.nvim' " git gutter
   Plug 'matze/vim-move' " move lines up and down
   Plug 'mhinz/vim-startify' " nice vim startup screen
   Plug 'neovim/nvim-lspconfig' " neovim lsp common configs
@@ -37,8 +38,6 @@ endtry
   let g:completion_matching_smart_case = 1
   let g:completion_auto_change_source = 1
   let g:completion_matching_strategy_list = ['fuzzy', 'substring', 'exact', 'all']
-  let g:completion_matching_smart_case = 1
-  let g:completion_trigger_on_delete = 1
 
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -75,6 +74,7 @@ endtry
 " }}}
 
 " prettier {{{
+  let g:prettier#exec_cmd_async = 1
   let g:prettier#config#single_quote = 'true'
   let g:prettier#config#trailing_comma = 'none'
   let g:prettier#autoformat = 0

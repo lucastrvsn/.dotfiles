@@ -3,8 +3,6 @@ source ~/.zplug/init.zsh
 zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
-zplug 'denysdovhan/spaceship-prompt', use:spaceship.zsh, from:github, as:theme
-zplug 'laurenkt/zsh-vimto'
 
 zplug load
 
@@ -17,6 +15,10 @@ else
   lsflags="-GF"
   export CLICOLOR=1
 fi
+
+# defaults
+export TERM="xterm-256color"
+export EDITOR="nvim"
 
 # aliases
 alias ls="ls ${lsflags}"
@@ -67,19 +69,16 @@ export BLOCK_SIZE="'1"          # Add commas to file sizes
 typeset -U path                 # keep duplicates out of the path
 path+=(.)                       # append current directory to path (controversial)
 
-# spaceship prompt
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_USER_SHOW=always
-SPACESHIP_HOST_SHOW=always
-SPACESHIP_VI_MODE_SHOW=false
-
 # asdf
 . ~/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit
 compinit
 
+# start starship
+eval "$(starship init zsh)"
+
 # auto start tmux
-if which tmux >/dev/null 2>&1; then
-  test -z "$TMUX" && (tmux attach || tmux new-session)
+if [ -z "$TMUX" ]; then
+  tmux attach -t TMUX || tmux new -s TMUX
 fi

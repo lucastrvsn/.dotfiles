@@ -14,6 +14,9 @@ for key in ['<Up>', '<Down>', '<Left>', '<Right>']
   exec 'inoremap' key '<Nop>'
 endfor
 
+" save as root
+cmap w!! w !sudo tee % >/dev/null<CR>:e!<CR><CR>
+
 " open my vim config
 nnoremap <Leader>rc :e $MYVIMRC<CR>
 
@@ -28,14 +31,23 @@ nnoremap <Leader>p "+p
 vnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
 
+" buffer navigation
+map <Leader>, <C-^>
+map <Leader>ls :buffers<CR>
+map gb :bnext<CR>
+map gB :bprev<CR>
+
 " git conflict jump
-nnoremap <silent> c[ /\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
-nnoremap <silent> c] ?\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
+nnoremap <silent> <Leader>c /\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
+nnoremap <silent> <Leader>C ?\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
+
+" search and replace the word under cursor
+nmap <leader>* :%s/\<<C-r><C-w>\>//<Left>
 
 " neovim terminal
 if has('nvim')
-  nnoremap <Leader>c :tabnew +terminal<CR>
-  tnoremap <Leader>c <C-\><C-n>:tabnew +terminal<CR>
+  nnoremap <Leader>t :tabnew +terminal<CR>
+  tnoremap <Leader>t <C-\><C-n>:tabnew +terminal<CR>
   autocmd TermOpen * tnoremap <Esc> <C-\><C-n>
   autocmd BufWinEnter,WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
