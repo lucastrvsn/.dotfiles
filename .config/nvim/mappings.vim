@@ -38,8 +38,8 @@ map gb :bnext<CR>
 map gB :bprev<CR>
 
 " git conflict jump
-nnoremap <silent> <Leader>c /\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
-nnoremap <silent> <Leader>C ?\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
+nnoremap <silent> <Leader>gc /\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
+nnoremap <silent> <Leader>gC ?\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
 
 " search and replace the word under cursor
 nmap <leader>* :%s/\<<C-r><C-w>\>//<Left>

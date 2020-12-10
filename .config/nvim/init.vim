@@ -16,9 +16,9 @@ if !exists('g:vscode')
   source $HOME/.config/nvim/settings.vim
   source $HOME/.config/nvim/mappings.vim
   source $HOME/.config/nvim/statusline.vim
-  luafile $HOME/.config/nvim/plugins.lua
-  luafile $HOME/.config/nvim/lsp.lua
-  luafile $HOME/.config/nvim/treesitter.lua
+  luafile $HOME/.config/nvim/lua/plugins.lua
+  luafile $HOME/.config/nvim/lua/lsp.lua
+  luafile $HOME/.config/nvim/lua/treesitter.lua
 else
   source $HOME/.config/nvim/vscode/plugins.vim
   source $HOME/.config/nvim/vscode/settings.vim

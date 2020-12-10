@@ -17,7 +17,6 @@ else
 fi
 
 # defaults
-export TERM="xterm-256color"
 export EDITOR="nvim"
 
 # aliases

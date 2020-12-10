@@ -1,7 +1,12 @@
 local lsp = require('lspconfig')
+local completion = require('completion')
 
 local on_attach = function(client)
-  require('completion').on_attach(client)
+  completion.on_attach(client)
+
+  if client.config.flags then
+    client.config.flags.allow_incremental_sync = true
+  end
 
   local options = {
     noremap = true,
@@ -18,7 +23,7 @@ local on_attach = function(client)
   vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>', options)
 
   vim.api.nvim_command([[setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
-  vim.api.nvim_command([[autocmd CursorHold  * lua vim.lsp.diagnostic.show_line_diagnostics({ show_header = false })]])
+  -- vim.api.nvim_command([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ show_header = false })]])
 end
 
 -- bash

@@ -7,21 +7,22 @@ try
   Plug 'easymotion/vim-easymotion' " cursor magic
   Plug 'farmergreg/vim-lastplace' " remember last cursor position
   Plug 'haya14busa/is.vim' " incsearch improved
-  Plug 'jiangmiao/auto-pairs' " auto close things
+  Plug 'cohama/lexima.vim' " auto close things
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fzf
   Plug 'junegunn/fzf.vim' " fzf integration with vim
   Plug 'justinmk/vim-dirvish' " fast netrw alternative
   Plug 'kristijanhusak/vim-dirvish-git' " git support for dirvish
-  " Plug 'lewis6991/gitsigns.nvim' " git gutter
+  Plug 'lewis6991/gitsigns.nvim' " git gutter
   Plug 'matze/vim-move' " move lines up and down
-  Plug 'mhinz/vim-startify' " nice vim startup screen
   Plug 'neovim/nvim-lspconfig' " neovim lsp common configs
   Plug 'nvim-lua/completion-nvim' " completion using lsp
   Plug 'nvim-lua/plenary.nvim' " utils nvim
   Plug 'nvim-treesitter/nvim-treesitter' " nvim treesitter
   Plug 'nvim-treesitter/nvim-treesitter-refactor' " nice treesitter refactor
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' } " code formatter
+  Plug 'psliwka/vim-smoothie' " smooth scroll
   Plug 'sainnhe/gruvbox-material' " theme
+  " Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " virtual text colors
   Plug 'tpope/vim-eunuch' " unix commands inside vim
   Plug 'tpope/vim-fugitive' " git integration
   Plug 'tpope/vim-surround' " change surround characters
@@ -33,6 +34,7 @@ catch
 endtry
 
 " completion-nvim {{{
+  let g:completion_confirm_key = ""
   let g:completion_enable_auto_popup = 1
   let g:completion_enable_auto_hover = 1
   let g:completion_matching_smart_case = 1
@@ -41,6 +43,9 @@ endtry
 
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <expr> <CR>  pumvisible() ? complete_info()["selected"] != "-1" ?
+    \ "\<Plug>(completion_confirm_completion)"  :
+    \ "\<c-e>\<CR>" : "\<CR>"
 " }}}
 
 " dirvish {{{
@@ -55,11 +60,11 @@ endtry
   let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
   let g:EasyMotion_smartcase = 1
 
-  map  <Leader>f <Plug>(easymotion-bd-f)
+  map <Leader>f <Plug>(easymotion-bd-f)
   nmap <Leader>f <Plug>(easymotion-overwin-f)
   map <Leader>l <Plug>(easymotion-bd-jk)
   nmap <Leader>l <Plug>(easymotion-overwin-line)
-  map  <Leader><Leader> <Plug>(easymotion-bd-w)
+  map <Leader><Leader> <Plug>(easymotion-bd-w)
   nmap <Leader><Leader> <Plug>(easymotion-overwin-w)
 " }}}
 
@@ -100,10 +105,6 @@ endtry
   autocmd! FileType fzf
   autocmd  FileType fzf set laststatus=0 noshowmode noruler nonumber norelativenumber
     \| autocmd BufLeave <buffer> set laststatus=2 ruler number relativenumber
-" }}}
-
-" auto-pairs {{{
-  let g:AutoPairsMultilineClose = 0
 " }}}
 
 " vim-rooter {{{

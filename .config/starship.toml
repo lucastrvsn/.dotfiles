@@ -1,16 +1,67 @@
 add_newline = false
 
-[character]
-success_symbol = "[➜](bold green) "
-error_symbol = "[✗](bold red) "
+[cmd_duration]
+min_time = 10_000 # >10s
+format = " ([$duration]($style))"
 
-[hostname]
-ssh_only = false
+[battery]
+full_symbol = "🔋"
+charging_symbol = "🔌"
+discharging_symbol = "⚡"
+
+[[battery.display]]
+threshold = 30
+style = "bold red"
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_length = 2
+truncate_to_repo = false
+truncation_symbol = "…/"
+fish_style_pwd_dir_length = 2
+
+[git_branch]
+format = " [$symbol$branch]($style) "
+style = "bold yellow"
+
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
+
+[git_status]
+style = "bright-white"
+format = "$all_status$ahead_behind"
+
+[memory_usage]
+format = "$symbol[${ram}( | ${swap})]($style) "
+show_percentage = true
+show_swap = false
+threshold = 75
+style = "bold dimmed white"
+disabled = false
+
+[package]
+disabled = true
 
 [time]
-disabled = false
-format = '[$time]($style) '
 time_format = "%H:%M"
+format = "[$time]($style) "
+style = "bright-white"
+disabled = false
 
 [username]
 show_always = true
+style_user = "bold green"
+format = "[$user]($style) "
+
+[status]
+style = "bg:white fg:black"
+symbol = ""
+format = '[\[$symbol$status\]]($style) '
+disabled = false
+
+[nodejs]
+format = " [$symbol$version]($style) "
+
+[rust]
+format = " [$symbol$version]($style) "
