@@ -57,6 +57,10 @@ if pacman -Qs gdm > /dev/null ; then
   systemctl enable gdm.service
 fi
 
+if pacman -Qs lightdm > /dev/null ; then
+  systemctl enable lightdm.service
+fi
+
 if pacman -Qs slim > /dev/null ; then
   systemctl enable slim.service
 fi
