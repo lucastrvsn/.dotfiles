@@ -147,7 +147,7 @@ then
 fi
 
 echo "choose what do you want to install"
-read -p 'GNOME (g), sway (s) or awesome (a)? ' de
+read -p 'GNOME (g), sway (s), awesome (a) or XFCE (x)? ' de
 if [ $de = 'g' ] || [ $de = 'G' ]
 then
   PACKAGES+=(
@@ -168,11 +168,21 @@ then
     wl-clipboard
     xorg-server-xwayland
   )
-else
+elif [ $de = 's' ] || [ $de = 'S' ]
+then
   PACKAGES+=(
     xorg
     awesome
     connman
+  )
+elif [ $de = 's' ] || [ $de = 'S' ]
+then
+  PACKAGES+=(
+    xorg
+    xfce4
+    xfce4-goodies
+    lightdm
+    lightdm-gtk-greeter
   )
 fi
 
