@@ -147,7 +147,7 @@ then
 fi
 
 echo "choose what do you want to install"
-read -p 'GNOME (g), sway (s), awesome (a) or XFCE (x)? ' de
+read -p 'gnome (g), sway (s), awesome (a), xfce (x) or mate (m)? ' de
 if [ $de = 'g' ] || [ $de = 'G' ]
 then
   PACKAGES+=(
@@ -168,19 +168,30 @@ then
     wl-clipboard
     xorg-server-xwayland
   )
-elif [ $de = 's' ] || [ $de = 'S' ]
+elif [ $de = 'a' ] || [ $de = 'A' ]
 then
   PACKAGES+=(
     xorg
     awesome
     connman
   )
-elif [ $de = 's' ] || [ $de = 'S' ]
+elif [ $de = 'x' ] || [ $de = 'X' ]
 then
   PACKAGES+=(
     xorg
     xfce4
     xfce4-goodies
+    network-manager-applet
+    lightdm
+    lightdm-gtk-greeter
+  )
+elif [ $de = 'm' ] || [ $de = 'M' ]
+then
+  PACKAGES+=(
+    xorg
+    mate
+    mate-extra
+    network-manager-applet
     lightdm
     lightdm-gtk-greeter
   )
