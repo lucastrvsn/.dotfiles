@@ -131,7 +131,7 @@ PACKAGES+=(
   gvfs-afc
 )
 
-echo "install laptop utils (wireless, bluetooth, touchpad)?"
+echo "install laptop utils?"
 read -p 'y/N: ' de
 if ! [ $de = 'y' ] && ! [ $de = 'Y' ]
 then
@@ -140,7 +140,6 @@ then
     light
     iwd
     wpa_supplicant
-    bluez
     dialog
     libinput
   )
@@ -191,6 +190,10 @@ then
     xorg
     mate
     mate-extra
+    mate-media
+    blueman
+    mate-power-manager
+    system-config-printer
     network-manager-applet
     lightdm
     lightdm-gtk-greeter
