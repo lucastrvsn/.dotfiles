@@ -151,7 +151,7 @@ then
 fi
 
 echo "choose what do you want to install"
-read -p 'gnome (g), sway (s), awesome (a), xfce (x) or mate (m)? ' de
+read -p 'gnome (g), budgie (b), sway (s), awesome (a), xfce (x) or mate (m)? ' de
 if [ $de = 'g' ] || [ $de = 'G' ]
 then
   PACKAGES+=(
@@ -159,6 +159,14 @@ then
     gnome-extra
     gdm
     wl-clipboard
+  )
+if [ $de = 'b' ] || [ $de = 'B' ]
+then
+  PACKAGES+=(
+    gnome
+    budgie-desktop
+    budgie-extras
+    gdm
   )
 elif [ $de = 's' ] || [ $de = 'S' ]
 then
