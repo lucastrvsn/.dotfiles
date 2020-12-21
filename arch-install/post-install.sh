@@ -80,6 +80,7 @@ function cp_config_file() {
 
 font_config
 yay
+starship
 zplug
 vim_plug
 asdf
