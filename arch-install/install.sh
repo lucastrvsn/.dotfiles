@@ -92,6 +92,7 @@ PACKAGES=(
   noto-fonts
   noto-fonts-emoji
   noto-fonts-cjk
+  ttf-liberation
   ttf-jetbrains-mono
 )
 
@@ -160,7 +161,7 @@ then
     gdm
     wl-clipboard
   )
-if [ $de = 'b' ] || [ $de = 'B' ]
+elif [ $de = 'b' ] || [ $de = 'B' ]
 then
   PACKAGES+=(
     gnome
