@@ -139,6 +139,7 @@ read -p 'y/N: ' de
 if ! [ $de = 'y' ] && ! [ $de = 'Y' ]
 then
   PACKAGES+=(
+    bluez
     tlp
     light
     iwd
