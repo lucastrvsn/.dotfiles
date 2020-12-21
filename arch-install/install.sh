@@ -140,6 +140,7 @@ if ! [ $de = 'y' ] && ! [ $de = 'Y' ]
 then
   PACKAGES+=(
     bluez
+    bluez-utils
     tlp
     light
     iwd
