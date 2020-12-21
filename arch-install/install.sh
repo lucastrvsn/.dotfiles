@@ -56,7 +56,7 @@ swapon /dev/sda2
 # pacman
 pacman -Sy
 pacman -S --noconfirm --needed --noprogressbar --quiet reflector
-reflector --country 'Brazil' --country 'United States' --sort rate --save /etc/pacman.d/mirrorlist
+reflector --protocol https --country "Brazil" --country "United States" --age 24 --sort rate --save /etc/pacman.d/mirrorlist
 
 # arch install
 echo "starting arch install..."
@@ -81,14 +81,17 @@ PACKAGES=(
   curl
   ripgrep
   zsh
+  tmux
+  fzf
+  kitty
   playerctl
   libpipewire02
   xdg-user-dirs
   xdg-utils
   xdg-desktop-portal-wlr
-  ttf-liberation
   noto-fonts
   noto-fonts-emoji
+  noto-fonts-cjk
   ttf-jetbrains-mono
 )
 
@@ -213,12 +216,8 @@ chmod a+x /mnt/chroot-install.sh
 cp -rfv /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
 # chroot
-echo "After chrooting into newly installed OS, please run the chroot-install.sh by executing ./chroot-install.sh"
-echo "Press any key to chroot..."
-read tmpvar
-arch-chroot /mnt
-
-# delete chroot-install
+echo "Running chroot-install.sh script on newly installed OS."
+arch-chroot /mnt ./chroot-install.sh
 rm /mnt/chroot-install.sh
 
 # ready to go arch

@@ -1,27 +1,17 @@
-# dotfiles
+## lucastrvsn/dotfiles
 
-### This is all my config and tools I use daily as software engineer.
+This is all my config and tools I use daily as software engineer.
 
----
+- [asdf](https://asdf-vim.com/): languages version manager
+- [arch](https://archlinux.org/): operating system
+- [gnome](https://gnome.org/): desktop enviroment
+- [fzf](https://github.com/junegunn/fzf/): fuzzy search
+- [jetbrains-mono](https://jetbrains.com/lp/mono/): font used everywhere
+- [kitty](https://github.com/kovidgoyal/kitty/): terminal emulator
+- [ripgrep](https://github.com/BurntSushi/ripgrep/): better grep
+- [starship](https://starship.rs/): shell prompt
+- [vim-plug](https://github.com/junegunn/vim-plug/): neovim plugin manager
+- [tmux](https://github.com/tmux/tmux/): terminal multiplexer
+- [zplug](https://github.com/zplug/zplug/): zsh plugin manager
+- [zsh](https://zsh.org/): awesome shell
 
-- [asdf][]: languages version manager
-- [gnome][]: desktop enviroment
-- [fzf][]: fuzzy search
-- [jetbrains-mono][]: font used everywhere
-- [kitty][]: terminal emulator
-- [ripgrep][]: better grep
-- [starship][]: shell prompt
-- [vim-plug][]: neovim plugin manager
-- [zplug][]: zsh plugin manager
-- [zsh][]: awesome shell
-
-[asdf]: https://asdf-vm.com/
-[gnome]: https://gnome.org/
-[fzf]: https://github.com/junegunn/fzf/
-[jetbrains-mono]: https://jetbrains.com/lp/mono/
-[kitty]: https://github.com/kovidgoyal/kitty/
-[ripgrep]: https://github.com/BurntSushi/ripgrep/
-[starship]: https://starship.rs/
-[vim-plug]: https://github.com/junegunn/vim-plug/
-[zplug]: https://github.com/zplug/zplug/
-[zsh]: https://zsh.org/

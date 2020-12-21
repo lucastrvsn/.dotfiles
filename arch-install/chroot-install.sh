@@ -29,9 +29,10 @@ sed --in-place 's/^#\s*\(%wheel\s\+ALL=(ALL)\s\+ALL\)/\1/' /etc/sudoers
 echo "password for ${username}:"
 passwd $username
 
-# configure home directory
+# configure home directory (english lang)
+export LC_ALL=C
 mkhomedir_helper $username
-LC_ALL=C bash -c 'xdg-user-dirs-update --force'
+bash -c 'xdg-user-dirs-update --force'
 
 # initramfs
 mkinitcpio -P
