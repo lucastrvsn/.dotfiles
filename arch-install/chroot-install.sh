@@ -42,6 +42,10 @@ grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=arch
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # setup services
+if pacman -Qs bluez > /dev/null ; then
+  systemctl enable bluetooth.service
+fi
+
 if pacman -Qs tlp > /dev/null ; then
   systemctl enable tlp.service
 fi
