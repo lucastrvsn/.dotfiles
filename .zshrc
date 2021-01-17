@@ -18,6 +18,9 @@ fi
 
 # defaults
 export EDITOR="nvim"
+export GOROOT=/usr/lib/go
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # aliases
 alias ls="ls ${lsflags}"
@@ -29,6 +32,24 @@ alias m="less"
 alias vim=nvim
 alias vi=nvim
 alias v=nvim
+alias g="git"
+alias ga="git add"
+alias gaa="git add --all"
+alias gb="git branch"
+alias gc="git commit -v"
+alias gc!="git commit -v --amend"
+alias gs="git status"
+alias gp="git pull"
+alias gm="git merge"
+alias gp="git push"
+alias gr="git rebase"
+alias gra="git rebase --abort"
+alias grc="git rebase --continue"
+alias glog='git log --oneline --decorate --graph'
+
+# vi mode
+bindkey -v
+KEYTIMEOUT=5
 
 # history
 HISTFILE=~/.history-zsh
@@ -69,7 +90,7 @@ typeset -U path                 # keep duplicates out of the path
 path+=(.)                       # append current directory to path (controversial)
 
 # asdf
-. ~/.asdf/asdf.sh
+. $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit
 compinit

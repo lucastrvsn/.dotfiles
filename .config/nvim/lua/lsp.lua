@@ -1,116 +1,111 @@
-local lsp = require('lspconfig')
-local completion = require('completion')
+local lsp_config = require("lspconfig")
+local lsp = vim.lsp
+local api = vim.api
+local fn = vim.fn
+local g = vim.g
+
+-- nvim-completion
+g.completion_enable_auto_popup = 1
+g.completion_matching_strategy_list = { "exact", "substring", "fuzzy", "all" }
+g.completion_auto_change_source = 1
+g.completion_matching_smart_case = 1
+g.completion_enable_auto_paren = 1
+
+api.nvim_set_keymap("i", "<Tab>", 'pumvisible() ? "<C-n>" : "<Tab>"', { expr = true, noremap = true })
+api.nvim_set_keymap("i", "<S-Tab>", 'pumvisible() ? "<C-p>" : "<S-Tab>"', { expr = true, noremap = true })
+
+-- lsp
+lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
+  lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    virtual_text = {
+      prefix = "●",
+      spacing = 4,
+    }
+  }
+)
+
+fn.sign_define("LspDiagnosticsSignError", { text = "🞮", numhl = "LspDiagnosticsDefaultError" })
+fn.sign_define("LspDiagnosticsSignWarning", { text = "▲", numhl = "LspDiagnosticsDefaultWarning" })
+fn.sign_define("LspDiagnosticsSignInformation", { text = "⁈", numhl = "LspDiagnosticsDefaultInformation" })
+fn.sign_define("LspDiagnosticsSignHint", { text = "⯁", numhl = "LspDiagnosticsDefaultHint" })
 
 local on_attach = function(client)
-  completion.on_attach(client)
-
-  if client.config.flags then
-    client.config.flags.allow_incremental_sync = true
-  end
+  require("completion").on_attach(client)
 
   local options = {
     noremap = true,
     silent = true
   }
 
-  vim.api.nvim_set_keymap('n', '<c-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', options)
-  vim.api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', options)
-  vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>', options)
-  vim.api.nvim_set_keymap('n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', options)
-  vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', options)
-  vim.api.nvim_set_keymap('n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', options)
-  vim.api.nvim_set_keymap('n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', options)
-  vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>', options)
-
-  vim.api.nvim_command([[setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
-  -- vim.api.nvim_command([[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({ show_header = false })]])
+  api.nvim_set_keymap("n", "<c-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", options)
+  api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", options)
+  api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.implementation()<CR>", options)
+  api.nvim_set_keymap("n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", options)
+  api.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", options)
+  api.nvim_set_keymap("n", "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", options)
+  api.nvim_set_keymap("n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", options)
+  api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.declaration()<CR>", options)
+  api.nvim_command([[setlocal omnifunc=v:lua.vim.lsp.omnifunc]])
 end
 
--- bash
-lsp.bashls.setup({
+-- lsp setup
+lsp_config.bashls.setup({
   on_attach = on_attach
 })
 
--- css
-lsp.cssls.setup({
+lsp_config.cssls.setup({
   on_attach = on_attach
 })
 
--- general diagnostic server
-lsp.diagnosticls.setup({
+lsp_config.diagnosticls.setup({
   on_attach = on_attach,
   filetypes={
-    'markdown',
-    'javascript',
-    'typescript',
-    'javascriptreact',
-    'typescriptreact',
-    'css',
-    'scss',
-    'sass'
+    "markdown",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
   },
   init_options = {
     linters = {
       eslint = {
-        command = './node_modules/.bin/eslint',
-        rootPatterns = { '.git' },
-        debounce = 100,
+        sourceName = "eslint",
+        command = "eslint_d",
+        rootPatterns = { ".git" },
         args = {
-          '--stdin',
-          '--stdin-filename',
-          '%filepath',
-          '--format',
-          'json'
+          "--stdin",
+          "--stdin-filename",
+          "%filepath",
+          "--format",
+          "json"
         },
-        sourceName = 'eslint',
+        debounce = 100,
         parseJson = {
-          errorsRoot = '[0].messages',
-          line = 'line',
-          column = 'column',
-          endLine = 'endLine',
-          endColumn = 'endColumn',
-          message = '${message} [${ruleId}]',
-          security = 'severity'
+          errorsRoot = "[0].messages",
+          line = "line",
+          column = "column",
+          endLine = "endLine",
+          endColumn = "endColumn",
+          message = "${message} [${ruleId}]",
+          security = "severity"
         },
         securities = {
-          [2] = 'error',
-          [1] = 'warning',
+          [2] = "error",
+          [1] = "warning",
         },
-      },
-      stylelint = {
-        command = './node_modules/.bin/stylelint',
-        rootPatterns = { '.git' },
-        debounce = 100,
-        args = {
-          '--formatter',
-          'json',
-          '--stdin-filename',
-          '%filepath'
-        },
-        sourceName = 'stylelint',
-        parseJson = {
-          errorsRoot = '[0].warnings',
-          line = 'line',
-          column = 'column',
-          message = '${text}',
-          security = 'severity'
-        },
-        securities = {
-          error = 'error',
-          warning = 'warning'
-        }
       },
       markdownlint = {
-        command = 'markdownlint',
+        sourceName = "markdownlint",
+        command = "markdownlint",
+        args = { "--stdin" },
         isStderr = true,
         debounce = 100,
-        args = { '--stdin' },
         offsetLine = 0,
         offsetColumn = 0,
-        sourceName = 'markdownlint',
         formatLines = 1,
         formatPattern = {
-          '^.*?:\\s+(\\d+):\\s+(.*)(\\r|\\n)*$',
+          "^.*?:\\s+(\\d+):\\s+(.*)(\\r|\\n)*$",
           {
             line = 1,
             column = -1,
@@ -120,62 +115,87 @@ lsp.diagnosticls.setup({
       }
     },
     filetypes = {
-      markdown = 'markdownlint',
-      javascript = 'eslint',
-      typescript = 'eslint',
-      javascriptreact = 'eslint',
-      typescriptreact = 'eslint',
-      css = 'stylelint',
-      scss = 'stylelint',
-      sass = 'stylelint'
-    },
-    formatters = {
-      prettier = {
-        command = './node_modules/.bin/prettier',
-        args = {
-          '--stdin-filepath',
-          '%filepath',
-          '--single-quote',
-          '--print-width 120'
-        }
-      }
-    },
-    formatFiletypes = {
-      javascript = 'prettier',
-      typescript = 'prettier',
-      javascriptreact = 'prettier',
-      typescriptreact = 'prettier'
-    },
+      markdown = "markdownlint",
+      javascript = "eslint",
+      typescript = "eslint",
+      javascriptreact = "eslint",
+      typescriptreact = "eslint",
+    }
   }
 })
 
--- html
-lsp.html.setup({
+-- local root_markers = { ".git/" }
+-- 
+-- local eslint = {
+--   lintCommand = "eslint_d -f unix --stdin",
+--   lintStdin = true,
+--   lintIgnoreExitCode = true
+-- }
+-- 
+-- local languages = {
+--   javascript = { eslint },
+--   javascriptreact = { eslint },
+--   typescript = { eslint },
+--   typescriptreact = eslint
+-- }
+-- 
+-- lsp_config.efm.setup({
+--   on_attach = on_attach,
+--   cmd = { "efm-langserver" },
+--   root_dir = lsp_config.util.root_pattern(unpack(root_markers)),
+-- 
+--   log_level = vim.lsp.protocol.MessageType.Log,
+--   message_level = vim.lsp.protocol.MessageType.Log,
+-- 
+--   settings = {
+--     rootMarkers = root_markers,
+--     languages = languages
+--   },
+--   filetypes = vim.tbl_keys(languages),
+-- })
+
+lsp_config.html.setup({
   on_attach = on_attach
 })
 
--- json
-lsp.jsonls.setup({
+lsp_config.jsonls.setup({
   on_attach = on_attach
 })
 
--- rust
-lsp.rust_analyzer.setup({
+lsp_config.rust_analyzer.setup({
   on_attach = on_attach
 })
 
--- lua
-lsp.sumneko_lua.setup({
+lsp_config.sumneko_lua.setup({
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        enable = true,
+        globals = {
+          "vim",
+          "describe",
+          "it",
+          "before_each",
+          "after_each",
+          "awesome",
+          "theme",
+          "client"
+        }
+      }
+    }
+  }
+})
+
+lsp_config.tsserver.setup({
   on_attach = on_attach
 })
 
--- typescript
-lsp.tsserver.setup({
+lsp_config.sqlls.setup({
   on_attach = on_attach
 })
 
--- vim
-lsp.vimls.setup({
+lsp_config.vimls.setup({
   on_attach = on_attach
 })
 

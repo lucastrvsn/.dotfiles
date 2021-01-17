@@ -23,20 +23,6 @@ set shortmess+=c
 set completeopt=menuone,noinsert,noselect
 set scrolloff=4
 set sidescrolloff=4
-
-" {{{ https://github.com/cempassi/.dotfiles/blob/a7d3d8fdd2a03ead1498c99ffd98e2abcf60cffa/neovim/.config/nvim/init.vim#L83
-set formatoptions-=a    " Turn off auto formating.
-set formatoptions-=t    " Turn off auto formating.
-set formatoptions+=c    " Comment respect textwidth
-set formatoptions+=q    " Allow formatting comments w/ gq
-set formatoptions-=o    " O and o, don't continue comments
-set formatoptions+=r    " But do continue when pressing enter.
-set formatoptions+=n    " Indent past the formatlistpat, not underneath it.
-set formatoptions+=j    " Auto-remove comments if possible.
-set formatoptions-=2    " Useless option
-set nojoinspaces        " Useless option 2
-" }}}
-
 set incsearch
 set inccommand=nosplit
 set hlsearch
@@ -82,31 +68,25 @@ set showmatch
 set colorcolumn=80
 set synmaxcol=120
 
+" https://github.com/cempassi/.dotfiles/blob/a7d3d8fdd2a03ead1498c99ffd98e2abcf60cffa/neovim/.config/nvim/init.vim#L83
+set formatoptions-=a " turn off auto formating.
+set formatoptions-=t " turn off auto formating.
+set formatoptions+=c " comment respect textwidth
+set formatoptions+=q " allow formatting comments w/ gq
+set formatoptions-=o " o and O, don't continue comments
+set formatoptions+=r " but do continue when pressing enter.
+set formatoptions+=n " indent past the formatlistpat, not underneath it.
+set formatoptions+=j " auto-remove comments if possible.
+set formatoptions-=2 " useless option
+set nojoinspaces     " useless option 2
+
 " folding with treesitter
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevelstart=99
 
-" styles {{{
-  " TODO: Move this section to another file
-  set termguicolors
-  set background=dark
-  " set guicursor=n-v-c-sm:block,i-ci-ve:ver50-Cursor,r-cr-o:hor50 " using cursor block only for normal mode
-  set guicursor=n-v-c:block-nCursor " using cursor block for everything
-
-  let &t_Cs = "\<Esc>[4:3m"
-  let &t_Ce = "\<Esc>[4:0m"
-  let g:gruvbox_material_palette = 'material'
-  let g:gruvbox_material_background = 'hard'
-  let g:gruvbox_material_enable_italic = 1
-  let g:gruvbox_material_transparent_background = 0
-  let g:gruvbox_material_diagnostic_line_highlight = 1
-
-  colorscheme gruvbox-material
-" }}}
-
 " highlight yank for 500ms
 augroup highlight_yank
   autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({ higroup = 'Substitute', timeout = 500 })
+  autocmd TextYankPost * silent! lua require("vim.highlight").on_yank({ higroup = 'Substitute', timeout = 500 })
 augroup END

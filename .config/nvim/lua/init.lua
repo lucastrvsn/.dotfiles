@@ -1,1 +1,3 @@
-print('hello')
+require("lsp")
+require("treesitter")
+require("plugins")

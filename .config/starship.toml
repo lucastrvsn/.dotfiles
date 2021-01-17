@@ -1,7 +1,7 @@
 add_newline = false
 
 [cmd_duration]
-min_time = 10_000 # >10s
+min_time = 10_000 # 10s
 format = " ([$duration]($style))"
 
 [battery]
@@ -20,18 +20,6 @@ truncate_to_repo = false
 truncation_symbol = "…/"
 fish_style_pwd_dir_length = 2
 
-[git_branch]
-format = " [$symbol$branch]($style) "
-style = "bold yellow"
-
-[git_commit]
-commit_hash_length = 8
-style = "bold white"
-
-[git_status]
-style = "bright-white"
-format = "$all_status$ahead_behind"
-
 [memory_usage]
 format = "$symbol[${ram}( | ${swap})]($style) "
 show_percentage = true
@@ -43,16 +31,9 @@ disabled = false
 [package]
 disabled = true
 
-[time]
-time_format = "%H:%M"
-format = "[$time]($style) "
-style = "bright-white"
-disabled = false
-
 [username]
 show_always = true
 style_user = "bold green"
-format = "[$user]($style) "
 
 [status]
 style = "bg:white fg:black"
@@ -60,8 +41,3 @@ symbol = ""
 format = '[\[$symbol$status\]]($style) '
 disabled = false
 
-[nodejs]
-format = " [$symbol$version]($style) "
-
-[rust]
-format = " [$symbol$version]($style) "

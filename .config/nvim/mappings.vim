@@ -42,7 +42,7 @@ nnoremap <silent> <Leader>gc /\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
 nnoremap <silent> <Leader>gC ?\v^[<>=\|]{4,7}($\|\s\|\r)<CR>
 
 " search and replace the word under cursor
-nmap <leader>* :%s/\<<C-r><C-w>\>//<Left>
+nmap <Leader>* :%s/\<<C-r><C-w>\>//<Left>
 
 " neovim terminal
 if has('nvim')

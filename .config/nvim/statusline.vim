@@ -26,12 +26,8 @@ function! LinePercent() abort
   return printf("%d%%", line('.') * 100 / line('$'))
 endfunction
 
-function! Modified() abort
-  return &modified ? " •" : ""
-endfunction
-
-function! FileType() abort
-  return len(&filetype) == 0 ? "text" : tolower(&filetype)
+function! Filetype()
+ return len(&filetype) == 0 ? "text" : tolower(&filetype)
 endfunction
 
 function! GitBranch() abort
@@ -51,12 +47,11 @@ function! ActiveStatusLine() abort
   let l:mode = mode()
   let l:statusline='' " left side
   let l:statusline.=CurrentModeColor() . ' ' . CurrentModeText() . ' '
-  let l:statusline.='%1*%{Modified()}'
-  let l:statusline.=' %t '
+  let l:statusline.='%1* %t %m'
   let l:statusline.='%7*[%n%R%W]'
   let l:statusline.='%6*%{GitBranch()}'
   let l:statusline.='%*%=' " right side
-  let l:statusline.='%1* %{FileType()} %7*|%1* %l:%c %7*|%1* %{LinePercent()} '
+  let l:statusline.='%1* %{Filetype()} %7*|%1* %l:%c %7*|%1* %{LinePercent()} '
   return l:statusline
 endfunction
 

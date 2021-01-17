@@ -2,6 +2,8 @@
 
 This is all my config and tools I use daily as software engineer.
 
+### Applications and tools
+
 - [asdf](https://asdf-vim.com/): languages version manager
 - [arch](https://archlinux.org/): operating system
 - [gnome](https://gnome.org/): desktop enviroment
@@ -15,3 +17,7 @@ This is all my config and tools I use daily as software engineer.
 - [zplug](https://github.com/zplug/zplug/): zsh plugin manager
 - [zsh](https://zsh.org/): awesome shell
 
+### Scripts
+
+- `lsp_install`: install all lsp servers I use
+- `arch_install`: install arch with all my software

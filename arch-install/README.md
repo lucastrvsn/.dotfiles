@@ -1,6 +1,6 @@
 > My arch linux installation script.
 
-# Tips
+# Tips (sway)
 
 ## Configure keyboard layout
 
