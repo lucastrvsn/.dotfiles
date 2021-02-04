@@ -1,15 +1,5 @@
--- gitsigns
-require('gitsigns').setup({
-  signs = {
-    add          = { hl = 'DiffAdd'   , text = '+' },
-    change       = { hl = 'DiffChange', text = '+' },
-    delete       = { hl = 'DiffDelete', text = '-' },
-    topdelete    = { hl = 'DiffDelete', text = '-' },
-    changedelete = { hl = 'DiffChange', text = '~' },
-  }
-})
+-- I will use this until formatting from LSP is stable.
 
--- formatter.nvim
 local prettier = function()
   return {
     exe = "prettier",
@@ -83,10 +73,15 @@ require('formatter').setup({
   }
 })
 
+
+-- vim.api.nvim_command [[augroup Format]]
+-- vim.api.nvim_command [[autocmd! * <buffer>]]
+-- vim.api.nvim_command [[autocmd BufWritePost <buffer> FormatWrite]]
+-- vim.api.nvim_command [[augroup END]]
+
 vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
   autocmd BufWritePost *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html,*.rs FormatWrite
 augroup END
 ]], true)
-
