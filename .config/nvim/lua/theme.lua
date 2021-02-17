@@ -3,7 +3,7 @@ local apply_globals = require('utils').apply_globals
 
 apply_globals({
   gruvbox_material_palette = 'material',
-  gruvbox_material_background = 'soft',
+  gruvbox_material_background = 'hard',
   gruvbox_material_enable_italic = false,
   gruvbox_material_disable_italic_comment = true,
   gruvbox_material_transparent_background = false,
@@ -12,4 +12,4 @@ apply_globals({
 })
 
 apply_colorscheme('gruvbox-material', 'dark')
-
+-- apply_colorscheme('calme', 'dark')

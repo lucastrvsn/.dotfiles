@@ -1,8 +1,26 @@
-vim.g.completion_enable_auto_popup = 1
-vim.g.completion_sorting = "length"
-vim.g.completion_matching_strategy_list = { "exact", "substring", "fuzzy", "all" }
-vim.g.completion_auto_change_source = 1
-vim.g.completion_matching_smart_case = 1
-vim.g.completion_enable_auto_paren = 1
-vim.g.completion_trigger_on_delete = 1
-
+require('compe').setup({
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    vsnip = false;
+    nvim_lsp = true;
+    nvim_lua = true;
+    spell = true;
+    tags = true;
+    snippets_nvim = false;
+    treesitter = true;
+  };
+})

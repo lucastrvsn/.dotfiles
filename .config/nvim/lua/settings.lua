@@ -36,7 +36,7 @@ apply_options({
   undolevels = 1000,
   undoreload = 10000,
   updatetime = 500,
-  cursorline = false,
+  cursorline = true,
   lazyredraw = true,
   showcmd = true,
   cmdheight = 1,

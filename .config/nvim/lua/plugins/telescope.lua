@@ -4,6 +4,7 @@ require('telescope').setup{
   defaults = {
     mappings = {
       i = {
+        ["<Esc>"]  = actions.close,
         ["<C-n>"]  = actions.move_selection_next,
         ["<C-p>"]  = actions.move_selection_previous,
         ["<C-j>"]  = actions.move_selection_next,
@@ -43,11 +44,13 @@ require('telescope').setup{
       '.docz/*',
       '.DS_Store'
     },
+    layout_strategy = 'flex',
+    scroll_strategy = 'cycle',
     winblend = 20,
     width = 0.65,
     preview_cutoff = 120,
     results_height = 1,
-    results_width = 0.8,
+    results_width = 0.8
   }
 }
 

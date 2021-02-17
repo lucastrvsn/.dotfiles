@@ -32,6 +32,12 @@ lsp_config.efm.setup({
     "-logfile",
     efm_log_dir .. "efm.log"
   },
+  filetype = {
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact'
+  },
   on_attach = on_attach,
   root_dir = lsp_config.util.root_pattern(unpack(efm_root_markers)),
   init_options = {

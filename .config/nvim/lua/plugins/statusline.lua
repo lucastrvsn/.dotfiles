@@ -43,7 +43,12 @@ local palletes = {
   }
 }
 
-local colors = palletes[vim.g.colors_name]
+local colors
+if palletes[vim.g.colors_name] ~= nil then
+  colors = palletes[vim.g.colors_name]
+else
+  colors = palletes['gruvbox-material']
+end
 
 local buffer_not_empty = function()
   if fn.empty(fn.expand("%:t")) ~= 1 then

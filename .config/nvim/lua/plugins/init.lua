@@ -2,6 +2,7 @@ vim.cmd[[packadd packer.nvim]]
 
 -- packer.nvim configuration and plugins
 require('packer').startup(function()
+  use { '~/Projetos/calme-colorscheme' }
   use { 'wbthomason/packer.nvim', opt = true }
   use { 'christoomey/vim-tmux-navigator' }
   use { 'farmergreg/vim-lastplace' }
@@ -14,6 +15,10 @@ require('packer').startup(function()
     config = function() require('plugins.statusline') end
   }
   use { 'haya14busa/is.vim' }
+  use {
+    'hrsh7th/nvim-compe',
+    config = function() require('plugins.completion') end
+  }
   use {
     'justinmk/vim-dirvish',
     requires = { 'kristijanhusak/vim-dirvish-git' },
@@ -32,10 +37,6 @@ require('packer').startup(function()
   use {
     'neovim/nvim-lspconfig',
     config = function() require('lsp') end
-  }
-  use {
-    'nvim-lua/completion-nvim',
-    config = function() require('plugins.completion') end
   }
   use {
     'nvim-telescope/telescope.nvim',
@@ -68,6 +69,10 @@ require('packer').startup(function()
   use { 'tpope/vim-surround' }
   use { 'tyru/caw.vim' }
   use { 'vim-test/vim-test' }
+  use {
+    'phaazon/hop.nvim',
+    config = function() require('plugins.hop') end
+  }
 
   use {
     { 'sainnhe/gruvbox-material' },

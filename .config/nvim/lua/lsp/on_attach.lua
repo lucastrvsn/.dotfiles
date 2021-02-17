@@ -2,8 +2,6 @@ local buf_map = require('utils').buf_map
 local buf_option = require('utils').buf_option
 
 local function on_attach(client)
-  require('completion').on_attach(client)
-
   buf_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   local opts = {

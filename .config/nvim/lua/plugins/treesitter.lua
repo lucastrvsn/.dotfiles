@@ -1,6 +1,4 @@
-local treesitter = require("nvim-treesitter.configs")
-
-treesitter.setup({
+require('nvim-treesitter.configs').setup({
   ensure_installed = "all",
   highlight = {
     enable = true
@@ -21,8 +19,9 @@ treesitter.setup({
     smart_rename = {
       enable = true,
       keymaps = {
-        smart_rename = "grr",
+        smart_rename = "grr"
       }
     }
   }
 })
+

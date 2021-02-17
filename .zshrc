@@ -1,8 +1,16 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 source ~/.zplug/init.zsh
 
 zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+zplug 'romkatv/powerlevel10k', as:theme, depth:1
 
 zplug load
 
@@ -18,20 +26,22 @@ fi
 
 # defaults
 export EDITOR="nvim"
-export GOROOT=/usr/lib/go
-export GOPATH=$HOME/.go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # aliases
+function fetch_and_delete_branches() {
+  git fetch --prune
+  git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D
+}
+
 alias ls="ls ${lsflags}"
 alias ll="ls ${lsflags} -l"
 alias la="ls ${lsflags} -la"
 alias h="history"
 alias hg="history -1000 | grep -i"
 alias m="less"
-alias vim=nvim
-alias vi=nvim
-alias v=nvim
+alias vim="nvim"
+alias vi="nvim"
+alias v="nvim"
 alias g="git"
 alias ga="git add"
 alias gaa="git add --all"
@@ -45,7 +55,10 @@ alias gp="git push"
 alias gr="git rebase"
 alias gra="git rebase --abort"
 alias grc="git rebase --continue"
-alias glog='git log --oneline --decorate --graph'
+alias glog="git log --oneline --decorate --graph"
+alias gfp="git fetch --prune"
+alias gdlb="git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D"
+alias gdd="fetch_and_delete_branches"
 
 # vi mode
 bindkey -v
@@ -95,10 +108,10 @@ fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit
 compinit
 
-# start starship
-eval "$(starship init zsh)"
-
 # auto start tmux
 if [ -z "$TMUX" ]; then
   tmux attach -t TMUX || tmux new -s TMUX
 fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
