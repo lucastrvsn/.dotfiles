@@ -9,7 +9,7 @@ window:
   dynamic_padding: true
   dynamic_title: true
   startup_mode: Maximized
-background_opacity: 0.96
+background_opacity: 0.98
 font:
   normal:
     family: JetBrainsMono Nerd Font
@@ -17,7 +17,10 @@ font:
   size: 12
   offset:
     x: 0
-    y: 0
+    y: 4
+  glyph_offset:
+    x: 0
+    y: 2
 schemes:
   gruvbox_material_hard_dark: &gruvbox_material_hard_dark
     primary:
