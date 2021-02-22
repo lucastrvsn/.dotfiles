@@ -2,34 +2,6 @@
 # some settings are adapted from prezto.
 
 ###################
-# functions
-###################
-cursor_mode() {
-  # See https://ttssh2.osdn.jp/manual/4/en/usage/tips/vim.html for cursor shapes
-  cursor_block='\e[2 q'
-  cursor_beam='\e[6 q'
-
-  function zle-keymap-select {
-    if [[ ${KEYMAP} == vicmd ]] ||
-       [[ $1 = 'block' ]]; then
-      echo -ne $cursor_block
-    elif [[ ${KEYMAP} == main ]] ||
-         [[ ${KEYMAP} == viins ]] ||
-         [[ ${KEYMAP} = '' ]] ||
-         [[ $1 = 'beam' ]]; then
-      echo -ne $cursor_beam
-    fi
-  }
-
-  zle-line-init() {
-    echo -ne $cursor_beam
-  }
-
-  zle -N zle-keymap-select
-  zle -N zle-line-init
-}
-
-###################
 # plugins
 ###################
 source ~/.zplug/init.zsh
@@ -38,13 +10,12 @@ zplug 'mafredri/zsh-async'
 zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
-zplug 'sindresorhus/pure', use:pure.zsh, as:theme
 
 zplug load
 
-###################
+########################
 # asdf version manager
-###################
+########################
 ASDF_DIR="${ASDF_DIR:-$HOME/.asdf}"
 ASDF_COMPLETIONS="$ASDF_DIR/completions"
 
@@ -57,6 +28,9 @@ fi
 # defaults
 ###################
 export EDITOR="nvim"
+export VISUAL=$EDITOR
+export PAGER="less"
+export MANPAGER="nvim -c 'set ft=man' -"
 
 ###################
 # env
@@ -223,8 +197,6 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-autoload -Uz cursor_mode; cursor_mode
-
 ###################
 # aliases
 ###################
@@ -270,9 +242,15 @@ alias h="history"
 alias hg="history -1000 | grep -i"
 alias history-10="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
+################################
+# starship init
+################################
+eval "$(starship init zsh)"
+
 ###################
-# start tmux
+# tmux init
 ###################
 if [ -z "$TMUX" ]; then
   tmux attach -t TMUX || tmux new -s TMUX
 fi
+

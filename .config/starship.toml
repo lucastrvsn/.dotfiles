@@ -14,14 +14,12 @@ threshold = 30
 style = "bold red"
 
 [directory]
-format = "[$path]($style)[$read_only]($read_only_style) "
 truncation_length = 2
 truncate_to_repo = false
 truncation_symbol = "…/"
 fish_style_pwd_dir_length = 2
 
 [memory_usage]
-format = "$symbol[${ram}( | ${swap})]($style) "
 show_percentage = true
 show_swap = false
 threshold = 75
