@@ -23,11 +23,12 @@ if not string.find(package.cpath, install_cpath_pattern, 1, true) then
 end
 
 local function try_loadstring(s, component, name)
-  local success, err = pcall(loadstring(s))
+  local success, result = pcall(loadstring(s))
   if not success then
     print('Error running ' .. component .. ' for ' .. name)
-    error(err)
+    error(result)
   end
+  return result
 end
 
 _G.packer_plugins = {
@@ -67,9 +68,18 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/lucas/.local/share/nvim/site/pack/packer/start/hop.nvim"
   },
+  ["indent-blankline.nvim"] = {
+    config = { "\27LJ\2\n轡2\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0綷2      let g:indent_blankline_char = '路'\n      let g:indent_blankline_char_highlight = 'Whitespace'\n      let g:indent_blankline_space_char = '路'\n      let g:indent_blankline_space_char_highlight = 'Whitespace'\n      let g:indent_blankline_use_treesitter = v:true\n      let g:indent_blankline_debug = v:true\n    \bcmd\bvim\0" },
+    loaded = true,
+    path = "/home/lucas/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
+  },
   ["is.vim"] = {
     loaded = true,
     path = "/home/lucas/.local/share/nvim/site/pack/packer/start/is.vim"
+  },
+  lspplease = {
+    loaded = true,
+    path = "/home/lucas/.local/share/nvim/site/pack/packer/start/lspplease"
   },
   ["nvim-compe"] = {
     config = { "\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.completion\frequire\0" },
@@ -97,6 +107,7 @@ _G.packer_plugins = {
   },
   ["packer.nvim"] = {
     loaded = false,
+    needs_bufread = false,
     path = "/home/lucas/.local/share/nvim/site/pack/packer/opt/packer.nvim"
   },
   ["plenary.nvim"] = {
@@ -159,28 +170,30 @@ _G.packer_plugins = {
 
 -- Config for: nvim-treesitter
 try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
--- Config for: nvim-compe
-try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.completion\frequire\0", "config", "nvim-compe")
+-- Config for: nvim-lspconfig
+try_loadstring("\27LJ\2\n#\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\blsp\frequire\0", "config", "nvim-lspconfig")
 -- Config for: telescope.nvim
 try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
+-- Config for: nvim-web-devicons
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.devicons\frequire\0", "config", "nvim-web-devicons")
+-- Config for: gitsigns.nvim
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.gitsigns\frequire\0", "config", "gitsigns.nvim")
+-- Config for: indent-blankline.nvim
+try_loadstring("\27LJ\2\n轡2\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0綷2      let g:indent_blankline_char = '路'\n      let g:indent_blankline_char_highlight = 'Whitespace'\n      let g:indent_blankline_space_char = '路'\n      let g:indent_blankline_space_char_highlight = 'Whitespace'\n      let g:indent_blankline_use_treesitter = v:true\n      let g:indent_blankline_debug = v:true\n    \bcmd\bvim\0", "config", "indent-blankline.nvim")
+-- Config for: hop.nvim
+try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.hop\frequire\0", "config", "hop.nvim")
+-- Config for: rooter.nvim
+try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plugins.rooter\frequire\0", "config", "rooter.nvim")
+-- Config for: nvim-compe
+try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.completion\frequire\0", "config", "nvim-compe")
+-- Config for: vim-fugitive
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.fugitive\frequire\0", "config", "vim-fugitive")
+-- Config for: formatter.nvim
+try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.formatter\frequire\0", "config", "formatter.nvim")
 -- Config for: galaxyline.nvim
 try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.statusline\frequire\0", "config", "galaxyline.nvim")
 -- Config for: vim-dirvish
 try_loadstring("\27LJ\2\n/\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\20plugins.dirvish\frequire\0", "config", "vim-dirvish")
--- Config for: rooter.nvim
-try_loadstring("\27LJ\2\n.\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\19plugins.rooter\frequire\0", "config", "rooter.nvim")
--- Config for: nvim-web-devicons
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.devicons\frequire\0", "config", "nvim-web-devicons")
--- Config for: nvim-lspconfig
-try_loadstring("\27LJ\2\n#\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\blsp\frequire\0", "config", "nvim-lspconfig")
--- Config for: formatter.nvim
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.formatter\frequire\0", "config", "formatter.nvim")
--- Config for: vim-fugitive
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.fugitive\frequire\0", "config", "vim-fugitive")
--- Config for: gitsigns.nvim
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.gitsigns\frequire\0", "config", "gitsigns.nvim")
--- Config for: hop.nvim
-try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.hop\frequire\0", "config", "hop.nvim")
 END
 
 catch

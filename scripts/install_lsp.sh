@@ -1,14 +1,5 @@
 #! /bin/sh
 
-# GO_PACKAGES=(
-#   "github.com/mattn/efm-langserver"
-# )
-# 
-# echo "installing language servers..."
-# npm install --global ${NPM_PACKAGES[@]}
-# go get ${GO_PACKAGES[@]}
-# echo "✅ LSP installation successful."
-
 NPM_PACKAGES=(
   "diagnostic-languageserver"
   "vim-language-server"
@@ -23,7 +14,12 @@ NPM_PACKAGES=(
   "prettier"
 )
 
+GO_PACKAGES=(
+  "github.com/mattn/efm-langserver"
+)
+
 echo "installing packages..."
 npm install --global ${NPM_PACKAGES[@]}
-
+go get ${GO_PACKAGES[@]}
 echo "🎉 installation completed."
+

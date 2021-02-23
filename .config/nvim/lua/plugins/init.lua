@@ -2,10 +2,19 @@ vim.cmd[[packadd packer.nvim]]
 
 -- packer.nvim configuration and plugins
 require('packer').startup(function()
-  use { '~/Projetos/calme-colorscheme' }
   use { 'wbthomason/packer.nvim', opt = true }
   use { 'christoomey/vim-tmux-navigator' }
   use { 'farmergreg/vim-lastplace' }
+  use { 'lukas-reineke/indent-blankline.nvim', branch = 'lua', config = function()
+    vim.cmd[[
+      let g:indent_blankline_char = '·'
+      let g:indent_blankline_char_highlight = 'Whitespace'
+      let g:indent_blankline_space_char = '·'
+      let g:indent_blankline_space_char_highlight = 'Whitespace'
+      let g:indent_blankline_use_treesitter = v:true
+      let g:indent_blankline_debug = v:true
+    ]]
+  end }
   use {
     'glepnir/galaxyline.nvim',
     branch = 'main',
@@ -78,4 +87,6 @@ require('packer').startup(function()
     { 'sainnhe/gruvbox-material' },
     { 'embark-theme/vim', as = 'embark' }
   }
+
+  use { '~/Projetos/lspplease' }
 end)

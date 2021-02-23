@@ -1,0 +1,35 @@
+[user]
+  name = Lucas Trevisan
+  email = lucastrvsn@gmail.com
+[core]
+  editor = nvim
+  pager = cat
+  mergeoptions = --no-edit # don't prompt for message for merge commits.
+  commitGraph = true
+[color]
+  ui = true
+[log]
+  decorate = auto
+  abbrevCommit = true
+[status]
+  short = true
+  branch = false
+[pull]
+  rebase = true
+  ff = only
+[rebase]
+  autoStash = true
+  autoSquash = true
+[push]
+  default = current
+[fetch]
+  prune = true
+[alias]
+  aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
+  branches = branch -a --sort=-authordate
+  stashes = stash list
+  remotes = remote -v
+  unstage = reset -q HEAD --
+  uncommit = reset --mixed HEAD~
+  lg = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(white)%s%C(reset) %C(dim white)-%C(reset) %ar %C(dim white)<%an>%C(reset)%C(auto)%d%C(reset)' --all
+  details = log -n1 -p --format=fuller
