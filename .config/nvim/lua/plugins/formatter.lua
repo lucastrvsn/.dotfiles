@@ -6,9 +6,9 @@ local prettier = function()
     args = {
       "--stdin-filepath",
       vim.api.nvim_buf_get_name(0),
-      "--single-quote"
+      "--single-quote",
     },
-    stdin = true
+    stdin = true,
   }
 end
 
@@ -16,72 +16,80 @@ local rustfmt = function()
   return {
     exe = "rustfmt",
     args = {
-      "--emit=stdout"
+      "--emit=stdout",
     },
-    stdin = true
+    stdin = true,
   }
 end
 
-require('formatter').setup({
+local stylua = function()
+  return {
+    exe = "stylua",
+    args = { "--search-parent-directories", "-" },
+    stdin = true,
+  }
+end
+
+require("formatter").setup {
   logging = false,
   filetype = {
     javascript = {
-      prettier
+      prettier,
     },
     javascriptreact = {
-      prettier
+      prettier,
     },
     typescript = {
-      prettier
+      prettier,
     },
     typescriptreact = {
-      prettier
+      prettier,
     },
     css = {
-      prettier
+      prettier,
     },
     less = {
-      prettier
+      prettier,
     },
     sass = {
-      prettier
+      prettier,
     },
     scss = {
-      prettier
+      prettier,
     },
     json = {
-      prettier
+      prettier,
     },
     graphql = {
-      prettier
+      prettier,
     },
     markdown = {
-      prettier
+      prettier,
     },
     vue = {
-      prettier
+      prettier,
     },
     yaml = {
-      prettier
+      prettier,
     },
     html = {
-      prettier
+      prettier,
     },
     rust = {
-      rustfmt
-    }
-  }
-})
+      rustfmt,
+    },
+    lua = {
+      stylua,
+    },
+  },
+}
 
-
--- vim.api.nvim_command [[augroup Format]]
--- vim.api.nvim_command [[autocmd! * <buffer>]]
--- vim.api.nvim_command [[autocmd BufWritePost <buffer> FormatWrite]]
--- vim.api.nvim_command [[augroup END]]
-
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html,*.rs FormatWrite
+  autocmd BufWritePost *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html,*.rs,*.lua FormatWrite
 augroup END
-]], true)
+]],
+  true
+)

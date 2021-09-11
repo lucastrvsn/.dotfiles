@@ -1,8 +1,8 @@
-require('rooter').setup({
+require("rooter").setup {
   echo = false,
   patterns = {
-    '.git',
-    'package.json'
+    ".git",
+    "package.json",
   },
-  non_project_files = 'current',
-})
+  non_project_files = "current",
+}

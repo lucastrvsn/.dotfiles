@@ -1,15 +1,15 @@
-local apply_colorscheme = require('utils').apply_colorscheme
-local apply_globals = require('utils').apply_globals
+vim.opt.termguicolors = true
+vim.opt.background = "dark"
+vim.opt.guicursor = {
+  "n-v-c:block",
+  "i-ci-ve:ver25",
+  "r-cr:hor20",
+  "o:hor50",
+  "a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor",
+  "sm:block-blinkwait175-blinkoff150-blinkon175",
+}
 
-apply_globals({
-  gruvbox_material_palette = 'material',
-  gruvbox_material_background = 'hard',
-  gruvbox_material_enable_italic = false,
-  gruvbox_material_disable_italic_comment = true,
-  gruvbox_material_transparent_background = false,
-  gruvbox_material_diagnostic_line_highlight = true,
-  gruvbox_material_better_performance = true
-})
+-- kikwis colorscheme options
+vim.g.kikwis_pallete = "lopsa"
 
-apply_colorscheme('gruvbox-material', 'dark')
--- apply_colorscheme('calme', 'dark')
+vim.cmd "colorscheme kikwis"

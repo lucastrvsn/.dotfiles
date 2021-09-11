@@ -3,9 +3,10 @@
   email = lucastrvsn@gmail.com
 [core]
   editor = nvim
-  pager = cat
-  mergeoptions = --no-edit # don't prompt for message for merge commits.
+  pager = less -MR
+  mergeoptions = --no-edit
   commitGraph = true
+  excludefiles = ~/.gitignoreglobal
 [color]
   ui = true
 [log]
@@ -26,10 +27,13 @@
   prune = true
 [alias]
   aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
-  branches = branch -a --sort=-authordate
+  branches = branch -a --sort=-authordate --no-pager
   stashes = stash list
+  sync = !git fetch && git pull origin $(git rev-parse --abbrev-ref HEAD)
   remotes = remote -v
   unstage = reset -q HEAD --
   uncommit = reset --mixed HEAD~
   lg = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(white)%s%C(reset) %C(dim white)-%C(reset) %ar %C(dim white)<%an>%C(reset)%C(auto)%d%C(reset)' --all
   details = log -n1 -p --format=fuller
+[init]
+	defaultBranch = main

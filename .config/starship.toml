@@ -1,41 +1,9 @@
 add_newline = false
 
-[cmd_duration]
-min_time = 10_000 # 10s
-format = " ([$duration]($style))"
-
-[battery]
-full_symbol = "🔋"
-charging_symbol = "🔌"
-discharging_symbol = "⚡"
-
-[[battery.display]]
-threshold = 30
-style = "bold red"
-
-[directory]
-truncation_length = 2
-truncate_to_repo = false
-truncation_symbol = "…/"
-fish_style_pwd_dir_length = 2
-
-[memory_usage]
-show_percentage = true
-show_swap = false
-threshold = 75
-style = "bold dimmed white"
-disabled = false
-
-[package]
-disabled = true
-
 [username]
 show_always = true
-style_user = "bold green"
 
-[status]
-style = "bg:white fg:black"
-symbol = ""
-format = '[\[$symbol$status\]]($style) '
-disabled = false
-
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+fish_style_pwd_dir_length = 2

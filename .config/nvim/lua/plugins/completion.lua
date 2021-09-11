@@ -1,26 +1,75 @@
-require('compe').setup({
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
+require("compe").setup {
+  preselect = "disable",
+  documentation = true,
   source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    vsnip = false;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    tags = true;
-    snippets_nvim = false;
-    treesitter = true;
-  };
-})
+    buffer = {
+      priority = 1,
+      menu = "📁",
+    },
+    emoji = {
+      priority = 1,
+      menu = "",
+    },
+    nvim_lsp = {
+      priority = 4,
+      menu = "",
+    },
+    nvim_lua = {
+      priority = 4,
+      menu = "",
+    },
+    path = {
+      priority = 2,
+      menu = "📁",
+    },
+    treesitter = {
+      priority = 3,
+      menu = "",
+    },
+    spell = false,
+    calc = false,
+  },
+}
+
+vim.api.nvim_set_keymap(
+  "i",
+  "<Tab>",
+  'pumvisible() ? "<C-n>" : "<Tab>"',
+  { expr = true, noremap = true }
+)
+vim.api.nvim_set_keymap(
+  "i",
+  "<S-Tab>",
+  'pumvisible() ? "<C-p>" : "<S-Tab>"',
+  { expr = true, noremap = true }
+)
+vim.api.nvim_set_keymap(
+  "i",
+  "<C-Space>",
+  "compe#complete()",
+  { silent = true, expr = true }
+)
+vim.api.nvim_set_keymap(
+  "i",
+  "<CR>",
+  "compe#confirm('<CR>')",
+  { silent = true, expr = true }
+)
+vim.api.nvim_set_keymap(
+  "i",
+  "<C-e>",
+  "compe#close('<C-e>')",
+  { silent = true, expr = true }
+)
+vim.api.nvim_set_keymap(
+  "i",
+  "<C-u>",
+  "compe#scroll({'delta': +4 })",
+  { silent = true, expr = true }
+)
+vim.api.nvim_set_keymap(
+  "i",
+  "<C-u>",
+  "compe#scroll({'delta': -4 })",
+  { silent = true, expr = true }
+)

@@ -1,27 +1,28 @@
-require('nvim-treesitter.configs').setup({
-  ensure_installed = "all",
+require("nvim-treesitter.configs").setup {
   highlight = {
-    enable = true
+    enable = true,
   },
   indent = {
-    enable = true
+    enable = true,
   },
   incremental_selection = {
-    enable = true
+    enable = false,
   },
   textobjects = {
-    enable = true
+    enable = true,
   },
   refactor = {
     highlight_definitions = {
-      enable = true
+      enable = true,
+    },
+    highlight_current_scope = {
+      enable = false,
     },
     smart_rename = {
       enable = true,
       keymaps = {
-        smart_rename = "grr"
-      }
-    }
-  }
-})
-
+        smart_rename = "grr",
+      },
+    },
+  },
+}
