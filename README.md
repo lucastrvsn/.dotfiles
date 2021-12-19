@@ -5,6 +5,7 @@ This is all my config and tools I use daily as software engineer. The mostly imp
 - macOS
 - neovim
 - tmux
+- kitty
 
 ### 💾 Applications and tools
 
@@ -27,7 +28,3 @@ This is all my config and tools I use daily as software engineer. The mostly imp
 
 - `lsp_install`: install all lsp servers I use to use in neovim.
 
-## 📓 Notes to myself
-
-- [ ] change how `lsp_install` works to accept update all lsp installed.
-- [ ] test tmux configuration againt macOS and linux.
