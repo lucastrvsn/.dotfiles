@@ -7,4 +7,7 @@ setopt cdable_vars
 setopt multios
 setopt correct
 setopt extended_glob
+
 unsetopt clobber
+
+# vim: ft=zsh

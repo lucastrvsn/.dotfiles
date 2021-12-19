@@ -24,14 +24,6 @@ require("packer").startup(function()
     end,
   }
 
-  -- completion engine for LSP
-  use {
-    "hrsh7th/nvim-compe",
-    config = function()
-      require "plugins/completion"
-    end,
-  }
-
   -- simple file explorer for vim
   use {
     "justinmk/vim-dirvish",
@@ -50,21 +42,6 @@ require("packer").startup(function()
     end,
   }
 
-  use {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup()
-    end,
-  }
-
-  -- run formatters
-  use {
-    "mhartington/formatter.nvim",
-    config = function()
-      require "plugins/formatter"
-    end,
-  }
-
   -- configuration for language servers
   use {
     "neovim/nvim-lspconfig",
@@ -72,6 +49,16 @@ require("packer").startup(function()
       require "lsp"
     end,
   }
+
+  -- completion engine for LSP
+  use {
+    "ms-jpq/coq_nvim",
+    config = function()
+      require "plugins/completion"
+    end,
+    after = { "nvim-lspconfig" },
+  }
+
 
   -- linter and formatter
   use {
@@ -81,16 +68,18 @@ require("packer").startup(function()
       "neovim/nvim-lspconfig",
     },
     config = function()
+      require "lsp/null"
       require "plugins/null"
     end,
+    after = { "nvim-lspconfig" },
   }
 
   -- fuzzy search
   use {
     "nvim-telescope/telescope.nvim",
     requires = {
-      { "nvim-lua/popup.nvim" },
-      { "nvim-lua/plenary.nvim" },
+      "nvim-lua/popup.nvim",
+      "nvim-lua/plenary.nvim",
     },
     config = function()
       require "plugins/telescope"
@@ -116,9 +105,9 @@ require("packer").startup(function()
 
   -- change working directory to current
   use {
-    "oberblastmeister/rooter.nvim",
+    "ahmedkhalf/project.nvim",
     config = function()
-      require "plugins/rooter"
+      require "plugins/project"
     end,
   }
 
@@ -126,18 +115,26 @@ require("packer").startup(function()
   use { "tpope/vim-surround" }
 
   -- comment or toggle section of code
-  use { "b3nj5m1n/kommentary" }
+  use {
+    "terrortylor/nvim-comment",
+    config = function()
+      require "plugins/comment"
+    end,
+  }
 
   -- smooth scroll
   use {
     "karb94/neoscroll.nvim",
     config = function()
-      require("neoscroll").setup()
+      require "plugins/neoscroll"
     end,
   }
 
+  -- themes
+  use { "sainnhe/gruvbox-material" }
+
   -- personal or dev plugins
-  use {
+  --[[ use {
     "~/Projects/kikwis/vim",
     as = "kikwis",
   }
@@ -146,5 +143,5 @@ require("packer").startup(function()
     config = function()
       require "plugins/statusline"
     end,
-  }
+  } ]]
 end)

@@ -2,7 +2,8 @@
 HOMEBREW_BIN_PATH="/opt/homebrew/bin"
 HOMEBREW_SBIN_PATH="/opt/homebrew/sbin"
 CARGO_BIN_PATH="$HOME/.cargo/bin"
-export PATH="$HOMEBREW_BIN_PATH:$HOMEBREW_SBIN_PATH:$CARGO_BIN_PATH:$PATH"
+LOCAL_BIN_PATH="$HOME/.local/bin"
+export PATH="$HOMEBREW_BIN_PATH:$HOMEBREW_SBIN_PATH:$LOCAL_BIN_PATH:$CARGO_BIN_PATH:$PATH"
 
 # lscolors
 export CLICOLOR=1
@@ -18,3 +19,5 @@ zmodload -a zsh/stat stat
 zmodload -a zsh/zpty zpty
 zmodload -a zsh/zprof zprof
 zmodload -a zsh/mapfile mapfile
+
+# vim: ft=zsh

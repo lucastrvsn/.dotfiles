@@ -1,5 +1,10 @@
+# get top 10 shell commands
+# from oh-my-zsh
+function zsh-top() {
+  fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n25
+}
+
 # preference
-alias m='less'
 alias vim='nvim'
 
 # better ls defaults
@@ -24,9 +29,15 @@ alias grc='git rebase --continue'
 alias glog='git log --oneline --decorate --graph'
 alias gfp='git fetch --prune'
 alias gdlb='git branch -r | awk "{print $1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print $1}" | xargs git branch -D'
-alias gdd='fetch_and_delete_branches'
 
 # history
 alias h='history'
 alias hg='history -1000 | grep -i'
 alias history-10='history 0 | awk "{print \$2}" | sort | uniq -c | sort -n -r | head'
+
+# some aliases for homebrew
+alias b='brew'
+alias bu='brew update'
+alias bi='brew install'
+
+# vim: ft=zsh

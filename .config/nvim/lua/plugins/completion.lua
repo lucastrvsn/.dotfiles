@@ -1,4 +1,4 @@
-require("compe").setup {
+--[[ require("compe").setup {
   preselect = "disable",
   documentation = true,
   source = {
@@ -72,4 +72,16 @@ vim.api.nvim_set_keymap(
   "<C-u>",
   "compe#scroll({'delta': -4 })",
   { silent = true, expr = true }
-)
+) ]]
+
+vim.g.coq_settings = {
+  auto_start = "shut-up",
+  display = {
+    ghost_text = {
+      context = {
+        "〈",
+        "〉",
+      },
+    },
+  },
+}

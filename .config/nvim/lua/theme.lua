@@ -12,4 +12,5 @@ vim.opt.guicursor = {
 -- kikwis colorscheme options
 vim.g.kikwis_pallete = "lopsa"
 
-vim.cmd "colorscheme kikwis"
+--vim.cmd "colorscheme kikwis"
+vim.cmd "colorscheme gruvbox-material"

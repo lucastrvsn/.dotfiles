@@ -35,6 +35,7 @@ require "lsp/efm"
 require "lsp/html"
 require "lsp/json"
 -- require('lsp/lua')
+-- require "lsp/null"
 -- require('lsp/rome')
 require "lsp/rust"
 require "lsp/sql"
