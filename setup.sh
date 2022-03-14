@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 
+# creates my default folder for projects if not exists yet
+if [ ! -d "$HOME/Projects" ]; then
+  mkdir -p $HOME/Projects
+fi
+
 # remove any existing config files if needed
 rm -rf $HOME/.config/alacritty
 rm -rf $HOME/.config/nvim
 rm -rf $HOME/.config/zsh
+rm -rf $HOME/.config/.starship.toml
 rm -rf $HOME/.gitconfig
 rm -rf $HOME/.gitignoreglobal
 rm -rf $HOME/.gitmessage
 rm -rf $HOME/.tmux.conf
+rm -rf $HOME/.tmux
 rm -rf $HOME/.zprofile
 rm -rf $HOME/.zshrc
 
@@ -23,6 +30,9 @@ rm -rf $HOME/.zshrc
   # tmux
   ln -sf "$PWD/tmux/config" "$HOME/.tmux.conf"
 
+  # starship
+  ln -sf "$PWD/starship/config.toml" "$HOME/.config/starship.toml"
+
   # git
   ln -sf "$PWD/git/gitconfig" "$HOME/.gitconfig"
   ln -sf "$PWD/git/gitignore" "$HOME/.gitignoreglobal"
@@ -35,8 +45,10 @@ rm -rf $HOME/.zshrc
   ln -sf "$PWD/alacritty" "$HOME/.config/alacritty"
 )
 
-# creates my default folder for projects
-mkdir -p $HOME/Projects
+# install tmux plugin manager (tpm)
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  /bin/bash -c "$(git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm)"
+fi
 
 if [ "$(uname)" == "Darwin" ]; then
   # install homebrew
@@ -46,7 +58,7 @@ if [ "$(uname)" == "Darwin" ]; then
   fi
 
   # install homebrew bundle located at Brewfile
-  brew bundle --file --no-lock "$PWD/Brewfile"
+  brew bundle --file="$PWD/Brewfile"
 
   # set my macOS preferences
   source $PWD/mac.sh

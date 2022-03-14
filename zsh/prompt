@@ -1,8 +1,5 @@
 # startship startup
 # https://starship.rs/
-export STARSHIP_CONFIG=$HOME/.config/zsh/starship/config.toml
-export STARSHIP_CACHE=$HOME/.config/zsh/starship/cache
-
 eval "$(starship init zsh)"
 
 # vim: ft=zsh

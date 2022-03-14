@@ -16,10 +16,10 @@ brew 'ripgrep'
 brew 'tmux'
 brew 'zplug'
 brew 'zsh'
+brew 'starship'
 
 cask 'alacritty'
 cask 'docker'
-cask 'google-chrome'
 cask 'ngrok'
 cask 'visual-studio-code'
 

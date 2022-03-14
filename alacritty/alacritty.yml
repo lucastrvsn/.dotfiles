@@ -1,0 +1,54 @@
+shell:
+  program: /opt/homebrew/bin/zsh
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
+
+window:
+  dimensions:
+    columns: 164
+    lines: 32
+  padding:
+    x: 0
+    y: 0
+  dynamic_padding: false
+  decorations: full
+  opacity: 1.0
+  dynamic_title: true
+
+scrolling:
+  history: 10000
+  multiplier: 3
+
+font:
+  size: 14.0
+  normal:
+    family: MesloLGL Nerd Font
+    style: Regular
+  bold:
+    family: MesloLGL Nerd Font
+    style: Bold
+  italic:
+    family: MesloLGL Nerd Font
+    style: Italic
+  bold_italic:
+    family: MesloLGL Nerd Font
+    style: Bold Italic
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+
+cursor:
+  style:
+    shape: Block
+    blinking: Off
+  unfocused_hollow: true
+
+live_config_reload: true
+
+mouse:
+  hide_when_typing: false
