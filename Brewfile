@@ -17,6 +17,7 @@ brew 'tmux'
 brew 'zplug'
 brew 'zsh'
 brew 'starship'
+brew 'lazygit'
 
 cask 'alacritty'
 cask 'docker'

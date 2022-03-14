@@ -39,6 +39,9 @@ alias glog='git log --oneline --decorate --graph'
 alias gfp='git fetch --prune'
 alias gdlb='git branch -r | awk "{print $1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print $1}" | xargs git branch -D'
 
+# lazygit
+alias gg='lazygit'
+
 # history
 alias h='history'
 alias hg='history -1000 | grep -i'

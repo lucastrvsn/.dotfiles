@@ -15,7 +15,7 @@ window:
   dynamic_padding: false
   decorations: full
   opacity: 1.0
-  dynamic_title: true
+  dynamic_title: false
 
 scrolling:
   history: 10000

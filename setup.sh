@@ -46,12 +46,20 @@ rm -rf $HOME/.zshrc
 )
 
 # install tmux plugin manager (tpm)
+# https://github.com/tmux-plugins/tpm/
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   /bin/bash -c "$(git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm)"
 fi
 
+# install packer.nvim (neovim plugin manager)
+# https://github.com/wbthomason/packer.nvim/
+if [ ! -d "$HOME/.local/share/nvim/site/pack/packer" ]; then
+  /bin/bash -c "$(git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim)"
+fi
+
 if [ "$(uname)" == "Darwin" ]; then
   # install homebrew
+  # https://brew.sh/
   if test ! $(which brew); then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$(/opt/homebrew/bin/brew shellenv)"
