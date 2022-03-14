@@ -1,0 +1,29 @@
+# append to path
+HOMEBREW_BIN_PATH="$(brew --prefix)/bin"
+HOMEBREW_SBIN_PATH="$(brew --prefix)/sbin"
+CARGO_BIN_PATH="$HOME/.cargo/bin"
+LOCAL_BIN_PATH="$HOME/.local/bin"
+export PATH="$LOCAL_BIN_PATH:$CARGO_BIN_PATH:$HOMEBREW_BIN_PATH:$HOMEBREW_SBIN_PATH:$PATH"
+
+# gpg
+export GPG_TTY=$(tty)
+
+# lscolors
+export CLICOLOR=1
+export LSCOLORS=Dxfxcxdxbxegedabadacad
+
+# defaults
+export EDITOR="nvim"
+export VISUAL=$EDITOR
+export PAGER="less"
+export MANPAGER="nvim -c 'set ft=man' -"
+
+# change sudo prompt
+export SUDO_PROMPT=$'\e[31msudo\e[m password for \e[34m%p\e[m: '
+
+zmodload -a zsh/stat stat
+zmodload -a zsh/zpty zpty
+zmodload -a zsh/zprof zprof
+zmodload -a zsh/mapfile mapfile
+
+# vim: ft=zsh

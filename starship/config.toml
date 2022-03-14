@@ -1,0 +1,22 @@
+add_newline = false
+command_timeout = 1000
+
+[directory]
+truncation_length = 2
+truncation_symbol = "…/"
+fish_style_pwd_dir_length = 1
+
+[hostname]
+ssh_only = true
+
+[username]
+disabled = false
+show_always = true
+
+[battery]
+disabled = true
+
+[character]
+success_symbol = "[\\$](green)"
+error_symbol = "[\\$](red)"
+vicmd_symbol = "[V](bold green)"

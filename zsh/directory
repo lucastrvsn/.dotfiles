@@ -1,0 +1,13 @@
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_silent
+setopt pushd_to_home
+setopt cdable_vars
+setopt multios
+setopt correct
+setopt extended_glob
+
+unsetopt clobber
+
+# vim: ft=zsh

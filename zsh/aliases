@@ -1,0 +1,52 @@
+# get top 10 shell commands
+# from oh-my-zsh
+function zsh-top() {
+  fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n25
+}
+
+# preference
+alias vim='nvim'
+alias v='nvim'
+
+# ls
+alias ls='gls --color=auto'
+alias ll='gls -alh --color=auto'
+
+# mkdir
+alias mkdir='mkdir -pv'
+
+# ping
+alias ping='ping -c 5'
+
+# grep
+alias grep='grep -n --color'
+
+# git
+alias g='git'
+alias ga='git add'
+alias gaa='git add --all'
+alias gb='git branch'
+alias gc='git commit -v'
+alias gc!='git commit -v --amend'
+alias gs='git status'
+alias gp='git pull'
+alias gm='git merge'
+alias gp='git push'
+alias gr='git rebase'
+alias gra='git rebase --abort'
+alias grc='git rebase --continue'
+alias glog='git log --oneline --decorate --graph'
+alias gfp='git fetch --prune'
+alias gdlb='git branch -r | awk "{print $1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print $1}" | xargs git branch -D'
+
+# history
+alias h='history'
+alias hg='history -1000 | grep -i'
+alias history-10='history 0 | awk "{print \$2}" | sort | uniq -c | sort -n -r | head'
+
+# homebrew
+alias b='brew'
+alias bu='brew update'
+alias bi='brew install'
+
+# vim: ft=zsh

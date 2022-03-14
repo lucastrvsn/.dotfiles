@@ -1,0 +1,19 @@
+
+
+# Subject: summary, imperative, without period
+#
+# Body: explain *what* and *why* (not *how*)
+#
+# ! Title should be 50 character long
+# ! Body should be 72 character long
+# ! Include a link to the ticket, if any.
+#
+# * Explain what is the current situation
+# * Explain why that is a problem
+# * Explain how this patch fixes the problem
+# * Anything else needed to understand the patch
+#   (e.g,. alternate solutions)
+#
+# Co-authored-by: name <name@email.com>
+#
+# vim: ft=gitcommit colorcolumn=50,72 textwidth=72

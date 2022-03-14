@@ -1,0 +1,11 @@
+# mac stuff
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# neovim
+.nvimlog
+
+# NEVER COMMIT .ENV! :^)
+.env
+
