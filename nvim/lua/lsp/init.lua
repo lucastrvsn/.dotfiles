@@ -33,7 +33,7 @@ require "lsp/css"
 -- require('lsp/deno')
 require "lsp/html"
 require "lsp/json"
--- require('lsp/lua')
+require "lsp/lua"
 -- require('lsp/rome')
 require "lsp/rust"
 require "lsp/sql"

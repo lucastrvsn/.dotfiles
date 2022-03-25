@@ -1,9 +1,12 @@
+env:
+  TERM: xterm-256color
+
 shell:
   program: /opt/homebrew/bin/zsh
   args:
     - -l
     - -c
-    - "tmux attach || tmux"
+    - "tmux attach 2> /dev/null || tmux"
 
 window:
   dimensions:
