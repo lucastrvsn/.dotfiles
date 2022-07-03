@@ -1,51 +1,34 @@
-require("nvim-tree").setup {
-  auto_close = true,
-  auto_reload_on_write = true,
-  open_on_tab = false,
-  update_cwd = true,
-  update_to_buf_dir = {
-    enable = true,
-    auto_open = true,
-  },
-  update_focused_file = {
-    enable      = false,
-    update_cwd  = false,
-    ignore_list = {}
-  },
-  system_open = {
-    cmd  = nil,
-    args = {}
-  },
-  filters = {
-    dotfiles = false,
-  },
-  git = {
-    enable = false,
-  },
-  view = {
-    width = 32,
-    height = 32,
-    hide_root_folder = false,
-    side = 'left',
-    auto_resize = false,
-    mappings = {
-      custom_only = false,
-      list = {}
-    },
-    number = false,
-    relativenumber = false,
-    signcolumn = "no"
-  },
-  trash = {
-    cmd = "trash",
-    require_confirm = true
-  },
-  actions = {
-    change_dir = {
-      global = false,
-    },
-    open_file = {
-      quit_on_open = false,
-    }
-  }
+local dirbuf = require "dirbuf"
+
+dirbuf.setup {
+  hash_padding = 2,
+  show_hidden = true,
+  sort_order = "directories_first",
+  write_cmd = "DirbufSync",
 }
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "dirbuf",
+  callback = function(args)
+    local buffer_number = args.buf
+
+    vim.keymap.set("n", "<C-v>", function()
+      dirbuf.enter "vsplit"
+    end, {
+      silent = true,
+      buffer = buffer_number,
+    })
+    vim.keymap.set("n", "<C-s>", function()
+      dirbuf.enter "split"
+    end, {
+      silent = true,
+      buffer = buffer_number,
+    })
+    vim.keymap.set("n", "<C-t>", function()
+      dirbuf.enter "tabedit"
+    end, {
+      silent = true,
+      buffer = buffer_number,
+    })
+  end,
+})

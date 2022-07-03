@@ -13,8 +13,7 @@ end
 require("telescope").setup {
   defaults = {
     prompt_prefix = "/ ",
-    selection_caret = "⯈ ",
-    color_devicons = false,
+    selection_caret = "> ",
     mappings = {
       i = {
         ["<Esc>"] = actions.close,
@@ -60,17 +59,19 @@ require("telescope").setup {
   },
   pickers = {
     find_files = {
-      theme = "ivy",
+      theme = "dropdown",
+      previewer = false,
     },
     git_files = {
-      theme = "ivy",
+      theme = "dropdown",
+      previewer = false,
     },
     live_grep = {
-      theme = "ivy",
+      theme = "dropdown",
       previewer = false,
     },
     file_browser = {
-      theme = "ivy",
+      theme = "dropdown",
       previewer = false,
     },
   },
@@ -86,12 +87,6 @@ vim.api.nvim_set_keymap(
   "n",
   "<Leader>g",
   '<cmd>lua require("telescope.builtin").live_grep()<CR>',
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "<Leader>f",
-  '<cmd>lua require("telescope.builtin").file_browser()<CR>',
   { noremap = true, silent = true }
 )
 vim.api.nvim_set_keymap(

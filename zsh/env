@@ -1,9 +1,20 @@
+export GOPATH=$(go env GOPATH)
+export GOROOT=$(go env GOROOT)
+export GOBIN=$(go env GOBIN)
+
 # append to path
 HOMEBREW_BIN_PATH="/opt/homebrew/bin"
 HOMEBREW_SBIN_PATH="/opt/homebrew/sbin"
 CARGO_BIN_PATH="$HOME/.cargo/bin"
 LOCAL_BIN_PATH="$HOME/.local/bin"
-export PATH="$LOCAL_BIN_PATH:$CARGO_BIN_PATH:$HOMEBREW_BIN_PATH:$HOMEBREW_SBIN_PATH:$PATH"
+GO_PATH="$GOPATH/bin"
+GO_ROOT_PATH="$GOROOT/bin"
+GO_BIN_PATH="$GOBIN"
+
+export PATH="$LOCAL_BIN_PATH:$CARGO_BIN_PATH:$GO_PATH:$GO_ROOT_PATH:$GO_BIN_PATH:$HOMEBREW_BIN_PATH:$HOMEBREW_SBIN_PATH:$PATH"
+
+# cargo env
+source "$HOME/.cargo/env"
 
 # gpg
 export GPG_TTY=$(tty)

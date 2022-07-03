@@ -23,7 +23,7 @@ return require("packer").startup(function(use)
 
   -- simple file explorer
   use {
-    "kyazdani42/nvim-tree.lua",
+    "elihunter173/dirbuf.nvim",
     config = function()
       require "plugins/explorer"
     end,
@@ -37,6 +37,9 @@ return require("packer").startup(function(use)
       require "plugins/gitsigns"
     end,
   }
+
+  -- editorconfig support
+  use { "editorconfig/editorconfig-vim" }
 
   -- configuration for language servers
   use {
@@ -53,13 +56,15 @@ return require("packer").startup(function(use)
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
       "hrsh7th/nvim-cmp",
     },
     config = function()
       require "plugins/completion"
     end,
   }
+
+  -- snippets
+  use { "dcampos/nvim-snippy" }
 
   -- linter and formatter
   use {
@@ -126,9 +131,9 @@ return require("packer").startup(function(use)
 
   -- smooth scroll
   use {
-    "karb94/neoscroll.nvim",
+    "declancm/cinnamon.nvim",
     config = function()
-      require "plugins/neoscroll"
+      require "plugins/smoothscroll"
     end,
   }
 

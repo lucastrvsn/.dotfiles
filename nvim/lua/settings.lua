@@ -2,24 +2,25 @@
 vim.g.mapleader = " "
 
 -- disable builtin plugins
-vim.g.loaded_gzip = true
-vim.g.loaded_tar = true
-vim.g.loaded_tarPlugin = true
-vim.g.loaded_zip = true
-vim.g.loaded_zipPlugin = true
+vim.g.loaded_2html_plugin = true
 vim.g.loaded_getscript = true
 vim.g.loaded_getscriptPlugin = true
+vim.g.loaded_gzip = true
+vim.g.loaded_logiPat = true
+vim.g.loaded_matchit = true
+vim.g.loaded_netrw = true
+vim.g.loaded_netrwFileHandlers = true
+vim.g.loaded_netrwPlugin = true
+vim.g.loaded_netrwSettings = true
+vim.g.loaded_rrhelper = true
+vim.g.loaded_tar = true
+vim.g.loaded_tarPlugin = true
 vim.g.loaded_vimball = true
 vim.g.loaded_vimballPlugin = true
-vim.g.loaded_matchit = true
-vim.g.loaded_2html_plugin = true
-vim.g.loaded_logiPat = true
-vim.g.loaded_netrw = true
-vim.g.loaded_netrwPlugin = true
-vim.g.loaded_rrhelper = true
-vim.g.loaded_netrwSettings = true
-vim.g.loaded_netrwFileHandlers = true
+vim.g.loaded_zip = true
+vim.g.loaded_zipPlugin = true
 
+-- settings
 vim.opt.compatible = false
 vim.opt.mouse = "nvh"
 vim.opt.history = 10000
@@ -33,16 +34,16 @@ vim.opt.undolevels = 1000
 vim.opt.undoreload = 10000
 vim.opt.updatetime = 500
 vim.opt.cursorline = true
-vim.opt.lazyredraw = true
+vim.opt.lazyredraw = false
 vim.opt.showcmd = true
-vim.opt.cmdheight = 1
+vim.opt.cmdheight = 0
 vim.opt.ruler = true
 vim.opt.completeopt = {
   "menu",
   "menuone",
   "noselect",
 }
-vim.opt.scrolloff = 4
+vim.opt.scrolloff = 6
 vim.opt.sidescrolloff = 4
 vim.opt.incsearch = true
 vim.opt.inccommand = "nosplit"
@@ -76,7 +77,7 @@ vim.opt.pumheight = 14
 vim.opt.signcolumn = "yes:1"
 vim.opt.list = true
 vim.opt.listchars = {
-  tab = "➞ ",
+  tab = "➞➞",
   lead = "·",
   trail = "·",
 }
@@ -88,11 +89,12 @@ vim.opt.timeoutlen = 1000
 vim.opt.ttimeoutlen = 50
 vim.opt.showtabline = 0
 vim.opt.showmode = false
+vim.opt.laststatus = 2
 vim.opt.path:append "**"
 vim.opt.shortmess:append "c"
 vim.opt.wildmenu = true
-vim.opt.wildmode = { "longest", "list", "full" }
-vim.opt.wildoptions = "pum"
+vim.opt.wildmode = { "longest:full", "full" }
+vim.opt.wildoptions = "pum,tagfile"
 vim.opt.wildignore:append {
   "*/.git/*",
   "*/.hg/*",

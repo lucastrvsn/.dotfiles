@@ -36,37 +36,27 @@ set -wg clock-mode-style 24
 # open new panes on current path
 bind c new-window -c '#{pane_current_path}'
 
+# better split defaults
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
 # reload tmux config
 bind R source-file ~/.tmux.conf \;
 
 #################
 # status line
 #################
-set  -g status on
-set  -g status-interval 5
-set  -g status-justify 'left'
-set  -g status-keys vi
-set  -g status-left-length 80
-set  -g status-right-length 80
-set  -g status-position bottom
-set  -g status-style 'bg=black,fg=white'
-set -wg mode-style 'bg=#7d7266,fg=#3e3a38'
-set -wg window-status-style 'bg=red,fg=#7c6f64'
-set -wg window-status-activity-style 'bg=#3e3a38,fg=#aa9f9d'
-set -wg window-status-bell-style 'bg=#3e3a38,fg=#7d7266'
-set -wg window-status-current-style 'bg=#7d7266,fg=#3e3a38'
-set  -g pane-active-border-style 'bg=#3e3a38,fg=#2d2a2a'
-set  -g pane-border-style 'bg=#3e3a38,fg=#2d2a2a'
-set  -g message-style 'bg=#e9d7aa,fg=#3e3a38'
-set  -g message-command-style 'bg=#aa9f9d,fg=#3e3a38'
-set  -g display-panes-active-colour '#8ec07c'
-set  -g display-panes-colour '#e9d7aa'
-set -wg clock-mode-colour '#554e49'
-set  -g status-left ''
-set  -g status-right '#[bg=#3e3a38,fg=#6d625a] %Y-%m-%d %H:%M #{?client_prefix,#[bg=#80b578 fg=#2d2a2a],#[bg=#554e49 fg=#918273]} #{host} '
-set -wg window-status-current-format '#{?window_zoomed_flag,#[bg=#554e49 fg=#e9d7aa bold],#[bg=#554e49 fg=#e9d7aa bold]} #{window_index}:#{window_name} '
-set -wg window-status-format '#{?window_zoomed_flag,#[bg=#3e3a38 fg=#e9d7aa bold],#[bg=#3e3a38 fg=#e9d7aa]} #{window_index}:#{window_name} '
-set -wg window-status-separator ''
+set -g status on
+set -g status-interval 60
+set -g status-bg black
+set -g status-fg white
+set -g window-status-current-style bg=white,fg=black,bold
+set -g status-left-length 30
+set -g status-left '#[fg=green](#S) #(whoami) '
+# set -g status-right '#[fg=yellow]#(cut -d " " -f 1-3 /proc/loadavg)#[default] #[fg=white]%H:%M#[default]'
+set -g status-right '#[fg=red,bold]#(uptime | cut -d "," -f 3-) #[fg=blue,bold][%Y/%m/%d(%a)%H:%M]#[default]'
 
 ########################
 # tmux plugin manager
