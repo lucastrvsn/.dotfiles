@@ -37,6 +37,7 @@
   sync = !git fetch && git pull origin $(git rev-parse --abbrev-ref HEAD)
   publish = "!git push origin $(git symbolic-ref --short HEAD) -u"
   main = "!git checkout $(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))"
+  c = "!git checkout $(git for-each-ref refs/heads/ --format='%(refname:short)' | fzf)"
   remotes = remote -v
   unstage = reset -q HEAD --
   uncommit = reset --mixed HEAD~

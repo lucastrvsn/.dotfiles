@@ -16,8 +16,11 @@ setopt no_list_beep
 setopt list_packed
 setopt no_list_rows_first
 setopt list_types
-setopt menu_complete
 setopt rec_exact
+unsetopt menu_complete
+unsetopt flow_control
+
+LS_COLORS=${LS_COLORS:-'di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'}
 
 autoload -Uz compinit && compinit
 

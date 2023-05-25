@@ -1,3 +1,2 @@
-source $HOME/.config/zsh/homebrew
 source $HOME/.config/zsh/asdf
 source $HOME/.config/zsh/env

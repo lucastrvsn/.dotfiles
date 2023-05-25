@@ -6,7 +6,6 @@
 # source all configurations inside ~/.config/zsh/*
 CONFIGS=(
   plugins
-  homebrew
   asdf
   jobs
   directory

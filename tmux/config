@@ -4,31 +4,32 @@
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-pain-control'
 set -g @plugin 'christoomey/vim-tmux-navigator'
+set -g @plugin 'fcsonline/tmux-thumbs'
 
 #################
 # better defaults
 #################
+set -g  default-terminal 'alacritty'
+set -sg terminal-overrides ",*:RGB"
+setw -q -g utf8 on
+
 set -s  escape-time 0
 set -g  repeat-time 0
-set -g  history-limit 50000
+set -g  history-limit 5000
 set -g  display-time 4000
 set -g  base-index 1
-set -wg pane-base-index 1
-set -g  set-titles on
-set -g  set-titles-string '#(whoami)@#H • (#S:#W.#P)'
-set -g  default-terminal 'xterm-256color'
-set -ga terminal-overrides ',*256col*:Tc'
-set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
-set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
-set -g  focus-events on
-set -wg aggressive-resize on
-set -g  automatic-rename on
-set -g  allow-rename off
+setw -g pane-base-index 1
 set -g  mouse on
-set -g  renumber-windows on
-set -wg monitor-activity on
-set -wg monitor-bell on
-set -wg clock-mode-style 24
+
+set -g set-titles on
+setw -g automatic-rename on
+set -g renumber-windows on
+
+set -g focus-events on
+setw -g aggressive-resize on
+setw -g monitor-activity on
+setw -g monitor-bell on
+setw -g clock-mode-style 24
 
 #################
 # key bindings
@@ -37,26 +38,63 @@ set -wg clock-mode-style 24
 bind c new-window -c '#{pane_current_path}'
 
 # better split defaults
-bind | split-window -h
-bind - split-window -v
 unbind '"'
 unbind %
+bind | split-window -h
+bind - split-window -v
+
+# window navigation
+unbind n
+unbind p
+bind -r C-h previous-window
+bind -r C-l next-window
+
+# pane navigation
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
+bind > swap-pane -D
+bind < swap-pane -U
 
 # reload tmux config
 bind R source-file ~/.tmux.conf \;
 
+# no jump to end when select
+unbind -T copy-mode-vi MouseDragEnd1Pane
+bind-key -T copy-mode-vi y send-keys -X copy-selection
+
 #################
 # status line
 #################
-set -g status on
-set -g status-interval 60
-set -g status-bg black
-set -g status-fg white
-set -g window-status-current-style bg=white,fg=black,bold
-set -g status-left-length 30
-set -g status-left '#[fg=green](#S) #(whoami) '
-# set -g status-right '#[fg=yellow]#(cut -d " " -f 1-3 /proc/loadavg)#[default] #[fg=white]%H:%M#[default]'
-set -g status-right '#[fg=red,bold]#(uptime | cut -d "," -f 3-) #[fg=blue,bold][%Y/%m/%d(%a)%H:%M]#[default]'
+set -g  status on
+set -g  status-interval 60
+set -gq status-utf8 on
+
+set  -g visual-activity off
+set  -g visual-bell off
+set  -g visual-silence off
+setw -g monitor-activity off
+set  -g bell-action none
+
+setw -g clock-mode-colour green
+setw -g mode-style 'fg=red bg=black bold'
+set  -g pane-border-style 'fg=black'
+set  -g pane-active-border-style 'fg=black'
+set  -g status-position bottom
+set  -g status-justify left
+set  -g status-style 'bg=black fg=white'
+set  -g status-left ''
+set  -g status-right ' #[fg=white,bg=black] %H:%M '
+set  -g status-right-length 50
+set  -g status-left-length 20
+setw -g window-status-style 'fg=white bg=black'
+setw -g window-status-format ' #I:#W#F '
+setw -g window-status-current-style 'fg=black bg=white'
+setw -g window-status-current-format ' #I:#W#F '
+setw -g window-status-bell-style 'fg=black bg=yellow'
+
+set -g message-style 'fg=black bg=white bold'
 
 ########################
 # tmux plugin manager

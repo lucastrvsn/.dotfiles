@@ -1,9 +1,29 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = false
 command_timeout = 1000
+format = """
+$username\
+$hostname\
+$directory\
+$git_status\
+$git_branch\
+$git_commit\
+$git_state\
+$aws\
+$gcloud\
+$azure\
+$sudo\
+$line_break\
+$jobs\
+$status\
+$shell\
+$character"""
 
 [directory]
+style = 'white bold underline'
 truncation_length = 2
-truncation_symbol = "…/"
+truncation_symbol = '…/'
 fish_style_pwd_dir_length = 1
 
 [hostname]
@@ -11,12 +31,57 @@ ssh_only = true
 
 [username]
 disabled = false
+format = '[$user]($style) '
+style_user = 'bright-white bold'
+style_root = 'bright-black bold'
 show_always = true
 
-[battery]
-disabled = true
+[status]
+disabled = false
+format = '[$symbol$status]($style)'
+style = 'bg:red fg:white bold'
+symbol = ''
+success_symbol = ''
 
 [character]
-success_symbol = "[\\$](green)"
-error_symbol = "[\\$](red)"
-vicmd_symbol = "[V](bold green)"
+format = '$symbol '
+success_symbol = '[\$](dimmed white bold)'
+error_symbol = ''
+vicmd_symbol = '[vi \$](inverted dimmed white bold)'
+
+[aws]
+format = '[$symbol($profile)(, $region)]($style) '
+symbol = '🅰 '
+
+[aws.region_aliases]
+us-east-1 = 'va'
+eu-west-1 = 'eu'
+
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+truncation_length = 24
+
+[git_state]
+style = 'bold bright-red'
+rebase = 'rebase'
+merge = 'merge'
+revert = 'revert'
+cherry_pick = 'cherry-pick'
+bisect = 'bisect'
+am = 'am'
+am_or_rebase = 'am/rebase'
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = 'bold dimmed white'
+conflicted = '=${count}'
+ahead = '⇡${count}'
+diverged = '⇡${ahead_count}⇣${behind_count}'
+behind = '⇣${count}'
+up_to_date = ''
+untracked = '?'
+stashed = '\$'
+modified = '[~$count](yellow)'
+staged = '[+$count](green)'
+renamed = '[~$count](yellow)'
+deleted = '[-$count](red)'

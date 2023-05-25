@@ -1,16 +1,9 @@
-# get top 10 shell commands
-# from oh-my-zsh
-function zsh-top() {
-  fc -l 1 | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head -n25
-}
-
-# preference
+# rename `nvim` to `vim`
 alias vim='nvim'
-alias v='nvim'
 
 # ls
-alias ls='gls --color=auto'
-alias ll='gls -alh --color=auto'
+alias ls='exa'
+alias ll='exa -l'
 
 # mkdir
 alias mkdir='mkdir -pv'
@@ -23,6 +16,7 @@ alias grep='grep -n --color'
 
 # git
 alias g='git'
+alias gg='gitui'
 alias ga='git add'
 alias gaa='git add --all'
 alias gb='git branch'
@@ -39,17 +33,11 @@ alias glog='git log --oneline --decorate --graph'
 alias gfp='git fetch --prune'
 alias gdlb='git branch -r | awk "{print $1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print $1}" | xargs git branch -D'
 
-# lazygit
-alias gg='lazygit'
-
 # history
 alias h='history'
 alias hg='history -1000 | grep -i'
-alias history-10='history 0 | awk "{print \$2}" | sort | uniq -c | sort -n -r | head'
 
-# homebrew
-alias b='brew'
-alias bu='brew update'
-alias bi='brew install'
+# macOS flush the DNS cache
+alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 
 # vim: ft=zsh

@@ -1,7 +1,6 @@
-require "settings"
-require "mappings"
+vim.loader.enable()
 
-if vim.fn.exists "g:vscode" ~= 1 then
-  require "theme"
-  require "plugins"
-end
+require "@lucastrvsn/options"
+require "@lucastrvsn/mappings"
+require "@lucastrvsn/autocmds"
+require "@lucastrvsn/plugins"

@@ -1,0 +1,4 @@
+std = "neovim"
+
+[rules]
+multiple_statements = "allow"

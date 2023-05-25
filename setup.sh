@@ -8,8 +8,11 @@ fi
 # remove any existing config files if needed
 rm -rf $HOME/.config/alacritty
 rm -rf $HOME/.config/nvim
+rm -rf $HOME/.config/gitui
 rm -rf $HOME/.config/zsh
 rm -rf $HOME/.config/.starship.toml
+rm -rf $HOME/.asdfrc
+rm -rf $HOME/.tool-version
 rm -rf $HOME/.gitconfig
 rm -rf $HOME/.gitignoreglobal
 rm -rf $HOME/.gitmessage
@@ -21,6 +24,10 @@ rm -rf $HOME/.zshrc
 # symlinking dotfiles to home directory
 (
   mkdir -p "$HOME/.config"
+
+  # asdf
+  ln -sf "$PWD/asdf/.asdfrc" "$HOME/.asdfrc"
+  ln -sf "$PWD/asdf/.tool-version" "$HOME/.tool-version"
 
   # zsh
   ln -sf "$PWD/zsh/zshrc" "$HOME/.zshrc"
@@ -37,6 +44,9 @@ rm -rf $HOME/.zshrc
   ln -sf "$PWD/git/gitconfig" "$HOME/.gitconfig"
   ln -sf "$PWD/git/gitignore" "$HOME/.gitignoreglobal"
   ln -sf "$PWD/git/gitmessage" "$HOME/.gitmessage"
+
+  # gitui
+  ln -sf "$PWD/gitui" "$HOME/.config/gitui"
 
   # neovim
   ln -sf "$PWD/nvim" "$HOME/.config/nvim"
