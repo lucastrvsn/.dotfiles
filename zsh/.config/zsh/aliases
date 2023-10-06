@@ -1,0 +1,13 @@
+alias vim='nvim'
+alias ls='exa --grid --group-directories-first'
+alias ll='exa -l'
+alias la='exa -a'
+alias mkdir='mkdir -pv'
+alias ping='ping -c 5'
+alias grep='grep -n --color'
+alias gs='git status'
+alias h='history'
+alias hg='history -1000 | grep -i'
+alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+
+# vim: ft=zsh

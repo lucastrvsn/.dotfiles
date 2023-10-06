@@ -1,0 +1,18 @@
+if type brew &>/dev/null; then
+  source "$(brew --prefix)/opt/zplug/init.zsh"
+
+  zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+  zplug 'zsh-users/zsh-autosuggestions'
+  zplug 'zsh-users/zsh-completions'
+  zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+  zplug 'zsh-users/zsh-history-substring-search', defer:2
+  zplug 'wfxr/forgit', defer:2
+
+  if ! zplug check --verbose; then
+    zplug install
+  fi
+
+  zplug load
+fi
+
+# vim: ft=zsh

@@ -1,0 +1,91 @@
+[user]
+	name = Lucas Trevisan
+	email = lucastrvsn@gmail.com
+	signingkey = B23E1D4F95004F54
+[core]
+  editor = nvim
+  pager = nvim -R
+  mergeoptions = --no-edit
+  commitGraph = true
+  excludefiles = ~/.gitignore_global
+[init]
+  defaultBranch = main
+[color]
+  ui = auto
+[color "branch"]
+  upstream = cyan
+[log]
+  abbrevCommit = true
+  follow = true
+  decorate = false
+[status]
+  short = true
+  branch = false
+  submoduleSummary = true
+  showUntrackedFiles = all
+[commit]
+  template = ~/.gittemplate
+	gpgsign = true
+[pull]
+  rebase = true
+  ff = only
+[rebase]
+  autoStash = true
+  autoSquash = true
+[merge]
+  ff = false
+[mergetool]
+  keepBackup = false
+  keepTemporaries = false
+  writeToTemp = true
+  prompt = false
+[push]
+  default = upstream
+  rebase = merges
+[fetch]
+  prune = true
+  pruneTags = true
+  recurseSubmodules = on-demand
+[grep]
+  break = true
+  heading = true
+  lineNumber = true
+  extendedRegexp = true
+[rerere]
+  autoupdate = true
+  enabled = true
+[tag]
+  sort = version:refname
+[versionsort]
+  prereleaseSuffix = -pre
+  prereleaseSuffix = .pre
+  prereleaseSuffix = -beta
+  prereleaseSuffix = .beta
+  prereleaseSuffix = -rc
+  prereleaseSuffix = .rc
+[alias]
+  # List available aliases
+  aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'
+  # Command shortcuts
+  ci = commit
+  co = checkout
+  s = status
+  # Display tree-like log, because default log is a pain…
+  l = log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'
+  # Useful when you have to update your last commit
+  # with staged files without editing the commit message.
+  oops = commit --amend --no-edit
+  # Ensure that force-pushing won't lose someone else's work (only mine).
+  push-with-lease = push --force-with-lease
+  # Push the current branch to origin
+  publish = "!git push origin $(git symbolic-ref --short HEAD) -u"
+  # List local commits that were not pushed to remote repository
+  review = "!git lg @{push}.."
+  # Edit last commit message
+  amend = commit --amend
+  # Undo last commit but keep changed files in stage
+  uncommit = reset --soft HEAD~1
+  # Remove file(s) from Git but not from disk
+  untrack = rm --cache --
+  # Pull changes from origin of the current branch
+  sync = !git fetch && git pull origin $(git rev-parse --abbrev-ref HEAD)

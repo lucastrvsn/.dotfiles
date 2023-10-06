@@ -1,0 +1,4 @@
+# https://starship.rs/
+eval "$(starship init zsh)"
+
+# vim: ft=zsh
