@@ -18,5 +18,5 @@ MiniStatusline.setup {
     end,
     inactive = nil,
   },
-  use_icons = false,
+  use_icons = true,
 }

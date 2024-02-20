@@ -1,14 +1,12 @@
 local null = require "null-ls"
 
 null.setup {
-  debug = true,
   sources = {
     -- actions
     null.builtins.code_actions.eslint_d,
 
     -- diagnostics
     null.builtins.diagnostics.eslint_d,
-    null.builtins.diagnostics.selene,
     null.builtins.diagnostics.stylelint,
     null.builtins.diagnostics.ruff,
 

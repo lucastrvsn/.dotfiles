@@ -34,7 +34,7 @@ vim.opt.undolevels = 1000
 vim.opt.undoreload = 10000
 vim.opt.updatetime = 500
 vim.opt.cursorline = true
-vim.opt.lazyredraw = true
+vim.opt.lazyredraw = false
 vim.opt.showcmd = true
 vim.opt.cmdheight = 0
 vim.opt.ruler = true
@@ -72,15 +72,15 @@ vim.opt.relativenumber = false
 vim.opt.equalalways = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.pumblend = 8
-vim.opt.winblend = 8
+vim.opt.pumblend = 0
+vim.opt.winblend = 0
 vim.opt.pumheight = 14
 vim.opt.signcolumn = "yes:1"
 vim.opt.list = true
 vim.opt.listchars = {
-  tab = "‣‣",
+  tab = "≫ ",
   lead = "·",
-  trail = "·",
+  trail = "␠",
 }
 vim.opt.fillchars = {
   eob = "~",
@@ -95,7 +95,7 @@ vim.opt.path:append "**"
 vim.opt.shortmess:append "c"
 vim.opt.wildmenu = true
 vim.opt.wildmode = { "longest:full", "full" }
-vim.opt.wildoptions = "pum,tagfile"
+vim.opt.wildoptions = "fuzzy,pum,tagfile"
 vim.opt.wildignore:append {
   "*/.git/*",
   "*/.hg/*",
@@ -141,8 +141,8 @@ vim.opt.joinspaces = false
 
 -- fold
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldenable = false
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- colors
 vim.opt.termguicolors = true

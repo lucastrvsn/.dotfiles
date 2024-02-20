@@ -15,51 +15,40 @@ vim.opt.rtp:prepend(path)
 
 require("lazy").setup {
   -- restore the cursor position
-  { "ethanholz/nvim-lastplace" },
+  {
+    "ethanholz/nvim-lastplace",
+    config = function()
+      require "lucas.plugins.lastplace"
+    end,
+  },
 
-  -- show git status on signs
+  -- basic git integration
   {
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
     config = function()
-      require "lucas/plugins/gitsigns"
+      require "lucas.plugins.gitsigns"
     end,
   },
 
-  -- configuration for language servers
+  -- language servers
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require "lucas/lsp"
+      require "lucas.plugins.lsp"
     end,
   },
 
-  -- snippets
-  { "dcampos/nvim-snippy" },
-
-  -- completion engine for LSP
+  -- completion engine
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "hrsh7th/nvim-cmp",
     },
     config = function()
-      require "lucas/plugins/completion"
-    end,
-  },
-
-  -- linter and formatter
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "neovim/nvim-lspconfig",
-    },
-    config = function()
-      require "lucas/plugins/null"
+      require "lucas.plugins.completion"
     end,
   },
 
@@ -71,73 +60,64 @@ require("lazy").setup {
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      require "lucas/plugins/telescope"
+      require "lucas.plugins.telescope"
     end,
   },
 
   -- treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-refactor",
-    },
-    config = function()
-      require "lucas/plugins/treesitter"
-    end,
     build = { ":TSUpdate" },
-  },
-
-  -- change working directory to current
-  {
-    "ahmedkhalf/project.nvim",
     config = function()
-      require "lucas/plugins/project"
+      require "lucas.plugins.treesitter"
     end,
   },
 
   {
     "echasnovski/mini.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
     config = function()
-      require "lucas/plugins/mini"
+      require "lucas.plugins.comment"
+      require "lucas.plugins.explorer"
+      require "lucas.plugins.statusline"
+      require "lucas.plugins.surround"
+    end,
+  },
+
+  -- icons
+  {
+    "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("nvim-web-devicons").setup {}
     end,
   },
 
   -- colorschemes
-  {
-    "folke/tokyonight.nvim",
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require "lucas/plugins/colorschemes/tokyonight"
-    end,
-  },
-  {
-    "sainnhe/gruvbox-material",
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require "lucas/plugins/colorschemes/gruvbox"
-    end,
-  },
   {
     "edeneast/nightfox.nvim",
     enabled = true,
     lazy = false,
     priority = 1000,
     config = function()
-      require "lucas/plugins/colorschemes/nightfox"
-    end,
-  },
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    enabled = false,
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require "lucas/plugins/colorschemes/catppuccin"
+      require("nightfox").setup {
+        options = {
+          terminal_colors = true,
+          inverse = {
+            match_paren = false,
+            visual = true,
+            search = false,
+          },
+          modules = {
+            cmp = true,
+            gitsigns = true,
+            telescope = true,
+          },
+        },
+      }
+
+      vim.cmd.colorscheme "nordfox"
     end,
   },
 }

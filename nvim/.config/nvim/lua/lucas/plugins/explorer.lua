@@ -1,34 +1,31 @@
-local dirbuf = require "dirbuf"
+local MiniFiles = require "mini.files"
 
-dirbuf.setup {
-  hash_padding = 2,
-  show_hidden = true,
-  sort_order = "directories_first",
-  write_cmd = "DirbufSync",
+MiniFiles.setup {
+  content = {
+    prefix = function() end,
+  },
+  mappings = {
+    go_in = "<S-CR>",
+    go_in_plus = "<CR>",
+    go_out = "-",
+    go_out_plus = "_",
+  },
 }
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "dirbuf",
+vim.api.nvim_create_autocmd("User", {
+  pattern = "MiniFilesWindowOpen",
   callback = function(args)
-    local buffer_number = args.buf
+    local win_id = args.data.win_id
 
-    vim.keymap.set("n", "<C-v>", function()
-      dirbuf.enter "vsplit"
-    end, {
-      silent = true,
-      buffer = buffer_number,
-    })
-    vim.keymap.set("n", "<C-s>", function()
-      dirbuf.enter "split"
-    end, {
-      silent = true,
-      buffer = buffer_number,
-    })
-    vim.keymap.set("n", "<C-t>", function()
-      dirbuf.enter "tabedit"
-    end, {
-      silent = true,
-      buffer = buffer_number,
+    vim.api.nvim_win_set_config(win_id, {
+      border = "shadow",
     })
   end,
 })
+
+vim.keymap.set("n", "-", function()
+  if MiniFiles.get_target_window() == nil then
+    local current = vim.api.nvim_buf_get_name(0)
+    MiniFiles.open(current)
+  end
+end)

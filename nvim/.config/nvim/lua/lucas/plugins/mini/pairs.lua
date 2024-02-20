@@ -1,1 +1,0 @@
-require("mini.pairs").setup {}

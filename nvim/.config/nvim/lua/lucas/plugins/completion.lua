@@ -1,5 +1,4 @@
 local cmp = require "cmp"
-local snippy = require "snippy"
 
 local icons = {
   Text = "⌗",
@@ -43,13 +42,12 @@ end
 cmp.setup {
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
-    { name = "snippy" },
   }, {
     { name = "buffer" },
   }),
   snippet = {
     expand = function(args)
-      snippy.expand_snippet(args.body)
+      vim.snippet.expand(args.body)
     end,
   },
   mapping = {
@@ -64,8 +62,8 @@ cmp.setup {
         return cmp.select_next_item()
       end
 
-      if snippy.can_expand_or_advance() then
-        return snippy.expand_or_advance()
+      if vim.snippet.jumpable(1) then
+        return vim.snippet.jump(1)
       end
 
       if has_words_before() then
@@ -79,8 +77,8 @@ cmp.setup {
         return cmp.select_prev_item()
       end
 
-      if snippy.can_jump(-1) then
-        return snippy.previous()
+      if vim.snippet.jumpable(-1) then
+        return vim.snippet.jump(-1)
       end
 
       return fallback()
@@ -99,16 +97,9 @@ cmp.setup {
         buffer = "[buf]",
         nvim_lsp = "[lsp]",
         nvim_lua = "[lua]",
-        snippy = "[snp]",
       })[entry.source.name]
 
       return item
     end,
   },
 }
-
-cmp.setup.cmdline("/", {
-  sources = {
-    { name = "buffer" },
-  },
-})

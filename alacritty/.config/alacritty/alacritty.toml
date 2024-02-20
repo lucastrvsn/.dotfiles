@@ -1,0 +1,56 @@
+import = [
+  # "~/.config/alacritty/nightfox.toml",
+  # "~/.config/alacritty/carbonfox.toml",
+  "~/.config/alacritty/nordfox.toml",
+  # "~/.config/alacritty/scrcery.toml",
+]
+
+live_config_reload = true
+
+[shell]
+program = "zsh"
+args = [
+  "-l",
+  "-c",
+  "tmux attach 2> /dev/null || tmux",
+]
+
+[window]
+decorations = "full"
+dimensions = { columns = 164, lines = 32 }
+padding = { x = 0, y = 0 }
+dynamic_padding = true
+dynamic_title = true
+opacity = 1.0
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+history = 8000
+multiplier = 3
+
+[cursor]
+unfocused_hollow = true
+style = { shape = "Block", blinking = "Off" }
+
+[font]
+size = 14.0
+offset = { x = 0, y = 0 }
+glyph_offset = { x = 0, y = 0 }
+
+[font.normal]
+family = "MonoLisa Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "MonoLisa Nerd Font Mono"
+style = "Regular"
+
+[font.italic]
+family = "MonoLisa Nerd Font Mono"
+style = "Regular"
+
+[font.bold_italic]
+family = "MonoLisa Nerd Font Mono"
+style = "Regular"

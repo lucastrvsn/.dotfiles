@@ -1,5 +1,0 @@
-require "lucas.plugins.mini.comment"
-require "lucas.plugins.mini.files"
-require "lucas.plugins.mini.pairs"
-require "lucas.plugins.mini.surround"
-require "lucas.plugins.mini.statusline"
