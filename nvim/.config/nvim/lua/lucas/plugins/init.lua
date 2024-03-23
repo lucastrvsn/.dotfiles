@@ -13,16 +13,13 @@ end
 
 vim.opt.rtp:prepend(path)
 
-require("lazy").setup {
-  -- restore the cursor position
+require("lazy").setup({
   {
     "ethanholz/nvim-lastplace",
     config = function()
       require "lucas.plugins.lastplace"
     end,
   },
-
-  -- basic git integration
   {
     "lewis6991/gitsigns.nvim",
     requires = { "nvim-lua/plenary.nvim" },
@@ -30,16 +27,12 @@ require("lazy").setup {
       require "lucas.plugins.gitsigns"
     end,
   },
-
-  -- language servers
   {
     "neovim/nvim-lspconfig",
     config = function()
-      require "lucas.plugins.lsp"
+      require "lucas.plugins.lspconfig"
     end,
   },
-
-  -- completion engine
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
@@ -51,8 +44,6 @@ require("lazy").setup {
       require "lucas.plugins.completion"
     end,
   },
-
-  -- fuzzy search
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
@@ -63,8 +54,6 @@ require("lazy").setup {
       require "lucas.plugins.telescope"
     end,
   },
-
-  -- treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     build = { ":TSUpdate" },
@@ -72,7 +61,6 @@ require("lazy").setup {
       require "lucas.plugins.treesitter"
     end,
   },
-
   {
     "echasnovski/mini.nvim",
     dependencies = {
@@ -85,39 +73,32 @@ require("lazy").setup {
       require "lucas.plugins.surround"
     end,
   },
-
-  -- icons
   {
     "nvim-tree/nvim-web-devicons",
     config = function()
       require("nvim-web-devicons").setup {}
     end,
   },
-
-  -- colorschemes
   {
     "edeneast/nightfox.nvim",
     enabled = true,
     lazy = false,
     priority = 1000,
+    dev = true,
     config = function()
-      require("nightfox").setup {
-        options = {
-          terminal_colors = true,
-          inverse = {
-            match_paren = false,
-            visual = true,
-            search = false,
-          },
-          modules = {
-            cmp = true,
-            gitsigns = true,
-            telescope = true,
-          },
-        },
-      }
+      require "lucas.plugins.nightfox"
 
-      vim.cmd.colorscheme "nordfox"
+      vim.cmd.colorscheme "gruvfox"
     end,
   },
-}
+  {
+    "sainnhe/gruvbox-material",
+    lazy = false,
+    priority = 1000,
+  },
+}, {
+  dev = {
+    path = "~/Projects",
+    fallback = false,
+  },
+})

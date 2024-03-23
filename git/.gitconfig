@@ -1,7 +1,6 @@
 [user]
 	name = Lucas Trevisan
 	email = lucastrvsn@gmail.com
-	signingkey = B23E1D4F95004F54
 [core]
   editor = nvim
   pager = nvim -R
@@ -25,7 +24,6 @@
   showUntrackedFiles = all
 [commit]
   template = ~/.gittemplate
-	gpgsign = true
 [pull]
   rebase = true
   ff = only
