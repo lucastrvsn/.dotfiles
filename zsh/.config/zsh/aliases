@@ -1,7 +1,4 @@
 alias vim='nvim'
-alias ls='exa --grid --group-directories-first'
-alias ll='exa -l'
-alias la='exa -a'
 alias mkdir='mkdir -pv'
 alias ping='ping -c 5'
 alias grep='grep -n --color'
