@@ -1,0 +1,6 @@
+.zcompcache
+.zcompdump*
+.zsh_history
+.zsh_sessions
+*.zwc
+*.zwc.old

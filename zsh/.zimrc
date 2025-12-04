@@ -1,0 +1,26 @@
+if [[ $OSTYPE == 'darwin'* ]]; then
+  zmodule homebrew
+fi
+
+zmodule environment
+zmodule input
+zmodule utility
+
+zmodule asdf
+zmodule git
+zmodule git-info
+zmodule prompt-pwd
+
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
+
+zmodule fzf
+zmodule wfxr/forgit
+zmodule unixorn/1password-op.plugin.zsh
+zmodule "${XDG_CONFIG_HOME}/zsh/modules/prompt"
+
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-autosuggestions
+
+# vim: ft=zsh

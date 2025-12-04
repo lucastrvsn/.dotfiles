@@ -1,7 +1,11 @@
-vim.loader.enable()
+if vim.loader then
+  vim.loader.enable()
+end
 
-require "lucas.options"
-require "lucas.mappings"
-require "lucas.autocmds"
-require "lucas.diagnostic"
-require "lucas.plugins"
+vim.cmd.packadd "nohlsearch"
+
+require "configs.options"
+require "configs.mappings"
+require "configs.autocmds"
+require "configs.diagnostic"
+require "configs.plugins"

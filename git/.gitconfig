@@ -1,11 +1,11 @@
 [user]
 	name = Lucas Trevisan
-	email = lucastrvsn@gmail.com
+	email = lucas@trv.sh
 [core]
   editor = nvim
-  pager = nvim -R
   mergeoptions = --no-edit
   commitGraph = true
+  whitespace = -trailing-space
   excludefiles = ~/.gitignore_global
 [init]
   defaultBranch = main
@@ -19,7 +19,7 @@
   decorate = false
 [status]
   short = true
-  branch = false
+  branch = true
   submoduleSummary = true
   showUntrackedFiles = all
 [commit]
@@ -31,8 +31,10 @@
   autoStash = true
   autoSquash = true
 [merge]
+  conflictStyle = diff3
   ff = false
 [mergetool]
+  tool = opendiff
   keepBackup = false
   keepTemporaries = false
   writeToTemp = true
@@ -49,6 +51,8 @@
   heading = true
   lineNumber = true
   extendedRegexp = true
+[apply]
+  whitespace = fix
 [rerere]
   autoupdate = true
   enabled = true
@@ -68,6 +72,7 @@
   ci = commit
   co = checkout
   s = status
+  check = diff --check
   # Display tree-like log, because default log is a pain…
   l = log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'
   # Useful when you have to update your last commit

@@ -1,25 +1,15 @@
-# adapted from prezto (https://github.com/sorin-ionescu/prezto)
+# Download zimfw plugin manager if missing
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
 
-# source all configurations inside ~/.config/zsh/*
-CONFIGS=(
-  asdf
-  plugins
-  jobs
-  directory
-  history
-  completion
-  prompt
-  search
-  fzf
-  forgit
-  aliases
-)
+# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
 
-for config in $CONFIGS; do
-  source $HOME/.config/zsh/$config end
-done
+source "${ZIM_HOME}/init.zsh"
 
-# vim: ft=zsh
-
-# Created by `pipx` on 2023-10-16 12:05:42
-export PATH="$PATH:/Users/lucas/Library/Python/3.11/bin"
+source "${XDG_CONFIG_HOME}/zsh/aliases"
+source "${XDG_CONFIG_HOME}/zsh/keybindings"

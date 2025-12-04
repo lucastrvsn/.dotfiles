@@ -1,10 +1,22 @@
-alias vim='nvim'
-alias mkdir='mkdir -pv'
-alias ping='ping -c 5'
-alias grep='grep -n --color'
-alias gs='git status'
-alias h='history'
-alias hg='history -1000 | grep -i'
-alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+alias rm="rm -iv"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias mkdir="mkdir -pv"
+
+alias h="history"
+alias hg="history | rg"
+alias h1="history 10"
+alias h2="history 20"
+alias h3="history 30"
+
+if type nvim &>/dev/null; then
+  alias vi="nvim"
+  alias vim="nvim"
+fi
+
+if [[ $OSTYPE == 'darwin'* ]]; then
+  alias flush-dns="sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+  alias ic="cd ~/Library/Mobile\ Documents/com~apple~CloudDocs"
+fi
 
 # vim: ft=zsh

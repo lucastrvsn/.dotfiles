@@ -1,9 +1,0 @@
-export PATH="$PATH:$FORGIT_INSTALL_DIR/bin"
-
-if type brew &>/dev/null; then
-  if [ -f "$(brew --prefix git)/etc/bash_completion.d/git-prompt.sh" ]; then
-    source "$(brew --prefix git)/etc/bash_completion.d/git-prompt.sh"
-  fi
-fi
-
-# vim: ft=zsh

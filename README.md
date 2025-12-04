@@ -1,22 +1,12 @@
 ## Overview
 
-Feel free to explore all my configuration and get what you feel makes
-sense to you! :^)
+You're welcome to browse through my configuration and take anything that you
+find useful or inspiring! :^)
 
-- [asdf](https://asdf-vim.com/)
-- [fzf](https://github.com/junegunn/fzf/)
-- [docker](https://docker.com/)
-- [fd](https://github.com/sharkdp/fd)
-- [ripgrep](https://github.com/BurntSushi/ripgrep/)
-- [starship](https://starship.rs/)
-- [neovim](https://github.com/neovim/neovim/)
-- [zplug](https://github.com/zplug/zplug/)
-- [zsh](https://zsh.org/)
+## Contributing
 
-## Contrib
-
-If you have any suggestion or want to fix something that I got wrong on
-my configuration, please open a PR for it! I'll love to review and
-put some better stuff into my dotfiles.
+If you have suggestions or notice anything in my configuration that could be
+improved, please feel free to open a pull request! I would love to review your
+contributions and make my (and yours!) dotfiles better.
 
 <!-- vim: set ft=markdown textwidth=80: -->
