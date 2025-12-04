@@ -1,4 +1,4 @@
-## Overview
+<img src="https://raw.githubusercontent.com/lucastrvsn/.dotfiles/main/.assets/banner.png" height="128" alt="banner" />
 
 You're welcome to browse through my configuration and take anything that you
 find useful or inspiring! :^)
