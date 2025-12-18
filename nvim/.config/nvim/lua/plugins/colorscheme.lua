@@ -9,7 +9,7 @@ now(function()
     options = {
       terminal_colors = true,
       inverse = {
-        match_paren = false,
+        match_paren = true,
         visual = true,
         search = false,
       },
@@ -27,5 +27,5 @@ now(function()
     },
   }
 
-  vim.cmd.colorscheme "nordfox"
+  vim.cmd.colorscheme "carbonfox"
 end)

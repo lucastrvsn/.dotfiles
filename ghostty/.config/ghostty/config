@@ -267,7 +267,7 @@ grapheme-width-method = unicode
 # 
 # Any additional colors specified via background, foreground, palette, etc.
 # will override the colors specified in the theme.
-theme = nightfox
+theme = carbonfox
 
 # Swap the foreground and background colors of cells for selection. This
 # option overrides the `selection-foreground` and `selection-background`
@@ -424,7 +424,7 @@ background-blur-radius = 0
 # is 0.15. This value still looks weird but you can at least see what's going
 # on. A value outside of the range 0.15 to 1 will be clamped to the nearest
 # valid value.
-unfocused-split-opacity = 0.8
+unfocused-split-opacity = 0.6
 
 # The color to dim the unfocused split. Unfocused splits are dimmed by
 # rendering a semi-transparent rectangle over the split. This sets the color of
@@ -891,7 +891,7 @@ window-decoration = true
 # The font that will be used for the application's window and tab titles.
 # 
 # This is currently only supported on macOS.
-window-title-font-family = 
+window-title-font-family = "Monolisa"
 
 # The theme to use for the windows. Valid values:
 # 
@@ -1286,7 +1286,7 @@ shell-integration = zsh
 #   * `title` - Set the window title via shell integration.
 # 
 # Example: `cursor`, `no-cursor`, `sudo`, `no-sudo`, `title`, `no-title`
-shell-integration-features = no-cursor,no-sudo,title
+shell-integration-features = no-cursor,sudo,title
 
 # Sets the reporting format for OSC sequences that request color information.
 # Ghostty currently supports OSC 10 (foreground), OSC 11 (background), and
@@ -1420,7 +1420,7 @@ macos-non-native-fullscreen = false
 # most cases.
 # 
 # Changing this option at runtime only applies to new windows.
-macos-titlebar-style = transparent
+macos-titlebar-style = native
 
 # Whether the proxy icon in the macOS titlebar is visible. The proxy icon
 # is the icon that represents the folder of the current working directory.
