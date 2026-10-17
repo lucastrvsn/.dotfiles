@@ -63,3 +63,5 @@ fi
 PS1='$(_prompt_user)%B%F{cyan}$(prompt-pwd)%f%b${(e)git_info[prompt]}$(_prompt_venv)$(_prompt_aws)
 %B%(1j.%F{blue}*%f .)%(?.%F{green}.%F{red}%? )$(_prompt_vimode)%f%b '
 unset RPS1
+
+# vim: ft=zsh

@@ -1,9 +1,19 @@
 local add, later = MiniDeps.add, MiniDeps.later
 
 later(function()
+  local function get_kind_icon_text(ctx)
+    local icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+    return icon
+  end
+
+  local function get_kind_icon_hl(ctx)
+    local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+    return hl
+  end
+
   add {
     source = "saghen/blink.cmp",
-    checkout = "v1.4.1",
+    checkout = "v1.10.1",
     depends = {
       "rafamadriz/friendly-snippets",
       "fang2hou/blink-copilot",
@@ -14,16 +24,29 @@ later(function()
     sources = {
       default = {
         "lsp",
-        "buffer",
-        "snippets",
+        "path",
         "copilot",
+        "snippets",
+        "buffer",
       },
       providers = {
         copilot = {
           name = "copilot",
           module = "blink-copilot",
+          score_offset = 100,
           async = true,
+          opts = {
+            max_completions = 1,
+          },
         },
+      },
+    },
+    fuzzy = {
+      implementation = "prefer_rust",
+      sorts = {
+        -- "exact",
+        "score",
+        "sort_text",
       },
     },
     completion = {
@@ -31,47 +54,30 @@ later(function()
         enabled = false,
       },
       menu = {
+        border = "shadow",
         draw = {
           components = {
             kind_icon = {
-              text = function(ctx)
-                local icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-
-                return icon
-              end,
-              highlight = function(ctx)
-                local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-
-                return hl
-              end,
+              text = get_kind_icon_text,
+              highlight = get_kind_icon_hl,
             },
             kind = {
-              highlight = function(ctx)
-                local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-
-                return hl
-              end,
+              highlight = get_kind_icon_hl,
             },
           },
         },
       },
-      list = {
-        selection = {
-          preselect = true,
-          auto_insert = true,
-        },
-        max_items = 8,
-      },
       documentation = {
         auto_show = true,
-        auto_show_delay_ms = 800,
       },
     },
     signature = {
       enabled = true,
     },
     keymap = {
+      -- remove default keymaps
       preset = "none",
+
       ["<CR>"] = { "accept", "fallback" },
       ["<Tab>"] = {
         "snippet_forward",
@@ -83,20 +89,7 @@ later(function()
         "select_prev",
         "fallback",
       },
-      ["<C-n>"] = {
-        "select_next",
-        "fallback_to_mappings",
-      },
-      ["<C-p>"] = {
-        "select_prev",
-        "fallback_to_mappings",
-      },
-      ["<C-Space>"] = {
-        "show",
-        "show_documentation",
-        "hide_documentation",
-      },
-      ["<C-e>"] = { "hide" },
+      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-u>"] = { "scroll_documentation_up", "fallback_to_mappings" },
       ["<C-d>"] = { "scroll_documentation_down", "fallback_to_mappings" },
       ["<C-k>"] = {

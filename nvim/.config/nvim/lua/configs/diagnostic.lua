@@ -1,17 +1,26 @@
+local SEVERITY_ICONS = {
+  [vim.diagnostic.severity.ERROR] = " ",
+  [vim.diagnostic.severity.WARN] = " ",
+  [vim.diagnostic.severity.INFO] = " ",
+  [vim.diagnostic.severity.HINT] = " ",
+}
+
 vim.diagnostic.config {
   severity_sort = true,
-  virtual_text = true,
-  virtual_lines = false,
-  float = {
-    border = "shadow",
+  virtual_text = {
+    source = false,
+    spacing = 2,
+    prefix = function(diagnostic)
+      return SEVERITY_ICONS[diagnostic.severity]
+    end,
   },
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = " ",
-      [vim.diagnostic.severity.WARN] = " ",
-      [vim.diagnostic.severity.INFO] = " ",
-      [vim.diagnostic.severity.HINT] = " ",
-    },
+  virtual_lines = false,
+  signs = false,
+  float = {
+    scope = "cursor",
+    header = false,
+    focusable = false,
+    -- border = "rounded",
   },
 }
 

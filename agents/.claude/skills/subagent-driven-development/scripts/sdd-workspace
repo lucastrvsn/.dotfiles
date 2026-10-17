@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Usage: sdd-workspace PLAN_FILE
+# Prints <plan-dir>/.work, creating it. Each plan has its own folder, so its
+# .work/ can never hold another plan's ledger, briefs, or review packages.
+set -euo pipefail
+
+if [ $# -ne 1 ]; then
+  echo "usage: sdd-workspace PLAN_FILE" >&2
+  exit 2
+fi
+
+plan=$1
+if [ ! -f "$plan" ]; then
+  echo "no such plan file: $plan" >&2
+  exit 2
+fi
+
+dir="$(CDPATH='' cd -- "$(dirname "$plan")" && pwd -P)/.work"
+mkdir -p "$dir"
+# Self-ignoring, so a plan saved outside .agentsout/ still stays out of git status.
+if [ ! -e "$dir/.gitignore" ]; then
+  printf '*\n' > "$dir/.gitignore"
+fi
+printf '%s\n' "$dir"

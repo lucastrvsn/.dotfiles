@@ -1,4 +1,7 @@
-# mac stuff
+# NEVER COMMIT .ENV! :^)
+.env
+
+# macos
 *.DS_Store
 .AppleDouble
 .LSOverride
@@ -6,5 +9,6 @@
 # neovim
 .nvimlog
 
-# NEVER COMMIT .ENV! :^)
-.env
+# ai bs
+.agentsout/
+**/.claude/settings.local.json

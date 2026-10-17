@@ -3,67 +3,79 @@ local add, now = MiniDeps.add, MiniDeps.now
 now(function()
   add {
     source = "nvim-treesitter/nvim-treesitter",
-    checkout = "master",
+    checkout = "main",
     hooks = {
       post_checkout = function()
         vim.cmd "TSUpdate"
       end,
     },
   }
-  add {
-    source = "nvim-treesitter/nvim-treesitter-refactor",
-    checkout = "master",
+
+  require("nvim-treesitter").install {
+    "bash",
+    "c",
+    "cmake",
+    "cpp",
+    "css",
+    "csv",
+    "dockerfile",
+    "editorconfig",
+    "git_config",
+    "git_rebase",
+    "gitattributes",
+    "gitcommit",
+    "gitignore",
+    "glsl",
+    "go",
+    "gomod",
+    "gosum",
+    "graphql",
+    "hlsl",
+    "html",
+    "javascript",
+    "jsdoc",
+    "json",
+    "json5",
+    "jsx",
+    "lua",
+    "make",
+    "markdown",
+    "markdown_inline",
+    "nginx",
+    "objc",
+    "prisma",
+    "python",
+    "regex",
+    "robots_txt",
+    "rust",
+    "scss",
+    "sql",
+    "ssh_config",
+    "swift",
+    "terraform",
+    "toml",
+    "tsx",
+    "typescript",
+    "vim",
+    "vimdoc",
+    "wgsl",
+    "xml",
+    "yaml",
+    "zsh",
   }
 
-  require("nvim-treesitter.configs").setup {
-    auto_install = true,
-    ensure_installed = {
-      "bash",
-      "c",
-      "cpp",
-      "diff",
-      "html",
-      "javascript",
-      "jsdoc",
-      "json",
-      "jsonc",
-      "lua",
-      "luadoc",
-      "luap",
-      "markdown",
-      "markdown_inline",
-      "printf",
-      "python",
-      "query",
-      "regex",
-      "rust",
-      "swift",
-      "toml",
-      "tsx",
-      "typescript",
-      "vim",
-      "vimdoc",
-      "xml",
-      "yaml",
-    },
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
-    indent = {
-      enable = true,
-    },
-    refactor = {
-      highlight_definitions = {
-        enable = true,
-        clear_on_cursor_move = true,
-      },
-      highlight_current_scope = {
-        enable = false,
-      },
-    },
-  }
+  vim.api.nvim_create_autocmd("FileType", {
+    callback = function(evt)
+      local filetype = evt.match
+      local lang = vim.treesitter.language.get_lang(filetype)
 
-  vim.wo.foldmethod = "expr"
-  vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+      if vim.treesitter.language.add(lang) then
+        vim.treesitter.start(evt.buf)
+
+        vim.wo.foldmethod = "expr"
+        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end
+    end,
+  })
 end)

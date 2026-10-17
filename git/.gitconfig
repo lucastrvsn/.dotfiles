@@ -3,10 +3,9 @@
 	email = lucas@trv.sh
 [core]
   editor = nvim
-  mergeoptions = --no-edit
   commitGraph = true
   whitespace = -trailing-space
-  excludefiles = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
 [init]
   defaultBranch = main
 [color]
@@ -26,7 +25,6 @@
   template = ~/.gittemplate
 [pull]
   rebase = true
-  ff = only
 [rebase]
   autoStash = true
   autoSquash = true
@@ -41,7 +39,6 @@
   prompt = false
 [push]
   default = upstream
-  rebase = merges
 [fetch]
   prune = true
   pruneTags = true
@@ -67,7 +64,7 @@
   prereleaseSuffix = .rc
 [alias]
   # List available aliases
-  aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'
+  aliases = !git config --get-regexp '^alias\\.' | sed -E 's/^alias\\.([^ ]*) (.*)$/\\1 = \\2/'
   # Command shortcuts
   ci = commit
   co = checkout
@@ -83,7 +80,7 @@
   # Push the current branch to origin
   publish = "!git push origin $(git symbolic-ref --short HEAD) -u"
   # List local commits that were not pushed to remote repository
-  review = "!git lg @{push}.."
+  review = "!git l @{push}.."
   # Edit last commit message
   amend = commit --amend
   # Undo last commit but keep changed files in stage

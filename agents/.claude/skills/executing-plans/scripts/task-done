@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Usage: task-done PLAN_FILE TASK_NUMBER BASE -- TEST_COMMAND [ARGS...]
+# Runs the task's tests, keeps the full log in the plan's workspace, prints
+# the tail, and only on success appends the completion line to the ledger.
+# A failing run records nothing.
+set -euo pipefail
+
+if [ $# -lt 5 ] || [ "$4" != "--" ]; then
+  echo "usage: task-done PLAN_FILE TASK_NUMBER BASE -- TEST_COMMAND [ARGS...]" >&2
+  exit 2
+fi
+
+plan=$1
+n=$2
+base=$3
+shift 4
+sdd="$(cd "$(dirname "$0")/../../subagent-driven-development/scripts" && pwd)"
+
+if ! git rev-parse --verify --quiet "$base" >/dev/null; then
+  echo "bad BASE: $base" >&2
+  exit 2
+fi
+
+dir=$(bash "$sdd/sdd-workspace" "$plan")
+log="$dir/task-${n}-tests.log"
+ledger="$dir/progress.md"
+
+cmd=""
+for arg in "$@"; do
+  case "$arg" in
+    *[[:space:]\"\;\|\&]*) cmd="$cmd '$arg'" ;;
+    *) cmd="$cmd $arg" ;;
+  esac
+done
+cmd=${cmd# }
+
+rc=0
+"$@" > "$log" 2>&1 || rc=$?
+
+tail -n 5 "$log"
+if [ "$rc" -ne 0 ]; then
+  echo "task-done: test command exited $rc; Task $n NOT recorded (full output: $log)" >&2
+  exit "$rc"
+fi
+
+last=$(grep -v '^[[:space:]]*$' "$log" | tail -n 1) || last="(no output)"
+if [ ! -f "$ledger" ]; then
+  printf '# SDD ledger — plan: %s\n' "$plan" > "$ledger"
+fi
+line="Task $n: complete (commits $(git rev-parse --short=7 "$base")..$(git rev-parse --short=7 HEAD), tests: $cmd → $last)"
+printf '%s\n' "$line" >> "$ledger"
+echo "ledger: $line"

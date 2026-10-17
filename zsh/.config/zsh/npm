@@ -1,0 +1,13 @@
+[[ -d $NPM_GLOBAL ]] || mkdir -p $NPM_GLOBAL
+
+# setup fnm
+if (( $+commands[fnm] )); then
+  eval "$(fnm env --corepack-enabled --use-on-cd --shell zsh)"
+fi
+
+# add global folder to the PATH
+path=($NPM_GLOBAL/bin $path)
+
+alias npmg="npm --global --prefix=$NPM_GLOBAL"
+
+# vim: ft=zsh

@@ -1,6 +1,3 @@
--- map leader to space
-vim.g.mapleader = " "
-
 -- disable builtin plugins
 vim.g.loaded_2html_plugin = true
 vim.g.loaded_getscript = true
@@ -20,31 +17,36 @@ vim.g.loaded_vimballPlugin = true
 vim.g.loaded_zip = true
 vim.g.loaded_zipPlugin = true
 
+-- general
+vim.g.mapleader = " " -- map leader key to space
+vim.o.mouse = "nvh" -- enable mouse support in normal, visual and insert modes
+vim.o.undofile = true -- enable persistent undo
+vim.o.history = 10000 -- set command history to 10k
+vim.o.shada = "'100,<50,s10,:1000,/100,@100,h" -- Limit ShaDa file (for startup)
+
+-- UI
+vim.o.title = true -- enable window title
+vim.o.titlestring = "%<%F - nvim" -- set the title format
+vim.o.breakindent = true -- indent wrapped lines to match line start
+vim.o.breakindentopt = "list:-1" -- add padding for lists (if `wrap` is set)
+vim.o.cursorline = true -- enable current line highlighting
+vim.o.scrolloff = 4 -- minimum number of screen lines to keep above and below the cursor
+vim.o.sidescrolloff = 4 -- minimum number of screen columns to keep to the left and right of the cursor
+
+vim.o.equalalways = true -- always make splits equal
+vim.o.splitbelow = true -- force all horizontal splits to go below
+vim.o.splitright = true -- force all vertical splits to go to the right
+
+vim.o.foldlevel = 10 -- no fold by default
+vim.o.foldmethod = "indent" -- fold based on indent level
+vim.o.foldnestmax = 10 -- limit number of fold levels
+vim.o.foldtext = "" -- show text under fold with its highlighting
+
 -- settings
-vim.opt.compatible = false
-vim.opt.mouse = "nvh"
-vim.opt.history = 10000
-vim.opt.backup = true
-vim.opt.backupdir = "/tmp//,."
-vim.opt.writebackup = false
-vim.opt.swapfile = false
-vim.opt.undodir = "/tmp//,."
-vim.opt.undofile = true
-vim.opt.undolevels = 1000
-vim.opt.undoreload = 10000
-vim.opt.updatetime = 500
-vim.opt.cursorline = true
-vim.opt.lazyredraw = false
-vim.opt.showcmd = true
-vim.opt.cmdheight = 1
-vim.opt.ruler = true
-vim.opt.completeopt = {
-  "menu",
-  "menuone",
-  "noselect",
-}
-vim.opt.scrolloff = 4
-vim.opt.sidescrolloff = 4
+vim.o.complete = ".,w,b,kspell" -- Use less sources
+vim.o.completeopt = "menuone,noselect,fuzzy,nosort" -- Use custom behavior
+vim.o.completetimeout = 100 -- Limit sources delay
+
 vim.opt.incsearch = true
 vim.opt.inccommand = "nosplit"
 vim.opt.hlsearch = true
@@ -68,9 +70,6 @@ vim.opt.autoindent = true
 vim.opt.magic = true
 vim.opt.number = true
 vim.opt.relativenumber = false
-vim.opt.equalalways = true
-vim.opt.splitbelow = true
-vim.opt.splitright = true
 vim.opt.pumblend = 0
 vim.opt.winblend = 0
 vim.opt.pumheight = 14
@@ -78,9 +77,9 @@ vim.opt.signcolumn = "yes:1"
 vim.opt.list = true
 vim.opt.listchars = vim.opt.listchars
   + "nbsp:⦸"
-  + "tab:▷┅"
-  + "extends:»"
-  + "precedes:«"
+  + "tab:> "
+  + "extends:…"
+  + "precedes:…"
   + "lead:·"
   + "trail:␠"
 vim.opt.fillchars = {
@@ -152,17 +151,10 @@ vim.opt.autoread = true
 vim.opt.visualbell = true
 vim.opt.errorbells = false
 vim.opt.showmatch = true
-vim.opt.colorcolumn = "80,120"
 vim.opt.synmaxcol = 120
 vim.opt.formatoptions = "njvcrql"
 vim.opt.joinspaces = false
-vim.opt.autochdir = true
 vim.opt.ttyfast = true
-
--- fold
-vim.opt.foldmethod = "expr"
-vim.opt.foldenable = false
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- colors
 vim.opt.termguicolors = true

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Usage: task-start PLAN_FILE TASK_NUMBER
+# Extracts the task's brief (via subagent-driven-development's task-brief, so
+# both executors share one workspace) and prints its path and BASE in one
+# call: every native tool call re-reads the whole context.
+set -euo pipefail
+
+if [ $# -ne 2 ]; then
+  echo "usage: task-start PLAN_FILE TASK_NUMBER" >&2
+  exit 2
+fi
+
+plan=$1
+n=$2
+sdd="$(cd "$(dirname "$0")/../../subagent-driven-development/scripts" && pwd)"
+
+out=$(bash "$sdd/task-brief" "$plan" "$n")
+brief=$(printf '%s\n' "$out" | sed -n 's/^wrote \(.*\): [0-9][0-9]* lines$/\1/p')
+if [ -z "$brief" ]; then
+  echo "task-brief did not report a path: $out" >&2
+  exit 1
+fi
+
+echo "brief: $brief"
+echo "base: $(git rev-parse HEAD)"

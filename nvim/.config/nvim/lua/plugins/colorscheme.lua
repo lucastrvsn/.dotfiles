@@ -7,18 +7,25 @@ now(function()
 
   require("nightfox").setup {
     options = {
+      transparent = false,
       terminal_colors = true,
       inverse = {
         match_paren = true,
-        visual = true,
+        visual = false,
         search = false,
+      },
+      styles = {
+        comments = "italic",
       },
       modules = {
         -- neovim defaults
-        diagnostic = true,
+        diagnostic = {
+          enable = true,
+          background = true,
+        },
         native_lsp = true,
-        treesitter = true,
         lsp_semantic_tokens = true,
+        treesitter = true,
 
         -- extra modules
         mini = true,
@@ -27,5 +34,5 @@ now(function()
     },
   }
 
-  vim.cmd.colorscheme "carbonfox"
+  vim.cmd.colorscheme "nightfox"
 end)
