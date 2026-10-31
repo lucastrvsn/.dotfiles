@@ -34,5 +34,5 @@ now(function()
     },
   }
 
-  vim.cmd.colorscheme "nightfox"
+  vim.cmd.colorscheme "nordfox"
 end)

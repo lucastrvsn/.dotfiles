@@ -267,7 +267,7 @@ grapheme-width-method = unicode
 #
 # Any additional colors specified via background, foreground, palette, etc.
 # will override the colors specified in the theme.
-theme = Nightfox
+theme = nordfox
 
 # Swap the foreground and background colors of cells for selection. This
 # option overrides the `selection-foreground` and `selection-background`
