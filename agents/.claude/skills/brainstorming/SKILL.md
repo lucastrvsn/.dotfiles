@@ -84,10 +84,18 @@ guessing this is because X keeps biting you?") often beats a question.
 offer to go look: their codebase or project, their own files and data,
 or the web. Say what you'd look for. They decide whether you go.
 
-**Think wide privately.** Before you propose anything, come up with
+**Propose 2-3 approaches.** Before you present a design, come up with
 several ideas and drop the weak ones, including any that fight what
-they've told you about why. Show the comparison only when it helps them
-decide.
+they've told you about why. Present the 2-3 that remain conversationally,
+with their trade-offs. Lead with the one you recommend and say why.
+
+Each approach should be the right one for the job as it stands now: the
+structure it needs, the trade-offs it makes, and what it costs to change
+later. Think about how the parts split up, where the boundaries sit, and
+which choices are hard to undo. Spend your care on those. YAGNI cuts
+features nobody asked for. It doesn't cut the structure the work needs
+to stay sound. Don't build for an imagined future, and
+don't paint yourself into a corner.
 
 **Show, don't tell.** Offer the visual companion (below) whenever seeing
 would help more than reading:
@@ -199,7 +207,8 @@ software, invoke writing-plans in full mode, naming the `<topic>` and
 
 | Thought | Reality |
 |---------|---------|
-| "I'll offer options to save them effort" | Options steer. Ask them to describe it first. |
+| "I'll offer options before they've described it" | Options steer. Ask them to describe it first, then propose 2-3 approaches. |
+| "YAGNI, so keep it as simple as possible" | YAGNI cuts features, not structure. Pick the shape the job needs now. |
 | "I'll fill in sensible defaults" | Good. Say them out loud. A default they never heard is one they couldn't reject. |
 | "I should explain the process first" | Ask your question. The process shows itself. |
 | "They said 'sounds good' to the idea" | Approval covers what you showed them. A description you haven't written isn't approved. |
