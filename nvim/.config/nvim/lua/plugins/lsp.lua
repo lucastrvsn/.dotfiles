@@ -58,7 +58,7 @@ now(function()
   })
 
   vim.lsp.enable {
-    "copilot",
+    -- "copilot",
     -- "eslint",
     "lua_ls",
     "oxfmt",
